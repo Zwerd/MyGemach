@@ -4,7 +4,7 @@ import { View } from 'react-native';
 const Card = (props) => {
   return (
     <View style={styles.containerStyle}>
-      {props.children}
+      {props.name}
     </View>
   );
 };
@@ -12,6 +12,7 @@ const Card = (props) => {
 
 const styles = {
   containerStyle: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderWidth: 1,
     borderRadius: 2,
     borderColor: '#ddd',
