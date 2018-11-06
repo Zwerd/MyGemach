@@ -3,7 +3,7 @@ import {TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, S
 import Card from "./Card";
 import {createStackNavigator} from 'react-navigation'
 
-class HomeScreen extends React.Component {
+export default class Home extends React.Component {
   render() {
     console.log(StatusBar.currentHeight)
     return (

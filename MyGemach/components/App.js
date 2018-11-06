@@ -1,7 +1,22 @@
-import {createStackNavigator} from 'react-navigation';
-import HomeScreen from './home.js'
+import React, { Component } from 'react'
+import { AppRegistry, View, Text } from 'react-native'
+import {StackNavigator} from 'react-navigation';
+import Home from './home.js'
 
-const App = createStackNavigator({
+class HomeScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
+  render() {
+    return (
+        <Home navigation={this.props.navigation} />
+    )
+  }
+}
+
+
+const App = StackNavigator({
   Home:{screen:HomeScreen},
 });
 
