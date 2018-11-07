@@ -12,7 +12,9 @@ link the image picker with our project:
 react-native link react-native-image-picker
 
 adding permission in the AndroidManifest.xml file:
+'''
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+'''
 
 
