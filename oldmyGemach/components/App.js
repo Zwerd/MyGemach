@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { AppRegistry, View, Text } from 'react-native'
-import {StackNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation';
 import Home from './home.js'
 
 class HomeScreen extends Component {
@@ -16,7 +16,7 @@ class HomeScreen extends Component {
 }
 
 
-const App = StackNavigator({
+const App = createStackNavigator({
   Home:{screen:HomeScreen},
 });
 
