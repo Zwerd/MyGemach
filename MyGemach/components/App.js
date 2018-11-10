@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { AppRegistry, View, Text } from 'react-native'
 import {createStackNavigator} from 'react-navigation';
-import Home from './home.js'
+import Home from './home'
+
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -14,7 +15,6 @@ class HomeScreen extends Component {
     )
   }
 }
-
 
 const App = createStackNavigator({
   Home:{screen:HomeScreen},

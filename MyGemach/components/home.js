@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
-import Card from "./Card";
-import {createStackNavigator} from 'react-navigation'
+import List from "./list";
 
-let {height, width} = Dimensions.get('window');
+
+let dim = Dimensions.get('window');
 const options={
   title:null,
   takePhotoButtonTitle:'צלם תמונה',
@@ -22,7 +22,8 @@ export default class Home extends React.Component {
       displayGemach: false,
       gemachName: '',
       gemachDescription: '',
-      pickedImage: null
+      pickedImage: null,
+      dataList:[],
      };
   }
 
@@ -45,9 +46,11 @@ export default class Home extends React.Component {
     let today  = new Date();
     this.setState({
       displayGemach:true,
-      date: today.toLocaleDateString("en-US")
-    });
+      date: today.toLocaleDateString("en-US"),
+      dataList:{...[this.state.dataList,this.state.gemachName,this.state.gemachDescription,this.state.pickedImage,today.toLocaleDateString("en-US")]
+    }});
     console.log("pickedImage: " +this.state.pickedImage)
+    console.log("dataList: "+this.state.dataList)
     this.refs.creator.close()
   }
 
@@ -107,21 +110,14 @@ export default class Home extends React.Component {
           <Text style={{fontSize:StatusBar.currentHeight}}>הגמח שלי</Text>
         </View>
         {this.state.displayGemach &&
-          <TouchableOpacity
-            style={styles.displayGemach}
-            onPress={() => this.refs.creator.open()}
-            >
-            <View style={{ flexDirection: 'row-reverse'}}>
-              <View style={[styles.View,styles.ViewTitle]}>
-                <Text>שם הגמח: {this.state.gemachName}</Text>
-                <Text>תיאור: {this.state.gemachDescription}</Text>
-                <Text>תאריך פתיחה: {this.state.date}</Text>
-              </View>
-              <View style={[styles.View,styles.ViewImage]}>
-                <Image source={this.state.pickedImage} style={styles.previewImage}/>
-              </View>
-            </View>
-          </TouchableOpacity>
+          <List
+            date={this.state.date}
+            displayGemach={this.state.displayGemach}
+            gemachName={this.state.gemachName}
+            gemachDescription={this.state.gemachDescription}
+            pickedImage={this.state.pickedImage}
+            dataList={this.state.dataList}
+          />
         }
 
           <TouchableOpacity
@@ -185,14 +181,14 @@ const styles = StyleSheet.create({
   },
   View:{
     backgroundColor: "white",
-    height: height/8,
+    height: dim.height/8,
     margin:2,
   },
   ViewTitle: {
-    width: ((width-22)/4) * 3,
+    width: ((dim.width-22)/4) * 3,
   },
   ViewImage:{
-    width: (width-22)/4,
+    width: (dim.width-22)/4,
     borderColor: "black",
   },
   previewImage: {
