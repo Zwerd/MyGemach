@@ -60,6 +60,19 @@ export default class Home extends React.Component {
     this.refs.creator.close()
   }
 
+renderList(){
+  return this.state.dataList.map(data =>
+    <List
+      date={data.date}
+      displayGemach={data.displayGemach}
+      gemachName={data.gemachName}
+      gemachDescription={data.gemachDescription}
+      pickedImage={data.pickedImage}
+      keyExtractor={(item) => item.toString()}
+    />
+  )
+}
+
   resetHandler = () => {
     this.reset();
   }
@@ -117,15 +130,7 @@ export default class Home extends React.Component {
         <View style={styles.head}>
           <Text style={{fontSize:StatusBar.currentHeight}}>הגמח שלי</Text>
         </View>
-        {this.state.displayGemach &&
-          <List
-            date={this.state.dataList.date}
-            displayGemach={this.state.dataList.displayGemach}
-            gemachName={this.state.dataList.gemachName}
-            gemachDescription={this.state.dataList.gemachDescription}
-            pickedImage={this.state.dataList.pickedImage}
-          />
-        }
+        {this.state.displayGemach && this.renderList()}
 
           <TouchableOpacity
             style={styles.head}
