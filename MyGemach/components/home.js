@@ -44,17 +44,23 @@ export default class Home extends React.Component {
 
   createGemach(){
     let today  = new Date();
-    this.setState({
+    let card = {date:this.state.date,
+                displayGemach:this.state.displayGemach,
+                gemachName:this.state.gemachName,
+                gemachDescription:this.state.gemachDescription,
+                pickedImage:this.state.pickedImage,
+                dataList:this.state.dataList}
+    this.setState(prevState => ({
       displayGemach:true,
       date: today.toLocaleDateString("en-US"),
-      dataList:{...[this.state.dataList,this.state.gemachName,this.state.gemachDescription,this.state.pickedImage,today.toLocaleDateString("en-US")]
-    }});
+      dataList: [...prevState.dataList,card]
+    }));
     console.log("pickedImage: " +this.state.pickedImage)
-    console.log("dataList: "+this.state.dataList)
+    console.log("dataList: "+this.state.dataList.date)
     this.refs.creator.close()
   }
 
-  resetHandler = () =>{
+  resetHandler = () => {
     this.reset();
   }
 
@@ -71,7 +77,7 @@ export default class Home extends React.Component {
     })
   }
 
-  dataList = () => ([])
+
 
   render() {
     return (
@@ -113,12 +119,11 @@ export default class Home extends React.Component {
         </View>
         {this.state.displayGemach &&
           <List
-            date={this.state.date}
-            displayGemach={this.state.displayGemach}
-            gemachName={this.state.gemachName}
-            gemachDescription={this.state.gemachDescription}
-            pickedImage={this.state.pickedImage}
-            dataList={this.state.dataList}
+            date={this.state.dataList.date}
+            displayGemach={this.state.dataList.displayGemach}
+            gemachName={this.state.dataList.gemachName}
+            gemachDescription={this.state.dataList.gemachDescription}
+            pickedImage={this.state.dataList.pickedImage}
           />
         }
 
