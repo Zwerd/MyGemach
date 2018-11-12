@@ -47,7 +47,7 @@ export default class Home extends React.Component {
     this.setState({
       displayGemach:true,
       date: today.toLocaleDateString("en-US"),
-      dataList:{[...prevState.this.state.dataList,this.state.gemachName,this.state.gemachDescription,this.state.pickedImage,today.toLocaleDateString("en-US")]
+      dataList:{...[this.state.dataList,this.state.gemachName,this.state.gemachDescription,this.state.pickedImage,today.toLocaleDateString("en-US")]
     }});
     console.log("pickedImage: " +this.state.pickedImage)
     console.log("dataList: "+this.state.dataList)
