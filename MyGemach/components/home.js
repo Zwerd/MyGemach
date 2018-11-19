@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
-import List from "./list";
+import Card from "./card";
 
 
 let dim = Dimensions.get('window');
@@ -18,7 +18,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date:null,
+      date:new Date().toLocaleDateString("en-US"),
       displayGemach: false,
       gemachName: '',
       gemachDescription: '',
@@ -61,8 +61,9 @@ export default class Home extends React.Component {
   }
 
 renderList(){
+  console.log("date: " + this.state.dataList.date)
   return this.state.dataList.map(data =>
-    <List
+    <Card
       date={data.date}
       displayGemach={data.displayGemach}
       gemachName={data.gemachName}
@@ -72,25 +73,6 @@ renderList(){
     />
   )
 }
-
-  resetHandler = () => {
-    this.reset();
-  }
-
-  reset = () => {
-    this.setState({
-      pickedImage: null
-    });
-  }
-
-  createDate(){
-    let date = String(new Date())
-    this.setState({
-      date: date
-    })
-  }
-
-
 
   render() {
     return (
@@ -110,13 +92,17 @@ renderList(){
           style={styles.textInput}
           onChangeText={(text) => this.setState({gemachDescription: text})}
         />
-        <TouchableOpacity
-          style={styles.head}
-          onPress={this.pickImageHandler}
-          >
-          <Text style={{fontSize:StatusBar.currentHeight}}>בחר תמונה</Text>
-          <Image source={this.state.pickedImage}/>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row-reverse'}}>
+          <TouchableOpacity
+            style={[{flex:2},styles.aproved]}
+            onPress={this.pickImageHandler}
+            >
+            <Text style={{fontSize:StatusBar.currentHeight,padding:2}}>בחר תמונה</Text>
+          </TouchableOpacity>
+          <View style={[styles.View,styles.ViewImage]}>
+            <Image source={this.state.pickedImage} style={styles.previewImage}/>
+          </View>
+        </View>
         <TouchableOpacity
           style={styles.head}
           onPress={() => this.createGemach()}
@@ -131,7 +117,6 @@ renderList(){
           <Text style={{fontSize:StatusBar.currentHeight}}>הגמח שלי</Text>
         </View>
         {this.state.displayGemach && this.renderList()}
-
           <TouchableOpacity
             style={styles.head}
             onPress={() => this.refs.creator.open()}
@@ -156,9 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 5,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 2,
+    borderRadius: 25,
   },
   welcome: {
     fontSize: 20,
@@ -182,15 +165,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     margin:5,
   },
-  displayGemach:{
-    backgroundColor: 'rgba(255,255,255, 0.8)',
-    justifyContent: 'center',
-    textAlign: 'right',
-    margin: 5,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 2,
-  },
   View:{
     backgroundColor: "white",
     height: dim.height/8,
@@ -201,11 +175,18 @@ const styles = StyleSheet.create({
   },
   ViewImage:{
     width: (dim.width-22)/4,
-    borderColor: "black",
+    //borderColor: "black",
+    //borderWidth:2,
   },
   previewImage: {
     width: "100%",
     height: "100%",
     borderRadius:10,
+  },
+  aproved:{
+    backgroundColor: 'rgba(192,192,192, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
   }
 });

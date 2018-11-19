@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import {Dimensions, Image, TouchableOpacity, StyleSheet, Text, View} from 'react-native';
+import { StackNavigator } from 'react-navigation'
 let dim = Dimensions.get('window');
 
-const List = (props) => (
+class Card export React.Component {
+  static navigationOptions = {
+  header: null
+}
+render()
+  return(
   <TouchableOpacity
+    onPress={() => this.props.navigation.navigate('Items')}
     style={styles.displayGemach}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
@@ -47,5 +54,6 @@ const styles = StyleSheet.create({
     borderRadius:10,
   }
 });
+}
 
-export default List
+export default Card
