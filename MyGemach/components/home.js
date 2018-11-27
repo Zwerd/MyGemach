@@ -69,6 +69,8 @@ renderList(){
   console.log("date: " + this.state.dataList.date)
   return this.state.dataList.map(data =>
     <Card
+      navigate={() => this.props.navigation.navigate("Items",
+                      {Home:data.gemachName})}
       key={data.key}
       date={data.date}
       displayGemach={data.displayGemach}
@@ -81,10 +83,8 @@ renderList(){
 }
 
   render() {
-
     return (
       <View style={styles.container}>
-
       <Modal
         style={[styles.modalbox]}
         position={'center'}
@@ -105,7 +105,7 @@ renderList(){
             style={[{flex:2},styles.aproved]}
             onPress={this.pickImageHandler}
             >
-            <Text style={{fontSize:StatusBar.currentHeight,padding:2}}>בחר תמונה</Text>
+            <Text style={{fontSize:StatusBar.currentHeight}}>בחר תמונה</Text>
           </TouchableOpacity>
           <View style={[styles.View,styles.ViewImage]}>
             <Image source={this.state.pickedImage} style={styles.previewImage}/>
@@ -203,9 +203,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    margin:20,
-    padding:StatusBar.currentHeight,
-    height:StatusBar.currentHeight,
+    //margin:10,
+    //padding:StatusBar.currentHeight,
+    //height:StatusBar.currentHeight,
     borderColor: "black",
     borderWidth:2,
   }

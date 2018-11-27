@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { AppRegistry, View, Text } from 'react-native'
 import {createStackNavigator} from 'react-navigation';
 import Home from './home'
+import Items from './items'
+
 
 
 class HomeScreen extends Component {
