@@ -3,29 +3,33 @@ import {Dimensions, Image, TouchableOpacity, StyleSheet, Text, View} from 'react
 import { StackNavigator } from 'react-navigation'
 let dim = Dimensions.get('window');
 
-class Card export React.Component {
-  static navigationOptions = {
-  header: null
+class Card extends Component {
+constructor(props) {
+  super(props);
+  this.state = {
+    };
 }
-render()
+render(){
+  console.log(this.props.navigation)
   return(
   <TouchableOpacity
-    onPress={() => this.props.navigation.navigate('Items')}
+    onPress={this.props.navigate}
     style={styles.displayGemach}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewTitle]}>
-        <Text>שם הגמח: {props.gemachName}</Text>
-        <Text>תיאור: {props.gemachDescription}</Text>
-        <Text>תאריך פתיחה: {props.date}</Text>
+        <Text>שם הגמח: {this.props.gemachName}</Text>
+        <Text>תיאור: {this.props.gemachDescription}</Text>
+        <Text>תאריך פתיחה: {this.props.date}</Text>
       </View>
       <View style={[styles.View,styles.ViewImage]}>
-        <Image source={props.pickedImage} style={styles.previewImage}/>
+        <Image source={this.props.pickedImage} style={styles.previewImage}/>
       </View>
     </View>
   </TouchableOpacity>
-)
-
+    )
+  }
+}
 const styles = StyleSheet.create({
   displayGemach:{
     backgroundColor: 'rgba(255,255,255, 0.8)',
@@ -54,6 +58,5 @@ const styles = StyleSheet.create({
     borderRadius:10,
   }
 });
-}
 
 export default Card
