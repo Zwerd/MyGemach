@@ -4,8 +4,6 @@ import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
 
-
-
 let dim = Dimensions.get('window');
 
 const options={
@@ -21,12 +19,15 @@ export default class Items extends React.Component {
     super(props);
     this.state = {
       date:new Date().toLocaleDateString("en-US"),
-      displayGemach: false,
-      gemachName: '',
-      gemachDescription: '',
+      displayitem: false,
+      gemachName:'',
+      itemName: '',
+      itemDescription: '',
       pickedImage: null,
+      displayImage: false,
+      displayText:true,
       key:0,
-      dataList:[],
+      itemsList:[],
      };
   }
 
@@ -38,6 +39,8 @@ export default class Items extends React.Component {
         console.log("Error", res.error);
       } else {
         this.setState({
+          displayText:false,
+          displayImage:true,
           pickedImage: { uri: res.uri }
         });
       console.log("pickedImage: " +this.state.pickedImage)
@@ -45,36 +48,39 @@ export default class Items extends React.Component {
     });
   }
 
-  createGemach(){
+  createitem(){
     let today  = new Date();
     let card = {date:this.state.date,
-                displayGemach:this.state.displayGemach,
-                gemachName:this.state.gemachName,
-                gemachDescription:this.state.gemachDescription,
+                displayitem:this.state.displayitem,
+                itemName:this.state.itemName,
+                itemDescription:this.state.itemDescription,
                 pickedImage:this.state.pickedImage,
-                dataList:this.state.dataList,
+                itemsList:this.state.itemsList,
                 key:this.state.key}
     this.setState(prevState => ({
-      displayGemach:true,
+      displayitem:true,
+      displayImage:false,
+      displayText:true,
       date: today.toLocaleDateString("en-US"),
       key: +1,
-      dataList: [...prevState.dataList,card]
+      itemsList: [...prevState.itemsList,card]
     }));
     console.log("pickedImage: " +this.state.pickedImage)
-    console.log("dataList: "+this.state.dataList.date)
-    this.refs.creator.close()
+    console.log("dataList: "+this.state.itemsList.date)
+    this.refs.item.close()
   }
 
-renderList(){
-  console.log("date: " + this.state.dataList.date)
-  return this.state.dataList.map(data =>
+renderItem(){
+  console.log("date: " + this.state.itemsList.date)
+  return this.state.itemsList.map(data =>
     <Card
-      navigate={() => this.props.navigation.navigate("Items")}
+    navigate={() => this.props.navigation.navigate("Item",
+                    {Items:data.itemName})}
       key={data.key}
       date={data.date}
-      displayGemach={data.displayGemach}
-      gemachName={data.gemachName}
-      gemachDescription={data.gemachDescription}
+      display={data.displayitem}
+      name={data.itemName}
+      description={data.itemDescription}
       pickedImage={data.pickedImage}
       keyExtractor={(item) => item.toString()}
     />
@@ -87,48 +93,43 @@ renderList(){
       <Modal
         style={[styles.modalbox]}
         position={'center'}
-        ref={"creator"}
+        ref={"item"}
         >
-        <Text style={{fontSize:StatusBar.currentHeight}}>שם הגמח:</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text) => this.setState({gemachName: text})}
-        />
-        <Text style={{fontSize:StatusBar.currentHeight}}>תיאור:</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text) => this.setState({gemachDescription: text})}
-        />
-        <View style={{flexDirection: 'row-reverse'}}>
-          <TouchableOpacity
-            style={[{flex:2},styles.aproved]}
-            onPress={this.pickImageHandler}
-            >
-            <Text style={{fontSize:StatusBar.currentHeight}}>בחר תמונה</Text>
-          </TouchableOpacity>
-          <View style={[styles.View,styles.ViewImage]}>
-            <Image source={this.state.pickedImage} style={styles.previewImage}/>
+        <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
+              {this.state.displayText && <Text style={{fontSize:20}}>בחר תמונה</Text>}
+              {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
+            </TouchableOpacity>
+          <View style={{flex:1,flexDirection: 'column'}}>
+            <TextInput
+              placeholder={'שם הפריט'}
+              style={styles.textInput}
+              onChangeText={(text) => this.setState({itemName: text})}
+            />
+            <TextInput
+              placeholder={'תיאור'}
+              style={styles.textInput}
+              onChangeText={(text) => this.setState({itemDescription: text})}
+            />
           </View>
         </View>
         <TouchableOpacity
-          style={styles.head}
-          onPress={() => this.createGemach()}
+          style={[styles.header,styles.button]}
+          onPress={() => this.createitem()}
           >
-          <Text style={{fontSize:StatusBar.currentHeight}}>אישור</Text>
+          <Text style={styles.fontStyle}>אישור</Text>
         </TouchableOpacity>
       </Modal>
-
-
         <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
-        <View style={styles.title}>
-          <Text style={{fontSize:StatusBar.currentHeight}}>הגמח שלי</Text>
+        <View style={styles.header}>
+          <Text style={styles.fontStyle}>{this.props.navigation.state.params.Home}</Text>
         </View>
-        {this.state.displayGemach && this.renderList()}
+        {this.state.displayitem && this.renderItem()}
           <TouchableOpacity
-            style={styles.head}
-            onPress={() => this.refs.creator.open()}
+            style={[styles.header,styles.button]}
+            onPress={() => this.refs.item.open()}
             >
-            <Text style={{fontSize:StatusBar.currentHeight}}>צור גמח חדש</Text>
+            <Text style={styles.fontStyle}>הוסף פריט</Text>
           </TouchableOpacity>
         </ImageBackground>
       </View>
@@ -137,75 +138,53 @@ renderList(){
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  fontStyle:{
+    fontFamily:'nrkis',
+    fontSize:StatusBar.currentHeight
   },
-  title:{
-    backgroundColor: 'rgba(192,192,192, 0.8)',
+  header:{
+    backgroundColor: 'rgba(135,206,235, 0.8)',
+    borderColor: "#008CBA",
     justifyContent: 'center',
     alignItems: 'center',
   },
-  head:{
-    backgroundColor: 'rgba(192,192,192, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
+  button:{
     margin: 5,
     borderRadius: 25,
-    borderColor: "black",
-    borderWidth:2,
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    borderWidth:1,
   },
   modalbox:{
+    justifyContent: 'center',
     height: null,
     borderWidth: 2,
     borderRadius: 10,
   },
   textInput:{
+    flex:1,
     fontSize:StatusBar.currentHeight,
     borderColor: 'black',
-    borderRadius:10,
-    borderWidth: 2,
-    margin:5,
-  },
-  View:{
-    backgroundColor: "white",
-    height: dim.height/8,
+    borderRadius:5,
+    borderWidth: 1,
     margin:2,
   },
   ViewTitle: {
     width: ((dim.width-22)/4) * 3,
   },
-  ViewImage:{
-    width: (dim.width-22)/4,
+  imageBox:{
+    backgroundColor: "white",
     borderColor: "black",
-    borderWidth:2,
+    borderStyle:'dashed',
+    borderWidth:1,
+    borderRadius:10,
+    justifyContent:'center',
+    alignItems:'center',
+    height: dim.height/6,
+    width: dim.width/3,
+    margin:2,
   },
   previewImage: {
     width: "100%",
     height: "100%",
     borderRadius:10,
   },
-  aproved:{
-    backgroundColor: 'rgba(192,192,192, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 25,
-    //margin:10,
-    //padding:StatusBar.currentHeight,
-    //height:StatusBar.currentHeight,
-    borderColor: "black",
-    borderWidth:2,
-  }
 });

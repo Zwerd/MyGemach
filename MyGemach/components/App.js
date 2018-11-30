@@ -28,10 +28,21 @@ class ItemsScreen extends Component {
     )
   }
 }
+class ItemScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
 
+  render() {
+    return (
+        <Item navigation={this.props.navigation} />
+    )
+  }
+}
 const App = createStackNavigator({
   Home:{screen:HomeScreen},
-  Items:{screen:ItemsScreen}
+  Items:{screen:ItemsScreen},
+  Item:{screen:ItemScreen}
 });
 
 export default App;

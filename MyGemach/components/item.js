@@ -4,7 +4,7 @@ import { StackNavigator } from 'react-navigation'
 import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
 
-class Card extends Component {
+class Item extends Component {
 constructor(props) {
   super(props);
   this.state = {
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Card
+export default Item
