@@ -11,7 +11,7 @@ constructor(props) {
     };
 }
 render(){
-
+  console.log('this is item', this.props.navigation.state.params.Items)
   return(
   <TouchableOpacity
     onPress={this.props.navigate}

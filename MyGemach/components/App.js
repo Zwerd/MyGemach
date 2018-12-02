@@ -3,6 +3,7 @@ import { AppRegistry, View, Text } from 'react-native'
 import {createStackNavigator} from 'react-navigation';
 import Home from './home'
 import Items from './items'
+import Item from './item'
 
 
 
@@ -17,6 +18,7 @@ class HomeScreen extends Component {
     )
   }
 }
+
 class ItemsScreen extends Component {
   static navigationOptions = {
     header: null
@@ -28,6 +30,7 @@ class ItemsScreen extends Component {
     )
   }
 }
+
 class ItemScreen extends Component {
   static navigationOptions = {
     header: null

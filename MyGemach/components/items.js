@@ -74,8 +74,9 @@ renderItem(){
   console.log("date: " + this.state.itemsList.date)
   return this.state.itemsList.map(data =>
     <Card
-    navigate={() => this.props.navigation.navigate("Item",
-                    {Items:data.itemName})}
+      onPress={console.log('render card in items' +data)}
+      navigate={() => this.props.navigation.navigate("Item",
+                    {Items:data})}
       key={data.key}
       date={data.date}
       display={data.displayitem}
