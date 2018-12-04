@@ -7,6 +7,7 @@ import Card from "./card";
 
 
 let dim = Dimensions.get('window');
+let height = StatusBar.currentHeight * 1.5
 
 const options={
   title:null,
@@ -123,15 +124,27 @@ renderList(){
       </Modal>
         <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
         <View style={styles.header}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: height, width: height}}>
+            <Image source={require('../images/setting.png')} style={{width: '100%', height: '100%'}}/>
+            <Image source={require('../images/search.png')} style={{width: '100%', height: '100%'}}/>
+          </View>
           <Text style={styles.fontStyle}>הגמח שלי</Text>
         </View>
         {this.state.displayGemach && this.renderList()}
-          <TouchableOpacity
-            style={[styles.header,styles.button]}
-            onPress={() => this.refs.creator.open()}
-            >
-            <Text style={styles.fontStyle}>צור גמח חדש</Text>
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:height/2}}>
+            <TouchableOpacity
+              style={{height:height, width:height}}
+              onPress={() => this.refs.creator.open()}
+              >
+                <Image source={require('../images/adding.png')} style={{width: '100%', height: '100%'}}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{height:height, width:height}}
+              onPress={() => this.refs.creator.open()}
+              >
+                <Image source={require('../images/remove.png')} style={{width: '100%', height: '100%'}}/>
+            </TouchableOpacity>
+          </View>
         </ImageBackground>
       </View>
     );
@@ -141,15 +154,19 @@ renderList(){
 const styles = StyleSheet.create({
   fontStyle:{
     fontFamily:'nrkis',
-    fontSize:StatusBar.currentHeight
+    fontSize:StatusBar.currentHeight,
+    color: 'white',
   },
   header:{
-    backgroundColor: 'rgba(135,206,235, 0.8)',
+    backgroundColor: 'rgb(0,176,240)',
     borderColor: "#008CBA",
-    justifyContent: 'center',
+    flexDirection:'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   button:{
+    justifyContent: 'center',
+    height: height,
     margin: 5,
     borderRadius: 25,
     borderWidth:1,
