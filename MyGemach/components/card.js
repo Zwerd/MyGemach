@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Dimensions, Image, TouchableOpacity, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
-
+let height = StatusBar.currentHeight * 1.5
 class Card extends Component {
 constructor(props) {
   super(props);
@@ -24,7 +24,12 @@ render(){
         <Text>תאריך: {this.props.date}</Text>
       </View>
       <View style={[styles.View,styles.ViewImage]}>
-        <Image source={this.props.pickedImage} style={styles.previewImage}/>
+        <ImageBackground source={this.props.pickedImage} style={styles.previewImage,{borderRadius:5}}>
+        {this.props.removeItem &&
+          <TouchableOpacity style={{width: height,height: height}} onPress={console.log('the item removed')}>
+            <Image source={require('../images/miniRemove.png')} style={{width: "100%",height: "100%"}}/>
+          </TouchableOpacity>}
+        </ImageBackground>
       </View>
     </View>
   </TouchableOpacity>
@@ -51,11 +56,12 @@ const styles = StyleSheet.create({
   },
   ViewImage:{
     width: (dim.width-16)/4,
+    borderRadius:10,
   },
   previewImage: {
     width: "100%",
     height: "100%",
-    borderRadius:10,
+
   }
 });
 

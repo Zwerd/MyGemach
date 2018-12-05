@@ -24,6 +24,7 @@ export default class Home extends React.Component {
       date:new Date().toLocaleDateString("en-US"),
       displayGemach: false,
       gemachName: '',
+      removeItem:false,
       gemachDescription: '',
       pickedImage: null,
       displayImage: false,
@@ -78,6 +79,7 @@ renderList(){
     <Card
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
+      removeItem={this.state.removeItem}
       key={data.key}
       date={data.date}
       display={data.displayGemach}
@@ -124,10 +126,15 @@ renderList(){
       </Modal>
         <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: height}}>
-          <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            <Image source={require('../images/setting.png')} style={{flex:1,width: height, height: height}}/>
-            <View style={{flex:1,width: height, height: height}}></View>
-            <Image source={require('../images/search.png')} style={{flex:1,width: height, height: height}}/>
+          <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
+            <TouchableOpacity
+              onPress={console.log('search was press')}>
+              <Image source={require('../images/setting.png')} style={{width: height, height: height}}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={console.log('settings was press')}>
+              <Image source={require('../images/search.png')} style={{width: height, height: height}}/>
+            </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
             <Text style={styles.fontStyle}>הגמח שלי</Text>
@@ -143,9 +150,11 @@ renderList(){
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:height, width:height}}
-              onPress={() => this.refs.creator.open()}
+              onPress={() => this.setState({removeItem:!this.state.removeItem})}
               >
-                <Image source={require('../images/remove.png')} style={{width: '100%', height: '100%'}}/>
+                {this.state.removeItem &&
+                  <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||
+                  <Image source={require('../images/remove.png')} style={{width: '100%', height: '100%'}} />}
             </TouchableOpacity>
           </View>
         </ImageBackground>
