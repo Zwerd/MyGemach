@@ -24,7 +24,7 @@ export default class Home extends React.Component {
       date:new Date().toLocaleDateString("en-US"),
       displayGemach: false,
       gemachName: '',
-      removeItem:false,
+      remove:false,
       gemachDescription: '',
       pickedImage: null,
       displayImage: false,
@@ -79,7 +79,7 @@ renderList(){
     <Card
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
-      removeItem={this.state.removeItem}
+      remove={this.state.remove}
       key={data.key}
       date={data.date}
       display={data.displayGemach}
@@ -150,9 +150,9 @@ renderList(){
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:height, width:height}}
-              onPress={() => this.setState({removeItem:!this.state.removeItem})}
+              onPress={() => this.setState({remove:!this.state.remove})}
               >
-                {this.state.removeItem &&
+                {this.state.remove &&
                   <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||
                   <Image source={require('../images/remove.png')} style={{width: '100%', height: '100%'}} />}
             </TouchableOpacity>

@@ -24,8 +24,8 @@ render(){
         <Text>תאריך: {this.props.date}</Text>
       </View>
       <View style={[styles.View,styles.ViewImage]}>
-        <ImageBackground source={this.props.pickedImage} style={styles.previewImage,{borderRadius:5}}>
-        {this.props.removeItem &&
+        <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
+        {this.props.remove &&
           <TouchableOpacity style={{width: height,height: height}} onPress={console.log('the item removed')}>
             <Image source={require('../images/miniRemove.png')} style={{width: "100%",height: "100%"}}/>
           </TouchableOpacity>}
@@ -56,12 +56,11 @@ const styles = StyleSheet.create({
   },
   ViewImage:{
     width: (dim.width-16)/4,
-    borderRadius:10,
+    overflow: 'hidden',
   },
   previewImage: {
     width: "100%",
     height: "100%",
-
   }
 });
 
