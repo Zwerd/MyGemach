@@ -125,8 +125,9 @@ renderList(){
         <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: height}}>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            <Image source={require('../images/setting.png')} style={{width: height, height: height}}/>
-            <Image source={require('../images/search.png')} style={{width: height, height: height}}/>
+            <Image source={require('../images/setting.png')} style={{flex:1,width: height, height: height}}/>
+            <View style={{flex:1,width: height, height: height}}></View>
+            <Image source={require('../images/search.png')} style={{flex:1,width: height, height: height}}/>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
             <Text style={styles.fontStyle}>הגמח שלי</Text>
