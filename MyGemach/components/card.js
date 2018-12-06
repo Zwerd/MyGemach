@@ -10,8 +10,12 @@ constructor(props) {
   this.state = {
     };
 }
-render(){
 
+removeItem(){
+
+}
+
+render(){
   return(
   <TouchableOpacity
     onPress={this.props.navigate}
@@ -26,7 +30,7 @@ render(){
       <View style={[styles.View,styles.ViewImage]}>
         <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
         {this.props.remove &&
-          <TouchableOpacity style={{width: height,height: height}} onPress={console.log('the item removed')}>
+          <TouchableOpacity style={{width: height,height: height}} onPress={()=>console.log('item '+this.props.itemNumber+' removed')}>
             <Image source={require('../images/miniRemove.png')} style={{width: "100%",height: "100%"}}/>
           </TouchableOpacity>}
         </ImageBackground>
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'right',
     margin: 5,
+    marginRight:null,
     marginBottom:0,
     borderRadius: 5,
     borderColor: 'black',
@@ -50,7 +55,7 @@ const styles = StyleSheet.create({
   View:{
     backgroundColor: "white",
     height: dim.height/8,
-    width: ((dim.width-10)/4) * 3,
+    width: ((dim.width-12)/4) * 3,
     borderRadius: 10,
     padding:2,
   },

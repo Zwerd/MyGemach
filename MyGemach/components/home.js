@@ -4,8 +4,7 @@ import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
 
-
-
+let today  = new Date();
 let dim = Dimensions.get('window');
 let height = StatusBar.currentHeight * 1.5
 
@@ -46,52 +45,46 @@ export default class Home extends React.Component {
           displayImage:true,
           pickedImage: { uri: res.uri }
         });
-      console.log("pickedImage: " +this.state.pickedImage)
       }
     });
   }
 
   createGemach(){
-    let today  = new Date();
-    let card = {date:this.state.date,
-                displayGemach:this.state.displayGemach,
-                gemachName:this.state.gemachName,
-                gemachDescription:this.state.gemachDescription,
-                pickedImage:this.state.pickedImage,
-                dataList:this.state.dataList,
-                key:this.state.key}
     this.setState(prevState => ({
       displayGemach:true,
       displayImage:false,
       displayText:true,
       date: today.toLocaleDateString("en-US"),
-      key: +1,
-      dataList: [...prevState.dataList,card]
+      key: this.state.key+1,
+      dataList: [...prevState.dataList,{key:this.state.key,
+                  date:this.state.date,
+                  gemachName:this.state.gemachName,
+                  gemachDescription:this.state.gemachDescription,
+                  pickedImage:this.state.pickedImage}]
     }));
-    console.log("pickedImage: " +this.state.pickedImage)
-    console.log("dataList: "+this.state.dataList.date)
+
     this.refs.creator.close()
   }
 
 renderList(){
-  console.log("date: " + this.state.dataList.date)
   return this.state.dataList.map(data =>
     <Card
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
       remove={this.state.remove}
       key={data.key}
+      itemNumber={data.key}
       date={data.date}
       display={data.displayGemach}
       name={data.gemachName}
       description={data.gemachDescription}
       pickedImage={data.pickedImage}
-      keyExtractor={(item) => item.toString()}
     />
   )
 }
 
   render() {
+    console.log('dataList:',this.state.dataList)
     return (
       <View style={styles.container}>
       <Modal
