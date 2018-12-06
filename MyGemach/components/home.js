@@ -6,7 +6,7 @@ import Card from "./card";
 
 let today  = new Date();
 let dim = Dimensions.get('window');
-let height = StatusBar.currentHeight * 1.5
+let barHeight = StatusBar.currentHeight * 1.5
 
 const options={
   title:null,
@@ -143,31 +143,33 @@ checkLength(){
         </TouchableOpacity>
       </Modal>
         <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
-        <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: height}}>
+        <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
             <TouchableOpacity
               onPress={console.log('search was press')}>
-              <Image source={require('../images/setting.png')} style={{width: height, height: height}}/>
+              <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={console.log('settings was press')}>
-              <Image source={require('../images/search.png')} style={{width: height, height: height}}/>
+              <Image source={require('../images/search.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
             <Text style={styles.fontStyle}>הגמח שלי</Text>
           </View>
         </View>
+        <ScrollView style={{height:dim.height-barHeight}}>
         {this.state.displayGemach && this.renderList()}
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:height/2}}>
+        </ScrollView>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:barHeight/2}}>
             <TouchableOpacity
-              style={{height:height, width:height}}
+              style={{height:barHeight, width:barHeight}}
               onPress={() => this.refs.creator.open()}
               >
                 <Image source={require('../images/adding.png')} style={{width: '100%', height: '100%'}}/>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{height:height, width:height}}
+              style={{height:barHeight, width:barHeight}}
               onPress={() => this.checkLength()}
               >
                 {this.state.remove &&
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
   },
   button:{
     justifyContent: 'center',
-    height: height,
+    height: barHeight,
     margin: 5,
     borderRadius: 25,
     borderWidth:1,
