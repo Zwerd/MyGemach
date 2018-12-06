@@ -66,9 +66,26 @@ export default class Home extends React.Component {
     this.refs.creator.close()
   }
 
+  removeItem = (itemNumber) => {
+    console.log('this is data from card: ' + itemNumber)
+    let newList = this.state.dataList
+    for(i=0;i<newList.length;i++){
+      console.log('in loop i is: '+i)
+      if(newList[i].key == itemNumber){
+        console.log('in if')
+        newList.splice(i, 1)
+        this.setState({dataList:newList})
+      }
+      if(this.state.dataList.length == 0){
+        this.setState({remove:false})
+      }
+    }
+  }
+
 renderList(){
   return this.state.dataList.map(data =>
     <Card
+      callbackFromHome={this.removeItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
       remove={this.state.remove}
@@ -83,8 +100,16 @@ renderList(){
   )
 }
 
+checkLength(){
+  if(this.state.dataList.length != 0){
+    this.setState({remove:!this.state.remove})
+  }
+}
+
+
   render() {
     console.log('dataList:',this.state.dataList)
+
     return (
       <View style={styles.container}>
       <Modal
@@ -143,7 +168,7 @@ renderList(){
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:height, width:height}}
-              onPress={() => this.setState({remove:!this.state.remove})}
+              onPress={() => this.checkLength()}
               >
                 {this.state.remove &&
                   <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||
