@@ -1,3 +1,7 @@
+this app build to make help each other in the community 
+please reffer to the documents for more details
+
+
 run the foolowing commands for modules:
 run npm for adding navigation:
 npm install --save react-navigation
