@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput} from 'react-native';
+import { Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
@@ -28,6 +28,9 @@ export default class Home extends React.Component {
       pickedImage: null,
       displayImage: false,
       displayText:true,
+      searchOpen:false,
+      searchText:'',
+      back:false,
       key:0,
       dataList:[],
      };
@@ -82,7 +85,25 @@ export default class Home extends React.Component {
     }
   }
 
-renderList(){
+renderList(list){
+  console.log('in renderList ', list)
+  if(list!==undefined){
+    console.log('in if')
+    return list.map(data =>
+      <Card
+        callbackFromHome={this.removeItem}
+        navigate={() => this.props.navigation.navigate("Items",
+                        {Home:data.gemachName})}
+        remove={this.state.remove}
+        key={data.key}
+        itemNumber={data.key}
+        date={data.date}
+        display={data.displayGemach}
+        name={data.gemachName}
+        description={data.gemachDescription}
+        pickedImage={data.pickedImage}
+      />)
+  }else{
   return this.state.dataList.map(data =>
     <Card
       callbackFromHome={this.removeItem}
@@ -97,7 +118,7 @@ renderList(){
       description={data.gemachDescription}
       pickedImage={data.pickedImage}
     />
-  )
+  )}
 }
 
 checkLength(){
@@ -105,11 +126,39 @@ checkLength(){
     this.setState({remove:!this.state.remove})
   }
 }
+openCreator(){
+  this.setState({
+    gemachName: '',
+    gemachDescription:'',
+    pickedImage: null,
+    displayImage: false,
+    displayText:true,
+  })
+  this.refs.creator.open()
+}
 
+openSearch(){
+  console.log('search was open')
+  this.setState({searchOpen:true, back:true})
+}
+
+removeSearch(){
+  this.setState({searchOpen:false, back:false})
+}
+
+searchByText(text){
+  let newList = [];
+  let dataList = this.state.dataList
+  for(i=0;i<dataList.length;i++){
+    if(dataList[i].gemachName.includes(text)){
+      newList.push(dataList[i])
+    }
+  }
+  this.renderList(newList)
+}
 
   render() {
     console.log('dataList:',this.state.dataList)
-
     return (
       <View style={styles.container}>
       <Modal
@@ -117,6 +166,7 @@ checkLength(){
         position={'center'}
         ref={"creator"}
         >
+
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
               {this.state.displayText && <Text style={{fontSize:20}}>בחר תמונה</Text>}
@@ -145,17 +195,26 @@ checkLength(){
         <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
-            <TouchableOpacity
-              onPress={console.log('search was press')}>
+            {this.state.back && <TouchableOpacity
+            onPress={()=>this.removeSearch()}>
+            <Image source={require('../images/back.png')} style={{width: barHeight, height: barHeight}}/>
+          </TouchableOpacity> ||
+          <TouchableOpacity
+              onPress={console.log('setting was press')}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
-            </TouchableOpacity>
+            </TouchableOpacity>}
             <TouchableOpacity
-              onPress={console.log('settings was press')}>
-              <Image source={require('../images/search.png')} style={{width: barHeight, height: barHeight}}/>
+              onPress={()=>this.openSearch()}>
+              {this.state.searchOpen && <TextInput
+                                          placeholder={'חיפוש לפי שם'}
+                                          style={{width:dim.width-barHeight,backgroundColor:'white',borderWidth:1,borderRadius:2}}
+                                          onChangeText={(text) => this.searchByText(text)}
+                                        /> ||
+              <Image source={require('../images/search.png')} style={{width: barHeight, height: barHeight}}/>}
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            <Text style={styles.fontStyle}>הגמח שלי</Text>
+            {!this.state.searchOpen && <Text style={styles.fontStyle}>הגמח שלי</Text>}
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
@@ -164,7 +223,7 @@ checkLength(){
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:barHeight/2}}>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => this.refs.creator.open()}
+              onPress={() => this.openCreator()}
               >
                 <Image source={require('../images/adding.png')} style={{width: '100%', height: '100%'}}/>
             </TouchableOpacity>

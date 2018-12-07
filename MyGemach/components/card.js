@@ -27,6 +27,7 @@ render(){
         <Text>שם: {this.props.name}</Text>
         <Text>תיאור: {this.props.description}</Text>
         <Text>תאריך: {this.props.date}</Text>
+        <Text>מספר: {this.props.itemNumber+1}</Text>
       </View>
       <View style={[styles.View,styles.ViewImage]}>
         <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
