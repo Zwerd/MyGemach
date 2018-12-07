@@ -17,6 +17,7 @@ removeItem(){
 }
 
 render(){
+  console.log('in card checking data: '+this.props)
   return(
   <TouchableOpacity
     onPress={this.props.navigate}

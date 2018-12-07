@@ -86,7 +86,7 @@ export default class Home extends React.Component {
   }
 
 renderList(list){
-  console.log('in renderList ', list)
+  console.log('in renderList ', list,typeof(list))
   if(list!==undefined){
     console.log('in if')
     return list.map(data =>
@@ -147,7 +147,7 @@ removeSearch(){
 }
 
 searchByText(text){
-  let newList = [];
+  let newList = {list:[]};////isue need to checking
   let dataList = this.state.dataList
   for(i=0;i<dataList.length;i++){
     if(dataList[i].gemachName.includes(text)){
