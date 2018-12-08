@@ -12,12 +12,11 @@ constructor(props) {
 }
 
 removeItem(){
-  console.log('item '+this.props.itemNumber+' removed')
   this.props.callbackFromHome(this.props.itemNumber)
 }
 
 render(){
-  console.log('in card checking data: '+this.props)
+  console.log('render card checking props: '+ this.props)
   return(
   <TouchableOpacity
     onPress={this.props.navigate}

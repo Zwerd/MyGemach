@@ -33,6 +33,8 @@ export default class Home extends React.Component {
       back:false,
       key:0,
       dataList:[],
+      searchList:[],
+      searchText:''
      };
   }
 
@@ -70,12 +72,9 @@ export default class Home extends React.Component {
   }
 
   removeItem = (itemNumber) => {
-    console.log('this is data from card: ' + itemNumber)
     let newList = this.state.dataList
     for(i=0;i<newList.length;i++){
-      console.log('in loop i is: '+i)
       if(newList[i].key == itemNumber){
-        console.log('in if')
         newList.splice(i, 1)
         this.setState({dataList:newList})
       }
@@ -85,25 +84,7 @@ export default class Home extends React.Component {
     }
   }
 
-renderList(list){
-  console.log('in renderList ', list,typeof(list))
-  if(list!==undefined){
-    console.log('in if')
-    return list.map(data =>
-      <Card
-        callbackFromHome={this.removeItem}
-        navigate={() => this.props.navigation.navigate("Items",
-                        {Home:data.gemachName})}
-        remove={this.state.remove}
-        key={data.key}
-        itemNumber={data.key}
-        date={data.date}
-        display={data.displayGemach}
-        name={data.gemachName}
-        description={data.gemachDescription}
-        pickedImage={data.pickedImage}
-      />)
-  }else{
+renderList(){
   return this.state.dataList.map(data =>
     <Card
       callbackFromHome={this.removeItem}
@@ -119,7 +100,24 @@ renderList(list){
       pickedImage={data.pickedImage}
     />
   )}
-}
+
+renderSearchList(){
+  console.log('render searching map: ' + String(this.state.searchList[0]))
+  return this.state.searchList.map(data =>
+      <Card
+        callbackFromHome={this.removeItem}
+        navigate={() => this.props.navigation.navigate("Items",
+                        {Home:data.gemachName})}
+        remove={this.state.remove}
+        key={data.key}
+        itemNumber={data.key}
+        date={data.date}
+        display={data.displayGemach}
+        name={data.gemachName}
+        description={data.gemachDescription}
+        pickedImage={data.pickedImage}
+      />)
+  }
 
 checkLength(){
   if(this.state.dataList.length != 0){
@@ -143,22 +141,24 @@ openSearch(){
 }
 
 removeSearch(){
-  this.setState({searchOpen:false, back:false})
+  this.setState({searchOpen:false, back:false,searchList:[],displayGemach:true})
 }
 
 searchByText(text){
-  let newList = {list:[]};////isue need to checking
-  let dataList = this.state.dataList
-  for(i=0;i<dataList.length;i++){
-    if(dataList[i].gemachName.includes(text)){
-      newList.push(dataList[i])
+  console.log('search by text function')
+  this.setState(prevState => ({
+    searchText:[...prevState.searchText+text]}))
+  let alltext = this.state.searchText+text
+  for(i=0;i<alltext.length;i++){
+    console.log('searching lop')
+    if(this.state.dataList[i].gemachName.includes(alltext)){
+      console.log('searching if statement - going to render new map ' + this.state.dataList[i])
+      this.setState({displayGemach:false,searchList:this.state.dataList[i]})
     }
   }
-  this.renderList(newList)
 }
 
   render() {
-    console.log('dataList:',this.state.dataList)
     return (
       <View style={styles.container}>
       <Modal
@@ -166,7 +166,6 @@ searchByText(text){
         position={'center'}
         ref={"creator"}
         >
-
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
               {this.state.displayText && <Text style={{fontSize:20}}>בחר תמונה</Text>}
@@ -218,7 +217,7 @@ searchByText(text){
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
-        {this.state.displayGemach && this.renderList()}
+        {this.state.displayGemach && this.renderList() || this.renderSearchList()}
         </ScrollView>
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:barHeight/2}}>
             <TouchableOpacity
