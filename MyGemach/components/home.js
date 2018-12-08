@@ -102,22 +102,23 @@ renderList(){
   )}
 
 renderSearchList(){
-  console.log('render searching map: ' + String(this.state.searchList[0]))
+  console.log('render searching map: ' + JSON.stringify(this.state.searchList))
   return this.state.searchList.map(data =>
-      <Card
-        callbackFromHome={this.removeItem}
-        navigate={() => this.props.navigation.navigate("Items",
-                        {Home:data.gemachName})}
-        remove={this.state.remove}
-        key={data.key}
-        itemNumber={data.key}
-        date={data.date}
-        display={data.displayGemach}
-        name={data.gemachName}
-        description={data.gemachDescription}
-        pickedImage={data.pickedImage}
-      />)
-  }
+    <Card
+      callbackFromHome={this.removeItem}
+      navigate={() => this.props.navigation.navigate("Items",
+                      {Home:data.gemachName})}
+      remove={this.state.remove}
+      key={data.key}
+      itemNumber={data.key}
+      date={data.date}
+      display={data.displayGemach}
+      name={data.gemachName}
+      description={data.gemachDescription}
+      pickedImage={data.pickedImage}
+    />
+  )
+}
 
 checkLength(){
   if(this.state.dataList.length != 0){
@@ -152,8 +153,10 @@ searchByText(text){
   for(i=0;i<alltext.length;i++){
     console.log('searching lop')
     if(this.state.dataList[i].gemachName.includes(alltext)){
-      console.log('searching if statement - going to render new map ' + this.state.dataList[i])
-      this.setState({displayGemach:false,searchList:this.state.dataList[i]})
+      console.log('searching if statement - going to render new map ' + i + JSON.stringify(this.state.dataList[0]))
+      this.setState(prevState => ({
+        displayGemach:false,
+        searchList:[...prevState.searchList,this.state.dataList[i]]}))
     }
   }
 }
