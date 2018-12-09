@@ -147,21 +147,21 @@ removeSearch(){
 
 searchByText(text){
   console.log('search by text function')
-  this.setState(prevState => ({
-    searchText:[...prevState.searchText+text]}))
-  let alltext = this.state.searchText+text
-  for(i=0;i<alltext.length;i++){
+  this.setState({searchText:text})
+  let data = []
+  for(i=0;i<this.state.dataList.length;i++){
     console.log('searching lop')
-    if(this.state.dataList[i].gemachName.includes(alltext)){
-      console.log('searching if statement - going to render new map ' + i + JSON.stringify(this.state.dataList[0]))
-      this.setState(prevState => ({
-        displayGemach:false,
-        searchList:[...prevState.searchList,this.state.dataList[i]]}))
+    if(this.state.dataList[i].gemachName.includes(text)){
+      console.log('searching if statement - going to render new map ' + JSON.stringify(this.state.dataList[i]))
+      data.push(this.state.dataList[i])
     }
-  }
+  }this.setState(prevState => ({
+    displayGemach:false,
+    searchList:data}))
 }
 
   render() {
+    console.log('first render searchlist ' +JSON.stringify(this.state.searchList))
     return (
       <View style={styles.container}>
       <Modal
