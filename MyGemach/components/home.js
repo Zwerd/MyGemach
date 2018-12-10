@@ -34,7 +34,6 @@ export default class Home extends React.Component {
       key:0,
       dataList:[],
       searchList:[],
-      searchText:''
      };
   }
 
@@ -145,14 +144,11 @@ removeSearch(){
   this.setState({searchOpen:false, back:false,searchList:[],displayGemach:true})
 }
 
+//search function
 searchByText(text){
-  console.log('search by text function')
-  this.setState({searchText:text})
   let data = []
   for(i=0;i<this.state.dataList.length;i++){
-    console.log('searching lop')
     if(this.state.dataList[i].gemachName.includes(text)){
-      console.log('searching if statement - going to render new map ' + JSON.stringify(this.state.dataList[i]))
       data.push(this.state.dataList[i])
     }
   }this.setState(prevState => ({
