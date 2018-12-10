@@ -221,6 +221,12 @@ searchByText(text){
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:barHeight/2}}>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
+              onPress={() => console.log('edit was press!')}
+              >
+                <Image source={require('../images/edit.png')} style={{width: '100%', height: '100%'}}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{height:barHeight, width:barHeight}}
               onPress={() => this.openCreator()}
               >
                 <Image source={require('../images/adding.png')} style={{width: '100%', height: '100%'}}/>
