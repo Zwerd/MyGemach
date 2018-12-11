@@ -8,6 +8,7 @@ class Card extends Component {
 constructor(props) {
   super(props);
   this.state = {
+    backgroundColor:'white',
     };
 }
 
@@ -19,8 +20,9 @@ render(){
   console.log('render card checking props: '+ this.props)
   return(
   <TouchableOpacity
+    //onLongPress={() => this.setState({backgroundColor:'rgba(221,221,221,0.8)'})}
     onPress={this.props.navigate}
-    style={styles.display}
+    style={[{backgroundColor: this.state.backgroundColor},styles.display]}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={styles.View}>
@@ -44,7 +46,6 @@ render(){
 }
 const styles = StyleSheet.create({
   display:{
-    backgroundColor: 'rgba(255,255,255, 0.8)',
     justifyContent: 'center',
     textAlign: 'right',
     margin: 5,
@@ -55,7 +56,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   View:{
-    backgroundColor: "white",
     height: dim.height/8,
     width: ((dim.width-11)/4) * 3,
     borderWidth:null,
