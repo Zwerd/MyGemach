@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
+import {Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
@@ -15,6 +15,11 @@ const options={
   cancelButtonTitle: 'ביטול'
 }
 
+const showAlert = () =>{
+    Alert.alert(
+        'You need to...'
+  )
+}
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -23,8 +28,8 @@ export default class Home extends React.Component {
       date:new Date().toLocaleDateString("en-US"),
       displayGemach: false,
       gemachName: '',
-      remove:false,
-      edit:false,
+      itemNumber:null,
+      itemSelected:false,
       gemachDescription: '',
       pickedImage: null,
       displayImage: false,
@@ -71,29 +76,66 @@ export default class Home extends React.Component {
     this.refs.creator.close()
   }
 
-  removeItem = (itemNumber) => {
-    let newList = this.state.dataList
-    for(i=0;i<newList.length;i++){
-      if(newList[i].key == itemNumber){
-        this.refs.removeItem.open()
-        newList.splice(i, 1)
-        this.setState({dataList:newList})
-      }
-      if(this.state.dataList.length == 0){
-        this.setState({remove:false})
+selectedItem = (itemNumber) => {
+  console.log('in selected item ' + (itemNumber)+(itemNumber !== null))
+  if(itemNumber == null){
+    this.setState({itemSelected:false})
+  }else if(this.state.itemNumber==null){
+    console.log('in if of selected item')
+    this.setState({
+      itemSelected:true,
+      itemNumber:[itemNumber]})
+  }else{
+    this.setState(prevState =>({
+      itemSelected:true,
+      itemNumber:[...prevState.itemNumber,itemNumber]}))
+  }
+}
+
+removeApproved(){
+  if(this.state.itemSelected && this.state.itemNumber.length==1){
+    Alert.alert(
+      'מחיקת קרן',
+      'האם למחוק את הקרן שנבחרה לצמיתות?',
+      [
+        {text: 'ביטול', onPress: () => false, style: 'cancel'},
+        {text: 'אישור', onPress: () => this.remove() }
+      ],
+    )
+  }else if(this.state.itemSelected){
+    Alert.alert(
+      'מחיקת קרן',
+      'האם למחוק את הקרנות הנבחרות לצמיתות?',
+      [
+        {text: 'ביטול', onPress: () => false, style: 'cancel'},
+        {text: 'אישור', onPress: () => this.remove() }
+      ],
+    )
+  }
+}
+
+remove(){
+  console.log('in remove item')
+  let newList = this.state.dataList
+  for(a=0;a<newList.length;a++){
+    console.log('in loop a and number of items are: '+this.state.itemNumber.length)
+    for(b=0;b<this.state.itemNumber.length;b++){
+      console.log('in loop b')
+      if(newList[a].key == this.state.itemNumber[b]){
+        console.log('in if statement')
+        newList.splice(a, 1)
       }
     }
-  }
-
-editItem(){
-
+  }this.setState({dataList:newList,itemNumber:null,itemSelected:false})
 }
+
+
+
 
 renderList(){
   return this.state.dataList.map(data =>
     <Card
-      callbackRemove={this.removeItem}
-      callbackEdit={this.editItem}
+      callbackSelectedItem={this.selectedItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
       remove={this.state.remove}
@@ -128,11 +170,7 @@ renderSearchList(){
   )
 }
 
-displayRemove(){
-  if(this.state.dataList.length != 0){
-    this.setState({remove:!this.state.remove})
-  }
-}
+
 
 displeyEdit(){
   if(this.state.dataList.length != 0){
@@ -181,7 +219,7 @@ searchByText(text){
         position={'center'}
         ref={"removeItem"}
         >
-        <Text style={{fontSize:20}}>מחיקת הקרן תסיר את כלל הנתונים לצמיתות, האם אתה בטוח?</Text>
+        <Text style={{fontSize:20}}>מחיקת קרן</Text>
       </Modal>
       <Modal
         style={[styles.modalbox]}
@@ -241,7 +279,7 @@ searchByText(text){
         <ScrollView style={{height:dim.height-barHeight}}>
         {this.state.displayGemach && this.renderList() || this.renderSearchList()}
         </ScrollView>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:barHeight/2}}>
+          <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
               onPress={() => this.displeyEdit()}
@@ -258,11 +296,9 @@ searchByText(text){
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => this.displayRemove()}
+              onPress={() => this.removeApproved()}
               >
-                {this.state.remove &&
-                  <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||
-                  <Image source={require('../images/remove.png')} style={{width: '100%', height: '100%'}} />}
+                  <Image source={require('../images/remove.png')} style={{width: '100%', height: '100%'}} />
             </TouchableOpacity>
           </View>
         </ImageBackground>

@@ -50,7 +50,7 @@ const AppContent = createStackNavigator({
 
 const App = () => (
   <View style={{flex: 1}}>
-    <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#236B8E" translucent = {false}/>
+    <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#0078a4" translucent = {false}/>
    <AppContent />
  </View>
 )

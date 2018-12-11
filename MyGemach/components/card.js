@@ -12,20 +12,24 @@ constructor(props) {
     };
 }
 
-removeItem(){
-  this.props.callbackRemove(this.props.itemNumber)
+selectedItem(){
+  if(this.state.backgroundColor === 'rgb(201,241,255)'){
+    this.setState({backgroundColor:'white'})
+    this.props.callbackSelectedItem(null)
+  }else{
+    this.setState({backgroundColor:'rgb(201,241,255)'})
+    this.props.callbackSelectedItem(this.props.itemNumber)
+  }
 }
-editItem(){
-  this.props.callbackEdit(this.props.itemNumber)
-}
+
 
 render(){
   console.log('render card checking props: '+ this.props)
   return(
   <TouchableOpacity
-    //onLongPress={() => this.setState({backgroundColor:'rgba(221,221,221,0.8)'})}
+    onLongPress={() => this.selectedItem()}
     onPress={this.props.navigate}
-    style={[{backgroundColor: this.state.backgroundColor},styles.display]}
+    style={[{backgroundColor:this.state.backgroundColor},styles.display]}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={styles.View}>
@@ -36,14 +40,6 @@ render(){
       </View>
       <View style={[styles.View,styles.ViewImage]}>
         <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
-        {this.props.remove &&
-          <TouchableOpacity style={{width: height,height: height}} onPress={()=>this.removeItem()}>
-            <Image source={require('../images/miniRemove.png')} style={{width: "100%",height: "100%"}}/>
-          </TouchableOpacity>}
-          {this.props.edit &&
-            <TouchableOpacity style={{width: height,height: height}} onPress={()=>this.editItem()}>
-              <Image source={require('../images/edit.png')} style={{width: "100%",height: "100%"}}/>
-            </TouchableOpacity>}
         </ImageBackground>
       </View>
     </View>
