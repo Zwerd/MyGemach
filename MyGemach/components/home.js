@@ -24,6 +24,7 @@ export default class Home extends React.Component {
       displayGemach: false,
       gemachName: '',
       remove:false,
+      edit:false,
       gemachDescription: '',
       pickedImage: null,
       displayImage: false,
@@ -74,6 +75,7 @@ export default class Home extends React.Component {
     let newList = this.state.dataList
     for(i=0;i<newList.length;i++){
       if(newList[i].key == itemNumber){
+        this.refs.removeItem.open()
         newList.splice(i, 1)
         this.setState({dataList:newList})
       }
@@ -83,13 +85,19 @@ export default class Home extends React.Component {
     }
   }
 
+editItem(){
+
+}
+
 renderList(){
   return this.state.dataList.map(data =>
     <Card
-      callbackFromHome={this.removeItem}
+      callbackRemove={this.removeItem}
+      callbackEdit={this.editItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
       remove={this.state.remove}
+      edit={this.state.edit}
       key={data.key}
       itemNumber={data.key}
       date={data.date}
@@ -108,6 +116,7 @@ renderSearchList(){
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
       remove={this.state.remove}
+      edit={this.state.edit}
       key={data.key}
       itemNumber={data.key}
       date={data.date}
@@ -119,11 +128,18 @@ renderSearchList(){
   )
 }
 
-checkLength(){
+displayRemove(){
   if(this.state.dataList.length != 0){
     this.setState({remove:!this.state.remove})
   }
 }
+
+displeyEdit(){
+  if(this.state.dataList.length != 0){
+    this.setState({edit:!this.state.edit})
+  }
+}
+
 openCreator(){
   this.setState({
     gemachName: '',
@@ -160,6 +176,13 @@ searchByText(text){
     console.log('first render searchlist ' +JSON.stringify(this.state.searchList))
     return (
       <View style={styles.container}>
+      <Modal
+        style={[styles.modalbox]}
+        position={'center'}
+        ref={"removeItem"}
+        >
+        <Text style={{fontSize:20}}>מחיקת הקרן תסיר את כלל הנתונים לצמיתות, האם אתה בטוח?</Text>
+      </Modal>
       <Modal
         style={[styles.modalbox]}
         position={'center'}
@@ -221,9 +244,11 @@ searchByText(text){
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-around',margin:barHeight/2}}>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => console.log('edit was press!')}
+              onPress={() => this.displeyEdit()}
               >
-                <Image source={require('../images/edit.png')} style={{width: '100%', height: '100%'}}/>
+                {this.state.edit &&
+                  <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||
+                  <Image source={require('../images/edit.png')} style={{width: '100%', height: '100%'}}/>}
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
@@ -233,7 +258,7 @@ searchByText(text){
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => this.checkLength()}
+              onPress={() => this.displayRemove()}
               >
                 {this.state.remove &&
                   <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||

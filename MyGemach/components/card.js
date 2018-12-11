@@ -13,7 +13,10 @@ constructor(props) {
 }
 
 removeItem(){
-  this.props.callbackFromHome(this.props.itemNumber)
+  this.props.callbackRemove(this.props.itemNumber)
+}
+editItem(){
+  this.props.callbackEdit(this.props.itemNumber)
 }
 
 render(){
@@ -37,6 +40,10 @@ render(){
           <TouchableOpacity style={{width: height,height: height}} onPress={()=>this.removeItem()}>
             <Image source={require('../images/miniRemove.png')} style={{width: "100%",height: "100%"}}/>
           </TouchableOpacity>}
+          {this.props.edit &&
+            <TouchableOpacity style={{width: height,height: height}} onPress={()=>this.editItem()}>
+              <Image source={require('../images/edit.png')} style={{width: "100%",height: "100%"}}/>
+            </TouchableOpacity>}
         </ImageBackground>
       </View>
     </View>
