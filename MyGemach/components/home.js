@@ -15,12 +15,6 @@ const options={
   cancelButtonTitle: 'ביטול'
 }
 
-const showAlert = () =>{
-    Alert.alert(
-        'You need to...'
-  )
-}
-
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
