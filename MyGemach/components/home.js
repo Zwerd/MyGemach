@@ -122,10 +122,32 @@ remove(){
   }this.setState({dataList:newList,itemNumber:[],itemSelected:false})
 }
 
-
-
+edit(){
+  if(this.state.itemSelected && this.state.itemNumber.length!==1){
+    Alert.alert(
+      'שגיאה',
+      'לא ניתן לבחור יותר מפריט אחד',
+      [
+        {text: 'אישור', onPress: () => false, style: 'cancel'}
+      ],
+    )
+    this.setState({itemNumber:[],itemSelected:false})
+    this.selectedItem('remove',this.state.itemNumber)
+  }else if(this.state.itemSelected && this.state.itemNumber.length==1){
+    console.log(this.state.dataList[this.state.itemNumber].gemachName)
+    this.setState({
+      gemachName: this.state.dataList[this.state.itemNumber].gemachName,
+      gemachDescription:this.state.dataList[this.state.itemNumber].gemachDescription,
+      pickedImage: this.state.dataList[this.state.itemNumber].pickedImage,
+      displayImage: true,
+      displayText:true,
+    })
+    this.refs.creator.open()
+  }
+}
 
 renderList(){
+  console.log('render the list map again')
   return this.state.dataList.map(data =>
     <Card
       callbackSelectedItem={this.selectedItem}
@@ -162,13 +184,6 @@ renderSearchList(){
   )
 }
 
-
-
-displeyEdit(){
-  if(this.state.dataList.length != 0){
-    this.setState({edit:!this.state.edit})
-  }
-}
 
 openCreator(){
   this.setState({
@@ -265,11 +280,9 @@ searchByText(text){
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => this.displeyEdit()}
+              onPress={() => this.edit()}
               >
-                {this.state.edit &&
-                  <Image source={require('../images/approve.png')} style={{width: '100%', height: '100%'}} /> ||
-                  <Image source={require('../images/edit.png')} style={{width: '100%', height: '100%'}}/>}
+                <Image source={require('../images/edit.png')} style={{width: '100%', height: '100%'}}/>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
