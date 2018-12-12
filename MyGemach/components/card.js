@@ -15,16 +15,15 @@ constructor(props) {
 selectedItem(){
   if(this.state.backgroundColor === 'rgb(201,241,255)'){
     this.setState({backgroundColor:'white'})
-    this.props.callbackSelectedItem(null)
+    this.props.callbackSelectedItem('remove',this.props.itemNumber)
   }else{
     this.setState({backgroundColor:'rgb(201,241,255)'})
-    this.props.callbackSelectedItem(this.props.itemNumber)
+    this.props.callbackSelectedItem('add', this.props.itemNumber)
   }
 }
 
 
 render(){
-  console.log('render card checking props: '+ this.props)
   return(
   <TouchableOpacity
     onLongPress={() => this.selectedItem()}

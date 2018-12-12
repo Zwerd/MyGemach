@@ -22,7 +22,7 @@ export default class Home extends React.Component {
       date:new Date().toLocaleDateString("en-US"),
       displayGemach: false,
       gemachName: '',
-      itemNumber:null,
+      itemNumber:[],
       itemSelected:false,
       gemachDescription: '',
       pickedImage: null,
@@ -66,24 +66,25 @@ export default class Home extends React.Component {
                   gemachDescription:this.state.gemachDescription,
                   pickedImage:this.state.pickedImage}]
     }));
-
     this.refs.creator.close()
   }
 
-selectedItem = (itemNumber) => {
-  console.log('in selected item ' + (itemNumber)+(itemNumber !== null))
-  if(itemNumber == null){
-    this.setState({itemSelected:false})
-  }else if(this.state.itemNumber==null){
-    console.log('in if of selected item')
-    this.setState({
-      itemSelected:true,
-      itemNumber:[itemNumber]})
-  }else{
-    this.setState(prevState =>({
-      itemSelected:true,
-      itemNumber:[...prevState.itemNumber,itemNumber]}))
+selectedItem = (command, itemNumber) => {
+  let numberList = this.state.itemNumber
+  if(command == 'remove' && numberList.length == 1){
+    console.log('remove lest selected item: '+itemNumber)
+    numberList.splice(numberList.indexOf(itemNumber),1)
+    this.setState({itemNumber:numberList,itemSelected:false})
+  }else if(command == 'remove'){
+    console.log('remove selected item: '+itemNumber)
+    numberList.splice(numberList.indexOf(itemNumber),1)
+    this.setState({itemNumber:numberList})
+  }else if(command == 'add'){
+    console.log('add selected item: '+itemNumber)
+    numberList.push(itemNumber)
+    this.setState({itemNumber:numberList,itemSelected:true})
   }
+  console.log('end','command is: '+command, 'itemNumber is: '+this.state.itemNumber)
 }
 
 removeApproved(){
@@ -109,18 +110,16 @@ removeApproved(){
 }
 
 remove(){
-  console.log('in remove item')
   let newList = this.state.dataList
   for(a=0;a<newList.length;a++){
-    console.log('in loop a and number of items are: '+this.state.itemNumber.length)
     for(b=0;b<this.state.itemNumber.length;b++){
-      console.log('in loop b')
       if(newList[a].key == this.state.itemNumber[b]){
-        console.log('in if statement')
-        newList.splice(a, 1)
+        console.log('going to remove item number: ' +a +' number b is: '+b, newList)
+        console.log('the key of datalist is: ' +newList[a].key, 'the item number is: ' +this.state.itemNumber[b])
+        newList.splice(newList.indexOf(newList[a]), 1)
       }
     }
-  }this.setState({dataList:newList,itemNumber:null,itemSelected:false})
+  }this.setState({dataList:newList,itemNumber:[],itemSelected:false})
 }
 
 
@@ -145,7 +144,6 @@ renderList(){
   )}
 
 renderSearchList(){
-  console.log('render searching map: ' + JSON.stringify(this.state.searchList))
   return this.state.searchList.map(data =>
     <Card
       callbackFromHome={this.removeItem}
@@ -184,7 +182,6 @@ openCreator(){
 }
 
 openSearch(){
-  console.log('search was open')
   this.setState({searchOpen:true, back:true})
 }
 
@@ -205,16 +202,8 @@ searchByText(text){
 }
 
   render() {
-    console.log('first render searchlist ' +JSON.stringify(this.state.searchList))
     return (
       <View style={styles.container}>
-      <Modal
-        style={[styles.modalbox]}
-        position={'center'}
-        ref={"removeItem"}
-        >
-        <Text style={{fontSize:20}}>מחיקת קרן</Text>
-      </Modal>
       <Modal
         style={[styles.modalbox]}
         position={'center'}
@@ -227,7 +216,7 @@ searchByText(text){
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
-              placeholder={'שם הגמח'}
+              placeholder={'שם הקרן'}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachName: text})}
             />
@@ -253,7 +242,7 @@ searchByText(text){
             <Image source={require('../images/back.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
           <TouchableOpacity
-              onPress={console.log('setting was press')}>
+              onPress={() => console.log('setting was press')}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
@@ -267,7 +256,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.searchOpen && <Text style={styles.fontStyle}>הגמח שלי</Text>}
+            {!this.state.searchOpen && <Text style={styles.fontStyle}>הצדקה שלי</Text>}
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
