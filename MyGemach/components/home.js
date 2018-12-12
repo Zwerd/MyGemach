@@ -6,7 +6,7 @@ import Card from "./card";
 
 let today  = new Date();
 let dim = Dimensions.get('window');
-let barHeight = StatusBar.currentHeight * 1.5
+let barHeight = StatusBar.currentHeight * 2
 
 const options={
   title:null,
