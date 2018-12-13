@@ -122,29 +122,6 @@ remove(){
   }this.setState({dataList:newList,itemNumber:[],itemSelected:false})
 }
 
-edit(){
-  if(this.state.itemSelected && this.state.itemNumber.length!==1){
-    Alert.alert(
-      'שגיאה',
-      'לא ניתן לבחור יותר מפריט אחד',
-      [
-        {text: 'אישור', onPress: () => false, style: 'cancel'}
-      ],
-    )
-    this.setState({itemNumber:[],itemSelected:false})
-    this.selectedItem('remove',this.state.itemNumber)
-  }else if(this.state.itemSelected && this.state.itemNumber.length==1){
-    console.log(this.state.dataList[this.state.itemNumber].gemachName)
-    this.setState({
-      gemachName: this.state.dataList[this.state.itemNumber].gemachName,
-      gemachDescription:this.state.dataList[this.state.itemNumber].gemachDescription,
-      pickedImage: this.state.dataList[this.state.itemNumber].pickedImage,
-      displayImage: true,
-      displayText:true,
-    })
-    this.refs.creator.open()
-  }
-}
 
 renderList(){
   console.log('render the list map again')
