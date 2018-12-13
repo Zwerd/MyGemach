@@ -111,12 +111,11 @@ removeApproved(){
 
 remove(){
   let newList = this.state.dataList
-  for(a=0;a<newList.length;a++){
-    for(b=0;b<this.state.itemNumber.length;b++){
+  let index
+  for(b=0;b<this.state.itemNumber.length;b++){
+    for(a=0;a<newList.length;a++){
       if(newList[a].key == this.state.itemNumber[b]){
-        console.log('going to remove item number: ' +a +' number b is: '+b, newList)
-        console.log('the key of datalist is: ' +newList[a].key, 'the item number is: ' +this.state.itemNumber[b])
-        newList.splice(newList.indexOf(newList[a]), 1)
+        newList.splice(newList.indexOf(newList[a]), 1);
       }
     }
   }this.setState({dataList:newList,itemNumber:[],itemSelected:false})
