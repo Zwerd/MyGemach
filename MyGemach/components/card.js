@@ -24,7 +24,6 @@ selectedItem(){
 */
 
 render(){
-  console.log('in card , background is: '+ this.props.backgroundColor)
   return(
   <TouchableOpacity
     onLongPress={() => this.props.callbackSelectedItem(this.props.itemNumber)}

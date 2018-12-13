@@ -21,15 +21,15 @@ export default class Home extends React.Component {
     this.state = {
       date:new Date().toLocaleDateString("en-US"),
       displayGemach: false,
+      displayImage: false,
+      displayText:true,
+      itemSelected:[],
       gemachName: '',
       itemNumber:[],
-      itemSelected:false,
       selectedItemsList:[],
       cardBackgroundColor:'white',
       gemachDescription: '',
       pickedImage: null,
-      displayImage: false,
-      displayText:true,
       searchOpen:false,
       searchText:'',
       back:false,
@@ -61,15 +61,15 @@ export default class Home extends React.Component {
       displayGemach:true,
       displayImage:false,
       displayText:true,
-      date: today.toLocaleDateString("en-US"),
-      key: this.state.key+1,
+      key:this.state.key+1,
       dataList: [...prevState.dataList,{
                   key:this.state.key,
-                  date:this.state.date,
+                  date:today.toLocaleDateString("en-US"),
                   gemachName:this.state.gemachName,
                   gemachDescription:this.state.gemachDescription,
                   pickedImage:this.state.pickedImage,
-                  cardBackgroundColor:'white'
+                  cardBackgroundColor:'white',
+                  selected:false
                 }]
     }));
     this.refs.creator.close()
@@ -88,18 +88,22 @@ findItem(itemNumber){
 selectedItem = (itemNumber) => {
   let index = this.findItem(itemNumber)
   let newList = this.state.dataList
+  let itemSelected = this.state.itemSelected
   if(newList[index].cardBackgroundColor == 'white'){
     newList[index].cardBackgroundColor = 'rgb(201,241,255)'
-    this.setState({dataList:newList})
+    newList[index].selected = true
+    itemSelected.push(itemNumber)
+    this.setState({dataList:newList,itemSelected:itemSelected})
   }else if(newList[index].cardBackgroundColor == 'rgb(201,241,255)'){
     newList[index].cardBackgroundColor = 'white'
-    this.setState({dataList:newList})
+    newList[index].selected = false
+    itemSelected.splice(itemSelected.indexOf(itemNumber),1)
+    this.setState({dataList:newList,itemSelected:itemSelected})
   }
-
 }
 
 removeApproved(){
-  if(this.state.itemSelected && this.state.itemNumber.length==1){
+  if(this.state.itemSelected.length==1){
     Alert.alert(
       'מחיקת קרן',
       'האם למחוק את הקרן שנבחרה לצמיתות?',
@@ -108,7 +112,7 @@ removeApproved(){
         {text: 'אישור', onPress: () => this.remove() }
       ],
     )
-  }else if(this.state.itemSelected){
+  }else if(this.state.itemSelected.length>1){
     Alert.alert(
       'מחיקת קרן',
       'האם למחוק את הקרנות הנבחרות לצמיתות?',
@@ -121,18 +125,21 @@ removeApproved(){
 }
 
 remove(){
-  let newList = this.state.dataList
-  for(b=0;b<this.state.itemNumber.length;b++){
-    for(a=0;a<newList.length;a++){
-      if(newList[a].key == this.state.itemNumber[b]){
-        newList.splice(newList.indexOf(newList[a]), 1);
-      }
+  let dataList = this.state.dataList
+  for(a=0;a<this.state.dataList.length;a++){
+    console.log('-------------------')
+    console.log('in the loop time: '+a,this.state.dataList[a].selected == true, this.state.dataList)
+    if(this.state.dataList[a].selected == true){
+      console.log('going to remove: ',this.state.dataList[a])
+      dataList.splice(dataList.indexOf(this.state.dataList[a]),1)
+
     }
-  }this.setState({dataList:newList,itemNumber:[],itemSelected:false})
+  };this.setState({dataList:dataList,itemSelected:[]})
 }
 
+
 edit(){
-  if(this.state.itemSelected && this.state.itemNumber.length>1){
+  if(this.state.itemNumber.length>1){
     Alert.alert(
       'שגיאה',
       'יש לבחור פריט אחד בלבד',
@@ -141,22 +148,18 @@ edit(){
       ],
     )
   }else{
-    let newList = this.state.dataList
-    let index;
-    for(b=0;b<this.state.itemNumber.length;b++){
-      for(a=0;a<newList.length;a++){
-        if(newList[a].key == this.state.itemNumber[b]){
-          index = newList.indexOf(newList[a])
-          this.setState({
-            gemachName:this.state.dataList[index].gemachName,
-            gemachDescription:this.state.dataList[index].gemachDescription,
-            pickedImage:this.state.dataList[index].pickedImage,
-            key:this.state.dataList[index].key,
-            date:this.state.dataList[index].date,
-            cardBackgroundColor:this.state.dataList[index].cardBackgroundColor,
-            index:index
-          })
-        }
+    let dataList = this.state.dataList
+    for(a=0;a<dataList.length;a++){
+      if(dataList[a].selected == true){
+        this.setState({
+          gemachName:dataList[a].gemachName,
+          gemachDescription:dataList[a].gemachDescription,
+          pickedImage:dataList[a].pickedImage,
+          key:dataList[a].key,
+          date:dataList[a].date,
+          cardBackgroundColor:dataList[a].cardBackgroundColor,
+          index:dataList.indexOf(dataList[a])
+        })
       }
     }this.refs.editor.open()
   }
@@ -170,6 +173,7 @@ gemachEditor(){
   dataList[this.state.index].date=this.state.date,
   dataList[this.state.index].key=this.state.key,
   dataList[this.state.index].cardBackgroundColor=this.state.cardBackgroundColor,
+  dataList[this.state.index].selected = false
   this.setState({
     dataList:dataList,
   });this.refs.editor.close()
