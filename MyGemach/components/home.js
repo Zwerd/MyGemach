@@ -24,6 +24,7 @@ export default class Home extends React.Component {
       gemachName: '',
       itemNumber:[],
       itemSelected:false,
+      cardBackgroundColor:'white',
       gemachDescription: '',
       pickedImage: null,
       displayImage: false,
@@ -34,6 +35,7 @@ export default class Home extends React.Component {
       key:0,
       dataList:[],
       searchList:[],
+      index:0,
      };
   }
 
@@ -74,15 +76,15 @@ selectedItem = (command, itemNumber) => {
   if(command == 'remove' && numberList.length == 1){
     console.log('remove lest selected item: '+itemNumber)
     numberList.splice(numberList.indexOf(itemNumber),1)
-    this.setState({itemNumber:numberList,itemSelected:false})
+    this.setState({itemNumber:numberList,itemSelected:false,cardBackgroundColor:'white'})
   }else if(command == 'remove'){
     console.log('remove selected item: '+itemNumber)
     numberList.splice(numberList.indexOf(itemNumber),1)
-    this.setState({itemNumber:numberList})
+    this.setState({itemNumber:numberList,cardBackgroundColor:'white'})
   }else if(command == 'add'){
     console.log('add selected item: '+itemNumber)
     numberList.push(itemNumber)
-    this.setState({itemNumber:numberList,itemSelected:true})
+    this.setState({itemNumber:numberList,itemSelected:true,cardBackgroundColor:'rgb(201,241,255)'})
   }
   console.log('end','command is: '+command, 'itemNumber is: '+this.state.itemNumber)
 }
@@ -111,7 +113,6 @@ removeApproved(){
 
 remove(){
   let newList = this.state.dataList
-  let index
   for(b=0;b<this.state.itemNumber.length;b++){
     for(a=0;a<newList.length;a++){
       if(newList[a].key == this.state.itemNumber[b]){
@@ -121,11 +122,56 @@ remove(){
   }this.setState({dataList:newList,itemNumber:[],itemSelected:false})
 }
 
+edit(){
+  if(this.state.itemSelected && this.state.itemNumber.length>1){
+    Alert.alert(
+      'שגיאה',
+      'יש לבחור פריט אחד בלבד',
+      [
+        {text: 'אישור', onPress: () => false, style: 'cancel'}
+      ],
+    )
+  }else{
+    let newList = this.state.dataList
+    let index;
+    for(b=0;b<this.state.itemNumber.length;b++){
+      for(a=0;a<newList.length;a++){
+        if(newList[a].key == this.state.itemNumber[b]){
+          index = newList.indexOf(newList[a])
+          this.setState({
+            gemachName:this.state.dataList[index].gemachName,
+            gemachDescription:this.state.dataList[index].gemachDescription,
+            pickedImage:this.state.dataList[index].pickedImage,
+            key:this.state.dataList[index].key,
+            date:this.state.dataList[index].date,
+            cardBackgroundColor:this.state.dataList[index].cardBackgroundColor,
+            index:index
+          })
+        }
+      }
+    }this.refs.editor.open()
+  }
+}
+
+gemachEditor(){
+  let dataList = this.state.dataList
+  dataList[this.state.index].gemachName=this.state.gemachName,
+  dataList[this.state.index].gemachDescription=this.state.gemachDescription,
+  dataList[this.state.index].pickedImage=this.state.pickedImage,
+  dataList[this.state.index].date=this.state.date,
+  dataList[this.state.index].key=this.state.key,
+  dataList[this.state.index].cardBackgroundColor=this.state.cardBackgroundColor,
+  this.setState({
+    dataList:dataList,
+  });this.refs.editor.close()
+}
+
 
 renderList(){
-  console.log('render the list map again')
+  console.log('in renderList')
   return this.state.dataList.map(data =>
     <Card
+      backgroundColor={this.state.cardBackgroundColor}
       callbackSelectedItem={this.selectedItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
@@ -144,6 +190,7 @@ renderList(){
 renderSearchList(){
   return this.state.searchList.map(data =>
     <Card
+      backgroundColor={this.state.cardBackgroundColor}
       callbackFromHome={this.removeItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
@@ -195,6 +242,37 @@ searchByText(text){
   render() {
     return (
       <View style={styles.container}>
+
+      <Modal
+        style={[styles.modalbox]}
+        position={'center'}
+        ref={"editor"}
+        >
+        <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
+              <Image source={this.state.pickedImage} style={styles.previewImage}/>
+            </TouchableOpacity>
+          <View style={{flex:1,flexDirection: 'column'}}>
+            <TextInput
+              value={this.state.gemachName}
+              style={styles.textInput}
+              onChangeText={(text) => this.setState({gemachName: text})}
+            />
+            <TextInput
+              value={this.state.gemachDescription}
+              style={styles.textInput}
+              onChangeText={(text) => this.setState({gemachDescription: text})}
+            />
+          </View>
+        </View>
+        <TouchableOpacity
+          style={[styles.header,styles.button]}
+          onPress={() => this.gemachEditor()}
+          >
+          <Text style={styles.fontStyle}>אישור</Text>
+        </TouchableOpacity>
+      </Modal>
+
       <Modal
         style={[styles.modalbox]}
         position={'center'}

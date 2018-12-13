@@ -8,16 +8,16 @@ class Card extends Component {
 constructor(props) {
   super(props);
   this.state = {
-    backgroundColor:'white',
+    backgroundColor:this.props.backgroundColor,
     };
 }
 
 selectedItem(){
   if(this.state.backgroundColor === 'rgb(201,241,255)'){
-    this.setState({backgroundColor:'white'})
+    //this.setState({backgroundColor:'white'})
     this.props.callbackSelectedItem('remove',this.props.itemNumber)
   }else{
-    this.setState({backgroundColor:'rgb(201,241,255)'})
+    //this.setState({backgroundColor:'rgb(201,241,255)'})
     this.props.callbackSelectedItem('add', this.props.itemNumber)
   }
 }
