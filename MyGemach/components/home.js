@@ -24,6 +24,7 @@ export default class Home extends React.Component {
       gemachName: '',
       itemNumber:[],
       itemSelected:false,
+      selectedItemsList:[],
       cardBackgroundColor:'white',
       gemachDescription: '',
       pickedImage: null,
@@ -62,31 +63,39 @@ export default class Home extends React.Component {
       displayText:true,
       date: today.toLocaleDateString("en-US"),
       key: this.state.key+1,
-      dataList: [...prevState.dataList,{key:this.state.key,
+      dataList: [...prevState.dataList,{
+                  key:this.state.key,
                   date:this.state.date,
                   gemachName:this.state.gemachName,
                   gemachDescription:this.state.gemachDescription,
-                  pickedImage:this.state.pickedImage}]
+                  pickedImage:this.state.pickedImage,
+                  cardBackgroundColor:'white'
+                }]
     }));
     this.refs.creator.close()
   }
 
-selectedItem = (command, itemNumber) => {
-  let numberList = this.state.itemNumber
-  if(command == 'remove' && numberList.length == 1){
-    console.log('remove lest selected item: '+itemNumber)
-    numberList.splice(numberList.indexOf(itemNumber),1)
-    this.setState({itemNumber:numberList,itemSelected:false,cardBackgroundColor:'white'})
-  }else if(command == 'remove'){
-    console.log('remove selected item: '+itemNumber)
-    numberList.splice(numberList.indexOf(itemNumber),1)
-    this.setState({itemNumber:numberList,cardBackgroundColor:'white'})
-  }else if(command == 'add'){
-    console.log('add selected item: '+itemNumber)
-    numberList.push(itemNumber)
-    this.setState({itemNumber:numberList,itemSelected:true,cardBackgroundColor:'rgb(201,241,255)'})
+findItem(itemNumber){
+  let newList = this.state.dataList
+  let index;
+  for(a=0;a<newList.length;a++){
+    if(newList[a].key == itemNumber){
+      return newList.indexOf(newList[a])
+    }
   }
-  console.log('end','command is: '+command, 'itemNumber is: '+this.state.itemNumber)
+}
+
+selectedItem = (itemNumber) => {
+  let index = this.findItem(itemNumber)
+  let newList = this.state.dataList
+  if(newList[index].cardBackgroundColor == 'white'){
+    newList[index].cardBackgroundColor = 'rgb(201,241,255)'
+    this.setState({dataList:newList})
+  }else if(newList[index].cardBackgroundColor == 'rgb(201,241,255)'){
+    newList[index].cardBackgroundColor = 'white'
+    this.setState({dataList:newList})
+  }
+
 }
 
 removeApproved(){
@@ -168,10 +177,9 @@ gemachEditor(){
 
 
 renderList(){
-  console.log('in renderList')
   return this.state.dataList.map(data =>
     <Card
-      backgroundColor={this.state.cardBackgroundColor}
+      backgroundColor={data.cardBackgroundColor}
       callbackSelectedItem={this.selectedItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}

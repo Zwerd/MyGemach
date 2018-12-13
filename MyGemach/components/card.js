@@ -11,7 +11,7 @@ constructor(props) {
     backgroundColor:this.props.backgroundColor,
     };
 }
-
+/*
 selectedItem(){
   if(this.state.backgroundColor === 'rgb(201,241,255)'){
     //this.setState({backgroundColor:'white'})
@@ -21,14 +21,15 @@ selectedItem(){
     this.props.callbackSelectedItem('add', this.props.itemNumber)
   }
 }
-
+*/
 
 render(){
+  console.log('in card , background is: '+ this.props.backgroundColor)
   return(
   <TouchableOpacity
-    onLongPress={() => this.selectedItem()}
+    onLongPress={() => this.props.callbackSelectedItem(this.props.itemNumber)}
     onPress={this.props.navigate}
-    style={[{backgroundColor:this.state.backgroundColor},styles.display]}
+    style={[{backgroundColor:this.props.backgroundColor},styles.display]}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={styles.View}>
