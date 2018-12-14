@@ -127,7 +127,7 @@ removeApproved(){
 remove(){
   let dataList = this.state.dataList
   for(a=0;a<this.state.dataList.length;a++){
-    console.log('-------------------')
+    console.log('------------------')
     console.log('in the loop time: '+a,this.state.dataList[a].selected == true, this.state.dataList)
     if(this.state.dataList[a].selected == true){
       console.log('going to remove: ',this.state.dataList[a])
