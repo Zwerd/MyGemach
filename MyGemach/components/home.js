@@ -125,16 +125,12 @@ removeApproved(){
 }
 
 remove(){
-  let dataList = this.state.dataList
-  for(a=0;a<this.state.dataList.length;a++){
-    console.log('------------------')
-    console.log('in the loop time: '+a,this.state.dataList[a].selected == true, this.state.dataList)
+  let newList = this.state.dataList
+  for(a=this.state.dataList.length-1;a>=0;a--){
     if(this.state.dataList[a].selected == true){
-      console.log('going to remove: ',this.state.dataList[a])
-      dataList.splice(dataList.indexOf(this.state.dataList[a]),1)
-
+      newList.splice(newList.indexOf(this.state.dataList[a]),1)
     }
-  };this.setState({dataList:dataList,itemSelected:[]})
+  };this.setState({dataList:newList,itemSelected:[]})
 }
 
 
@@ -147,7 +143,7 @@ edit(){
         {text: 'אישור', onPress: () => false, style: 'cancel'}
       ],
     )
-  }else{
+  }else if(this.state.itemNumber.length==1){
     let dataList = this.state.dataList
     for(a=0;a<dataList.length;a++){
       if(dataList[a].selected == true){
@@ -157,7 +153,7 @@ edit(){
           pickedImage:dataList[a].pickedImage,
           key:dataList[a].key,
           date:dataList[a].date,
-          cardBackgroundColor:dataList[a].cardBackgroundColor,
+          cardBackgroundColor:'white',
           index:dataList.indexOf(dataList[a])
         })
       }
