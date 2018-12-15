@@ -35,6 +35,7 @@ export default class Home extends React.Component {
       back:false,
       key:0,
       dataList:[],
+      editor:{},
       searchList:[],
       index:0,
      };
@@ -135,7 +136,7 @@ remove(){
 
 
 edit(){
-  if(this.state.itemNumber.length>1){
+  if(this.state.itemSelected.length>1){
     Alert.alert(
       'שגיאה',
       'יש לבחור פריט אחד בלבד',
@@ -143,18 +144,21 @@ edit(){
         {text: 'אישור', onPress: () => false, style: 'cancel'}
       ],
     )
-  }else if(this.state.itemNumber.length==1){
+  }else if(this.state.itemSelected.length==1){
     let dataList = this.state.dataList
     for(a=0;a<dataList.length;a++){
       if(dataList[a].selected == true){
         this.setState({
-          gemachName:dataList[a].gemachName,
-          gemachDescription:dataList[a].gemachDescription,
-          pickedImage:dataList[a].pickedImage,
-          key:dataList[a].key,
-          date:dataList[a].date,
-          cardBackgroundColor:'white',
-          index:dataList.indexOf(dataList[a])
+          editor:{
+            gemachName:dataList[a].gemachName,
+            gemachDescription:dataList[a].gemachDescription,
+            pickedImage:dataList[a].pickedImage,
+            key:dataList[a].key,
+            date:dataList[a].date,
+            cardBackgroundColor:'white',
+            index:dataList.indexOf(dataList[a])
+          }
+
         })
       }
     }this.refs.editor.open()
