@@ -25,13 +25,9 @@ export default class Home extends React.Component {
       displayText:true,
       itemSelected:[],
       gemachName: '',
-      itemNumber:[],
-      selectedItemsList:[],
-      cardBackgroundColor:'white',
       gemachDescription: '',
       pickedImage: null,
       searchOpen:false,
-      searchText:'',
       back:false,
       key:0,
       dataList:[],
@@ -149,16 +145,13 @@ edit(){
     for(a=0;a<dataList.length;a++){
       if(dataList[a].selected == true){
         this.setState({
-          editor:{
             gemachName:dataList[a].gemachName,
             gemachDescription:dataList[a].gemachDescription,
             pickedImage:dataList[a].pickedImage,
-            key:dataList[a].key,
+            key:dataList[a].key+1,
             date:dataList[a].date,
             cardBackgroundColor:'white',
             index:dataList.indexOf(dataList[a])
-          }
-
         })
       }
     }this.refs.editor.open()
