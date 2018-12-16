@@ -214,7 +214,7 @@ renderList(){
 renderSearchList(){
   return this.state.searchList.map(data =>
     <Card
-      backgroundColor={this.state.cardBackgroundColor}
+      backgroundColor={'white'}
       callbackFromHome={this.removeItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
