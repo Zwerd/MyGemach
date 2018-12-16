@@ -53,6 +53,19 @@ export default class Home extends React.Component {
     });
   }
 
+  editPickImageHandler = () => {
+    ImagePicker.showImagePicker(options, res => {
+      if (res.didCancel) {
+        console.log("User cancelled!");
+      } else if (res.error) {
+        console.log("Error", res.error);
+      } else {
+        this.setState(prevState => ({
+          editor:{...prevState.editor,pickedImage: { uri: res.uri }}}));
+      }
+    });
+  }
+
   createGemach(){
     this.setState(prevState => ({
       displayGemach:true,
@@ -74,7 +87,6 @@ export default class Home extends React.Component {
 
 findItem(itemNumber){
   let newList = this.state.dataList
-  let index;
   for(a=0;a<newList.length;a++){
     if(newList[a].key == itemNumber){
       return newList.indexOf(newList[a])
@@ -132,26 +144,38 @@ remove(){
 
 
 edit(){
+  let dataList = this.state.dataList
   if(this.state.itemSelected.length>1){
     Alert.alert(
       'שגיאה',
       'יש לבחור פריט אחד בלבד',
       [
-        {text: 'אישור', onPress: () => false, style: 'cancel'}
+        {text: 'אישור', onPress: () => {
+          this.setState({itemSelected:[]})
+          for(a=0;a<dataList.length;a++){
+            if(dataList[a].selected == true){
+              dataList[a].selected=false
+              dataList[a].cardBackgroundColor='white'
+            }
+          }console.log('dataList: ',dataList)
+          this.setState({dataList:dataList})
+        }, style: 'cancel'}
       ],
     )
   }else if(this.state.itemSelected.length==1){
-    let dataList = this.state.dataList
     for(a=0;a<dataList.length;a++){
       if(dataList[a].selected == true){
         this.setState({
+          editor:{
             gemachName:dataList[a].gemachName,
             gemachDescription:dataList[a].gemachDescription,
             pickedImage:dataList[a].pickedImage,
-            key:dataList[a].key+1,
+            key:dataList[a].key,
             date:dataList[a].date,
             cardBackgroundColor:'white',
+            selected:false,
             index:dataList.indexOf(dataList[a])
+          }
         })
       }
     }this.refs.editor.open()
@@ -160,15 +184,10 @@ edit(){
 
 gemachEditor(){
   let dataList = this.state.dataList
-  dataList[this.state.index].gemachName=this.state.gemachName,
-  dataList[this.state.index].gemachDescription=this.state.gemachDescription,
-  dataList[this.state.index].pickedImage=this.state.pickedImage,
-  dataList[this.state.index].date=this.state.date,
-  dataList[this.state.index].key=this.state.key,
-  dataList[this.state.index].cardBackgroundColor=this.state.cardBackgroundColor,
-  dataList[this.state.index].selected = false
+  dataList[this.state.editor.index]=this.state.editor,
   this.setState({
     dataList:dataList,
+    itemSelected:[],
   });this.refs.editor.close()
 }
 
@@ -254,19 +273,19 @@ searchByText(text){
         ref={"editor"}
         >
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
-              <Image source={this.state.pickedImage} style={styles.previewImage}/>
+            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
+              <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
-              value={this.state.gemachName}
+              value={this.state.editor.gemachName}
               style={styles.textInput}
-              onChangeText={(text) => this.setState({gemachName: text})}
+              onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor, gemachName: text}}))}
             />
             <TextInput
-              value={this.state.gemachDescription}
+              value={this.state.editor.gemachDescription}
               style={styles.textInput}
-              onChangeText={(text) => this.setState({gemachDescription: text})}
+              onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor,gemachDescription: text}}))}
             />
           </View>
         </View>
@@ -330,7 +349,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.searchOpen && <Text style={styles.fontStyle}>הצדקה שלי</Text>}
+            {!this.state.searchOpen && <Text style={styles.fontStyle}>הגמ''ח שלי</Text>}
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
@@ -369,7 +388,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   header:{
-    backgroundColor: 'rgb(0,176,240)',
+    backgroundColor: 'rgb(0,176,240)',//#00B0F0
     borderColor: "#008CBA",
     flexDirection:'row',
     justifyContent: 'space-between',
