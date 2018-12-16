@@ -145,16 +145,13 @@ edit(){
     for(a=0;a<dataList.length;a++){
       if(dataList[a].selected == true){
         this.setState({
-          editor:{
             gemachName:dataList[a].gemachName,
             gemachDescription:dataList[a].gemachDescription,
             pickedImage:dataList[a].pickedImage,
             key:dataList[a].key+1,
             date:dataList[a].date,
             cardBackgroundColor:'white',
-            selected:false,
             index:dataList.indexOf(dataList[a])
-          }
         })
       }
     }this.refs.editor.open()
@@ -163,8 +160,13 @@ edit(){
 
 gemachEditor(){
   let dataList = this.state.dataList
-  let dataEdit = this.state.editor
-  dataList[this.state.editor.index]=dataEdit,
+  dataList[this.state.index].gemachName=this.state.gemachName,
+  dataList[this.state.index].gemachDescription=this.state.gemachDescription,
+  dataList[this.state.index].pickedImage=this.state.pickedImage,
+  dataList[this.state.index].date=this.state.date,
+  dataList[this.state.index].key=this.state.key,
+  dataList[this.state.index].cardBackgroundColor=this.state.cardBackgroundColor,
+  dataList[this.state.index].selected = false
   this.setState({
     dataList:dataList,
   });this.refs.editor.close()
@@ -253,18 +255,18 @@ searchByText(text){
         >
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
-              <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
+              <Image source={this.state.pickedImage} style={styles.previewImage}/>
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
-              value={this.state.editor.gemachName}
+              value={this.state.gemachName}
               style={styles.textInput}
-              onChangeText={(text) => this.setState(prevState => ({editor:{prevState.editor,gemachName: text}}))}
+              onChangeText={(text) => this.setState({gemachName: text})}
             />
             <TextInput
-              value={this.state.editor.gemachDescription}
+              value={this.state.gemachDescription}
               style={styles.textInput}
-              onChangeText={(text) => this.setState(prevState => ({editor:{prevState.editor,gemachDescription: text}}))}
+              onChangeText={(text) => this.setState({gemachDescription: text})}
             />
           </View>
         </View>
