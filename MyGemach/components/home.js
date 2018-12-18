@@ -386,6 +386,7 @@ const styles = StyleSheet.create({
     fontFamily:'nrkis',
     fontSize:StatusBar.currentHeight,
     color: 'white',
+    alignItems:'center'
   },
   header:{
     backgroundColor: 'rgb(0,176,240)',//#00B0F0
