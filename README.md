@@ -1,4 +1,4 @@
-this app build to make help each other in the community 
+this app build to make help each other in the community, the first vertiin is only managing an open and active gemach which you can to open the fundetion and adding to it an items for each fundetion and display data like who is the lest person that used the item, time about the day this person must bring back the item to the gemach...
 please reffer to the documents for more details
 
 
