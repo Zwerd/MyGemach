@@ -332,11 +332,11 @@ searchByText(text){
           <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
             {this.state.back && <TouchableOpacity
             onPress={()=>this.removeSearch()}>
-            <Image source={require('../images/back.png')} style={{width: barHeight, height: barHeight}}/>
+            <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
           <TouchableOpacity
               onPress={() => console.log('setting was press')}>
-              <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
+              <Image source={require('../images/back.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
               onPress={()=>this.openSearch()}>
