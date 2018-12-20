@@ -19,21 +19,23 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date:new Date().toLocaleDateString("en-US"),
+      //display items
       displayGemach: false,
       displayImage: false,
       displayText:true,
-      itemSelected:[],
+      displaySearch:false,
+      //setting for Gemach
+      date:new Date().toLocaleDateString("en-US"),
       gemachName: '',
       gemachDescription: '',
       pickedImage: null,
-      searchOpen:false,
-      back:false,
       key:0,
+      index:0,
+      //setting for all section
+      itemSelected:[],
       dataList:[],
       editor:{},
       searchList:[],
-      index:0,
      };
   }
 
@@ -244,11 +246,11 @@ openCreator(){
 }
 
 openSearch(){
-  this.setState({searchOpen:true, back:true})
+  this.setState({displaySearch:true})
 }
 
 removeSearch(){
-  this.setState({searchOpen:false, back:false,searchList:[],displayGemach:true})
+  this.setState({displaySearch:false,searchList:[],displayGemach:true})
 }
 
 //search function
@@ -330,7 +332,7 @@ searchByText(text){
         <ImageBackground source={require('../images/homeBackground.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
-            {this.state.back && <TouchableOpacity
+            {this.state.displaySearch && <TouchableOpacity
             onPress={()=>this.removeSearch()}>
             <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
@@ -340,7 +342,7 @@ searchByText(text){
             </TouchableOpacity>}
             <TouchableOpacity
               onPress={()=>this.openSearch()}>
-              {this.state.searchOpen && <TextInput
+              {this.state.displaySearch && <TextInput
                                           placeholder={'חיפוש לפי שם'}
                                           style={{width:dim.width-barHeight,backgroundColor:'white',borderWidth:1,borderRadius:2}}
                                           onChangeText={(text) => this.searchByText(text)}
@@ -349,7 +351,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.searchOpen && <Text style={styles.fontStyle}>הגמ''ח שלי</Text>}
+            {!this.state.displaySearch && <Text style={styles.fontStyle}>הגמ''ח שלי</Text>}
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>

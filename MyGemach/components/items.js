@@ -197,8 +197,7 @@ renderList(){
     <Card
       backgroundColor={data.cardBackgroundColor}
       callbackSelectedItem={this.selectedItem}
-      navigate={() => this.props.navigation.navigate("Items",
-                      {Home:data.gemachName})}
+      navigate={() => this.refs.itemCheck.open()}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
