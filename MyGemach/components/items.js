@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
+import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
@@ -270,6 +270,36 @@ searchByText(text){
       <Modal
         style={[styles.modalbox]}
         position={'center'}
+        ref={"itemCheck"}
+        >
+        <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
+              <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
+            </TouchableOpacity>
+          <View style={{flex:1,flexDirection: 'column'}}>
+            <TextInput
+              value={this.state.editor.gemachName}
+              style={styles.textInput}
+              onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor, gemachName: text}}))}
+            />
+            <TextInput
+              value={this.state.editor.gemachDescription}
+              style={styles.textInput}
+              onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor,gemachDescription: text}}))}
+            />
+          </View>
+        </View>
+        <TouchableOpacity
+          style={[styles.header,styles.button]}
+          onPress={() => this.gemachEditor()}
+          >
+          <Text style={styles.fontStyle}>אישור</Text>
+        </TouchableOpacity>
+      </Modal>
+
+      <Modal
+        style={[styles.modalbox]}
+        position={'center'}
         ref={"editor"}
         >
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
@@ -327,7 +357,7 @@ searchByText(text){
           <Text style={styles.fontStyle}>אישור</Text>
         </TouchableOpacity>
       </Modal>
-        <ImageBackground source={require('../images/background.png')} style={{width: '100%', height: '100%'}}>
+        <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
             {this.state.back && <TouchableOpacity
@@ -335,7 +365,7 @@ searchByText(text){
             <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
           <TouchableOpacity
-              onPress={() => console.log('setting was press')}>
+              onPress={() => this.props.navigation.navigate("Home")}>
               <Image source={require('../images/back.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
