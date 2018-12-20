@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
-import Card from "./card";
+import Item from "./item";
 
 let today  = new Date();
 let dim = Dimensions.get('window');
@@ -19,21 +19,23 @@ export default class Items extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date:new Date().toLocaleDateString("en-US"),
+      //display items
       displayGemach: false,
       displayImage: false,
-      displayText:true,
-      itemSelected:[],
+      displaySearch:false,
+      //setting for Gemach
+      date:new Date().toLocaleDateString("en-US"),
       gemachName: '',
       gemachDescription: '',
       pickedImage: null,
-      searchOpen:false,
-      back:false,
       key:0,
+      index:0,
+      //setting for all section
+      itemSelected:[],
       dataList:[],
       editor:{},
       searchList:[],
-      index:0,
+      item:{}
      };
   }
 
@@ -191,13 +193,19 @@ gemachEditor(){
   });this.refs.editor.close()
 }
 
+openItem = (itemNumber) => {
+  this.setState({item:this.state.dataList[this.findItem(itemNumber)]})
+  console.log('this is the item: ',this.state.item)
+  this.refs.itemOpen.open()
+}
+
 
 renderList(){
   return this.state.dataList.map(data =>
-    <Card
+    <Item
       backgroundColor={data.cardBackgroundColor}
-      callbackSelectedItem={this.selectedItem}
-      navigate={() => this.refs.itemCheck.open()}
+      callbackFromItems={this.selectedItem}
+      callbackModalbox={this.openItem}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -212,9 +220,9 @@ renderList(){
 
 renderSearchList(){
   return this.state.searchList.map(data =>
-    <Card
+    <Item
       backgroundColor={'white'}
-      callbackFromHome={this.removeItem}
+      callbackFromItems={this.removeItem}
       navigate={() => this.props.navigation.navigate("Items",
                       {Home:data.gemachName})}
       remove={this.state.remove}
@@ -269,23 +277,13 @@ searchByText(text){
       <Modal
         style={[styles.modalbox]}
         position={'center'}
-        ref={"itemCheck"}
+        ref={"itemOpen"}
         >
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
-              <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
-            </TouchableOpacity>
+          <Image source={this.state.item.pickedImage} style={styles.previewImage}/>
           <View style={{flex:1,flexDirection: 'column'}}>
-            <TextInput
-              value={this.state.editor.gemachName}
-              style={styles.textInput}
-              onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor, gemachName: text}}))}
-            />
-            <TextInput
-              value={this.state.editor.gemachDescription}
-              style={styles.textInput}
-              onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor,gemachDescription: text}}))}
-            />
+            <Text>{this.state.item.gemachName}</Text>
+            <Text>{this.state.item.gemachDescription}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -333,7 +331,7 @@ searchByText(text){
         >
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
-              {this.state.displayText && <Text style={{fontSize:20}}>בחר תמונה</Text>}
+              {!this.state.displayImage && <Text style={{fontSize:20}}>בחר תמונה</Text>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>

@@ -22,7 +22,6 @@ export default class Home extends React.Component {
       //display items
       displayGemach: false,
       displayImage: false,
-      displayText:true,
       displaySearch:false,
       //setting for Gemach
       date:new Date().toLocaleDateString("en-US"),
@@ -306,7 +305,7 @@ searchByText(text){
         >
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
-              {this.state.displayText && <Text style={{fontSize:20}}>בחר תמונה</Text>}
+              {!this.state.displayImage && <Text style={{fontSize:20}}>בחר תמונה</Text>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
