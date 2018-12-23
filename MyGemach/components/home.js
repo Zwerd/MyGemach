@@ -32,7 +32,6 @@ export default class Home extends React.Component {
       index:0,
       //setting for all section
       itemSelected:[],
-      itemData:{},
       dataList:[],
       searchList:[],
       editor:{},
@@ -81,7 +80,8 @@ export default class Home extends React.Component {
                   gemachDescription:this.state.gemachDescription,
                   pickedImage:this.state.pickedImage,
                   cardBackgroundColor:'white',
-                  selected:false
+                  selected:false,
+                  itemData:null
                 }]
     }));
     this.refs.creator.close()
@@ -193,6 +193,15 @@ gemachEditor(){
   });this.refs.editor.close()
 }
 
+onChangeData(update,index){
+  console.log('checking index: ',index)
+  let data = this.state.dataList
+  data[index].itemData = update
+  console.log('checking data: ',data)
+  this.setState({
+    dataList:data
+  })
+}
 
 renderList(data){
   return data.map(data =>
@@ -200,7 +209,7 @@ renderList(data){
       backgroundColor={data.cardBackgroundColor}
       callbackSelectedItem={this.selectedItem}
       navigate={() => this.props.navigation.navigate("Items",
-                      {Home:data.gemachName})}
+                      {update:this.onChangeData.bind(this),data:data})}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}

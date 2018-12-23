@@ -5,7 +5,7 @@ import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
 let height = StatusBar.currentHeight * 1.5
 
-export default class itemDetails extends Component {
+export default class ItemDetails extends Component {
 constructor(props) {
   super(props);
   this.state = {

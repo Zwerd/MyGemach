@@ -3,7 +3,6 @@ import { AppRegistry, View, Text, StatusBar } from 'react-native'
 import {createStackNavigator} from 'react-navigation';
 import Home from './home'
 import Items from './items'
-import Item from './item'
 
 
 
@@ -31,21 +30,10 @@ class ItemsScreen extends Component {
   }
 }
 
-class ItemScreen extends Component {
-  static navigationOptions = {
-    header: null
-  }
 
-  render() {
-    return (
-        <Item navigation={this.props.navigation} />
-    )
-  }
-}
 const AppContent = createStackNavigator({
   Home:{screen:HomeScreen},
   Items:{screen:ItemsScreen},
-  Item:{screen:ItemScreen}
 });
 
 const App = () => (

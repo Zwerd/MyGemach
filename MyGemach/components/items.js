@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
-import Item from "./item";
+import ItemDetails from "./itemDetails";
 
 let today  = new Date();
 let dim = Dimensions.get('window');
@@ -85,6 +85,7 @@ export default class Items extends React.Component {
                   selected:false
                 }]
     }));
+    //this.props.navigation.state.params.update(this.state.dataList,this.props.itemNumber)
     this.refs.creator.close()
   }
 
@@ -202,7 +203,7 @@ openItem = (itemNumber) => {
 
 renderList(data){
   return data.map(data =>
-    <Item
+    <ItemDetails
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
       callbackModalbox={this.openItem}
@@ -337,7 +338,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.searchOpen && <Text style={styles.fontStyle}>{this.props.navigation.state.params.Home}</Text>}
+            {!this.state.searchOpen && <Text style={styles.fontStyle}>{this.props.navigation.state.params.data.gemachName}</Text>}
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
