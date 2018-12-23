@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
+import {Switch, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
@@ -10,6 +10,8 @@ constructor(props) {
   super(props);
   this.state = {
     backgroundColor:this.props.backgroundColor,
+    pressed:false,
+    delivered:false,
     };
 }
 /*
@@ -26,10 +28,10 @@ selectedItem(){
 
 render(){
   return(
+  <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
   <TouchableOpacity
     onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
-    onPress={() => this.props.callbackModalbox(this.props.itemNumber)}
-    style={[{backgroundColor:this.props.backgroundColor},styles.display]}
+    onPress={() => this.setState({pressed:!this.state.pressed})}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={styles.View}>
@@ -44,6 +46,18 @@ render(){
       </View>
     </View>
   </TouchableOpacity>
+  {this.state.pressed &&
+    <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
+    <Text>מוכן למסירה</Text>
+    <Switch
+      thumbColor={'#00B0F0'}
+      trackColor={'#008CBA'}
+      onValueChange={() => this.setState({delivered:!this.state.delivered})}
+      value={this.state.delivered}/>
+    </View>
+  }
+  </View>
+
     )
   }
 }
