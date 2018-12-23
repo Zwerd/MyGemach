@@ -7,6 +7,7 @@ import Item from "./item";
 let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
+let data = {}
 
 const options={
   title:null,
@@ -194,14 +195,13 @@ gemachEditor(){
 }
 
 openItem = (itemNumber) => {
-  this.setState({item:this.state.dataList[this.findItem(itemNumber)]})
-  console.log('this is the item: ',this.state.item)
-  this.refs.itemOpen.open()
+  data = this.state.dataList[this.findItem(itemNumber)]
+  console.log('this is the item: ',data,this.state.item)
 }
 
 
-renderList(){
-  return this.state.dataList.map(data =>
+renderList(data){
+  return data.map(data =>
     <Item
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
@@ -217,26 +217,6 @@ renderList(){
       pickedImage={data.pickedImage}
     />
   )}
-
-renderSearchList(){
-  return this.state.searchList.map(data =>
-    <Item
-      backgroundColor={'white'}
-      callbackFromItems={this.removeItem}
-      navigate={() => this.props.navigation.navigate("Items",
-                      {Home:data.gemachName})}
-      remove={this.state.remove}
-      edit={this.state.edit}
-      key={data.key}
-      itemNumber={data.key}
-      date={data.date}
-      display={data.displayGemach}
-      name={data.gemachName}
-      description={data.gemachDescription}
-      pickedImage={data.pickedImage}
-    />
-  )
-}
 
 
 openCreator(){
@@ -271,28 +251,9 @@ searchByText(text){
 }
 
   render() {
+    console.log('render search: ',this.state.searchList,this.state.displayGemach)
     return (
       <View style={styles.container}>
-
-      <Modal
-        style={[styles.modalbox]}
-        position={'center'}
-        ref={"itemOpen"}
-        >
-        <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
-          <Image source={this.state.item.pickedImage} style={styles.previewImage}/>
-          <View style={{flex:1,flexDirection: 'column'}}>
-            <Text>{this.state.item.gemachName}</Text>
-            <Text>{this.state.item.gemachDescription}</Text>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={[styles.header,styles.button]}
-          onPress={() => this.gemachEditor()}
-          >
-          <Text style={styles.fontStyle}>אישור</Text>
-        </TouchableOpacity>
-      </Modal>
 
       <Modal
         style={[styles.modalbox]}
@@ -380,7 +341,7 @@ searchByText(text){
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
-        {this.state.displayGemach && this.renderList() || this.renderSearchList()}
+        {this.state.displayGemach && this.renderList(this.state.dataList) || this.renderList(this.state.searchList)}
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
             <TouchableOpacity

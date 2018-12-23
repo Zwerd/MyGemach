@@ -32,9 +32,10 @@ export default class Home extends React.Component {
       index:0,
       //setting for all section
       itemSelected:[],
+      itemData:{},
       dataList:[],
-      editor:{},
       searchList:[],
+      editor:{},
      };
   }
 
@@ -193,8 +194,8 @@ gemachEditor(){
 }
 
 
-renderList(){
-  return this.state.dataList.map(data =>
+renderList(data){
+  return data.map(data =>
     <Card
       backgroundColor={data.cardBackgroundColor}
       callbackSelectedItem={this.selectedItem}
@@ -211,26 +212,6 @@ renderList(){
       pickedImage={data.pickedImage}
     />
   )}
-
-renderSearchList(){
-  return this.state.searchList.map(data =>
-    <Card
-      backgroundColor={'white'}
-      callbackFromHome={this.removeItem}
-      navigate={() => this.props.navigation.navigate("Items",
-                      {Home:data.gemachName})}
-      remove={this.state.remove}
-      edit={this.state.edit}
-      key={data.key}
-      itemNumber={data.key}
-      date={data.date}
-      display={data.displayGemach}
-      name={data.gemachName}
-      description={data.gemachDescription}
-      pickedImage={data.pickedImage}
-    />
-  )
-}
 
 
 openCreator(){
@@ -354,7 +335,7 @@ searchByText(text){
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
-        {this.state.displayGemach && this.renderList() || this.renderSearchList()}
+        {this.state.displayGemach && this.renderList(this.state.dataList) || this.renderList(this.state.searchList)}
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
             <TouchableOpacity
