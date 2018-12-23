@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Switch, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
+import {Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
 let height = StatusBar.currentHeight * 1.5
+let today  = new Date();
 
 export default class ItemDetails extends Component {
 constructor(props) {
@@ -47,13 +48,35 @@ render(){
     </View>
   </TouchableOpacity>
   {this.state.pressed &&
-    <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
-    <Text>מוכן למסירה</Text>
-    <Switch
-      thumbColor={'#00B0F0'}
-      trackColor={'#008CBA'}
-      onValueChange={() => this.setState({delivered:!this.state.delivered})}
-      value={this.state.delivered}/>
+    <View>
+      <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
+        <Text>מוכן למסירה</Text>
+        <Switch
+          thumbColor={'#00B0F0'}
+          trackColor={'#008CBA'}
+          onValueChange={() => this.setState({delivered:!this.state.delivered})}
+          value={this.state.delivered}/>
+      </View>
+      <View>
+        <TextInput
+          style={styles.textInput}
+          placeholder={'שם השואל'}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder={'כתובת השואל'}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder={'מספר השואל'}
+        />
+        <View style={{flexDirection:'row-reverse'}}>
+        <Text>תאריך השאלה: {today.toLocaleDateString("en-US")}</Text>
+        <Text>תאריך החזרה: </Text><TextInput
+          style={styles.textInput}
+        />
+        </View>
+      </View>
     </View>
   }
   </View>
@@ -71,6 +94,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: 'black',
     borderWidth: 1,
+  },
+  textInput:{
+    flex:1,
+    fontSize:StatusBar.currentHeight,
+    borderColor: 'black',
+    borderRadius:5,
+    borderWidth: 1,
+    margin:2,
   },
   View:{
     height: dim.height/8,

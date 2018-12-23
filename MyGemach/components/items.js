@@ -337,9 +337,11 @@ searchByText(text){
               <Image source={require('../images/search.png')} style={{width: barHeight, height: barHeight}}/>}
             </TouchableOpacity>
           </View>
-          <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.searchOpen && <Text style={styles.fontStyle}>{this.props.navigation.state.params.data.gemachName}</Text>}
-          </View>
+            {!this.state.searchOpen &&
+              <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
+                <Text style={styles.fontStyle}>{this.props.navigation.state.params.data.gemachName}</Text>
+                <Text style={styles.fontStyle}>{this.state.dataList.length}</Text>
+              </View>}
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
         {this.state.displayGemach && this.renderList(this.state.dataList) || this.renderList(this.state.searchList)}
