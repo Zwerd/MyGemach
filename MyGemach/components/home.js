@@ -81,7 +81,7 @@ export default class Home extends React.Component {
                   pickedImage:this.state.pickedImage,
                   cardBackgroundColor:'white',
                   selected:false,
-                  itemData:null
+                  itemData:[],
                 }]
     }));
     this.refs.creator.close()
@@ -176,7 +176,7 @@ edit(){
             date:dataList[a].date,
             cardBackgroundColor:'white',
             selected:false,
-            index:dataList.indexOf(dataList[a])
+            index:dataList.indexOf(dataList[a]),
           }
         })
       }
@@ -193,9 +193,11 @@ gemachEditor(){
   });this.refs.editor.close()
 }
 
-onChangeData(update,index){
-  console.log('checking index: ',index)
+onChangeData(update,itemNumber){
+  console.log('update:',update,'itemNumber:',itemNumber)
+  let index = this.findItem(itemNumber)
   let data = this.state.dataList
+  console.log('index is: ', index,'data is: ', data, 'data by index: ',data[index])
   data[index].itemData = update
   console.log('checking data: ',data)
   this.setState({

@@ -8,6 +8,7 @@ let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
 let data = {}
+let itemsList = []
 
 const options={
   title:null,
@@ -40,6 +41,7 @@ export default class Items extends React.Component {
      };
   }
 
+
   pickImageHandler = () => {
     ImagePicker.showImagePicker(options, res => {
       if (res.didCancel) {
@@ -70,22 +72,24 @@ export default class Items extends React.Component {
   }
 
   createGemach(){
+    itemsList.push({
+      key:this.state.key,
+      itemNumber:this.state.key,
+      date:today.toLocaleDateString("en-US"),
+      gemachName:this.state.gemachName,
+      gemachDescription:this.state.gemachDescription,
+      pickedImage:this.state.pickedImage,
+      cardBackgroundColor:'white',
+      selected:false,
+    })
     this.setState(prevState => ({
       displayGemach:true,
       displayImage:false,
       displayText:true,
       key:this.state.key+1,
-      itemsList: [...prevState.itemsList,{
-                  key:this.state.key,
-                  date:today.toLocaleDateString("en-US"),
-                  gemachName:this.state.gemachName,
-                  gemachDescription:this.state.gemachDescription,
-                  pickedImage:this.state.pickedImage,
-                  cardBackgroundColor:'white',
-                  selected:false
-                }]
+      itemsList:itemsList
     }));
-    //this.props.navigation.state.params.update(this.state.itemsList,this.props.itemNumber)
+    this.props.navigation.state.params.update(itemsList[itemsList.length-1],itemsList[itemsList.length-1].itemNumber)
     this.refs.creator.close()
   }
 
@@ -252,7 +256,6 @@ searchByText(text){
 }
 
   render() {
-    console.log('render search: ',this.state.searchList,this.state.displayGemach)
     return (
       <View style={styles.container}>
 
@@ -318,7 +321,7 @@ searchByText(text){
       </Modal>
         <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
-          <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
+          <View style={{flex:1,flexDirection: 'row', alignItems:'center'}}>
             {this.state.back && <TouchableOpacity
             onPress={()=>this.removeSearch()}>
             <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
@@ -338,9 +341,9 @@ searchByText(text){
             </TouchableOpacity>
           </View>
             {!this.state.searchOpen &&
-              <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
+              <View style={{flex:2, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
                 <Text style={styles.fontStyle}>{this.props.navigation.state.params.data.gemachName}</Text>
-                <Text style={styles.fontStyle}>{this.state.itemsList.length}</Text>
+                <Text style={styles.fontStyle}>סה''כ: {this.state.itemsList.length}</Text>
               </View>}
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
