@@ -318,7 +318,7 @@ searchByText(text){
           <Text style={styles.fontStyle}>אישור</Text>
         </TouchableOpacity>
       </Modal>
-        <ImageBackground source={require('../images/homeBackground.png')} style={{width: '100%', height: '100%'}}>
+        <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
             {this.state.displaySearch && <TouchableOpacity

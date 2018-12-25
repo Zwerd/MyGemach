@@ -33,7 +33,7 @@ export default class Items extends React.Component {
       index:0,
       //setting for all section
       itemSelected:[],
-      dataList:[],
+      itemsList:[],
       editor:{},
       searchList:[],
       item:{}
@@ -75,7 +75,7 @@ export default class Items extends React.Component {
       displayImage:false,
       displayText:true,
       key:this.state.key+1,
-      dataList: [...prevState.dataList,{
+      itemsList: [...prevState.itemsList,{
                   key:this.state.key,
                   date:today.toLocaleDateString("en-US"),
                   gemachName:this.state.gemachName,
@@ -85,12 +85,12 @@ export default class Items extends React.Component {
                   selected:false
                 }]
     }));
-    //this.props.navigation.state.params.update(this.state.dataList,this.props.itemNumber)
+    //this.props.navigation.state.params.update(this.state.itemsList,this.props.itemNumber)
     this.refs.creator.close()
   }
 
 findItem(itemNumber){
-  let newList = this.state.dataList
+  let newList = this.state.itemsList
   for(a=0;a<newList.length;a++){
     if(newList[a].key == itemNumber){
       return newList.indexOf(newList[a])
@@ -100,26 +100,26 @@ findItem(itemNumber){
 
 selectedItem = (itemNumber) => {
   let index = this.findItem(itemNumber)
-  let newList = this.state.dataList
+  let newList = this.state.itemsList
   let itemSelected = this.state.itemSelected
   if(newList[index].cardBackgroundColor == 'white'){
     newList[index].cardBackgroundColor = 'rgb(201,241,255)'
     newList[index].selected = true
     itemSelected.push(itemNumber)
-    this.setState({dataList:newList,itemSelected:itemSelected})
+    this.setState({itemsList:newList,itemSelected:itemSelected})
   }else if(newList[index].cardBackgroundColor == 'rgb(201,241,255)'){
     newList[index].cardBackgroundColor = 'white'
     newList[index].selected = false
     itemSelected.splice(itemSelected.indexOf(itemNumber),1)
-    this.setState({dataList:newList,itemSelected:itemSelected})
+    this.setState({itemsList:newList,itemSelected:itemSelected})
   }
 }
 
 removeApproved(){
   if(this.state.itemSelected.length==1){
     Alert.alert(
-      'מחיקת קרן',
-      'האם למחוק את הקרן שנבחרה לצמיתות?',
+      'מחיקת פריט',
+      'האם למחוק את הפריט שנבחר לצמיתות?',
       [
         {text: 'ביטול', onPress: () => false, style: 'cancel'},
         {text: 'אישור', onPress: () => this.remove() }
@@ -127,8 +127,8 @@ removeApproved(){
     )
   }else if(this.state.itemSelected.length>1){
     Alert.alert(
-      'מחיקת קרן',
-      'האם למחוק את הקרנות הנבחרות לצמיתות?',
+      'מחיקת פריט',
+      'האם למחוק את הפריטים שנבחרו לצמיתות?',
       [
         {text: 'ביטול', onPress: () => false, style: 'cancel'},
         {text: 'אישור', onPress: () => this.remove() }
@@ -138,17 +138,17 @@ removeApproved(){
 }
 
 remove(){
-  let newList = this.state.dataList
-  for(a=this.state.dataList.length-1;a>=0;a--){
-    if(this.state.dataList[a].selected == true){
-      newList.splice(newList.indexOf(this.state.dataList[a]),1)
+  let newList = this.state.itemsList
+  for(a=this.state.itemsList.length-1;a>=0;a--){
+    if(this.state.itemsList[a].selected == true){
+      newList.splice(newList.indexOf(this.state.itemsList[a]),1)
     }
-  };this.setState({dataList:newList,itemSelected:[]})
+  };this.setState({itemsList:newList,itemSelected:[]})
 }
 
 
 edit(){
-  let dataList = this.state.dataList
+  let itemsList = this.state.itemsList
   if(this.state.itemSelected.length>1){
     Alert.alert(
       'שגיאה',
@@ -156,29 +156,29 @@ edit(){
       [
         {text: 'אישור', onPress: () => {
           this.setState({itemSelected:[]})
-          for(a=0;a<dataList.length;a++){
-            if(dataList[a].selected == true){
-              dataList[a].selected=false
-              dataList[a].cardBackgroundColor='white'
+          for(a=0;a<itemsList.length;a++){
+            if(itemsList[a].selected == true){
+              itemsList[a].selected=false
+              itemsList[a].cardBackgroundColor='white'
             }
-          }console.log('dataList: ',dataList)
-          this.setState({dataList:dataList})
+          }console.log('itemsList: ',itemsList)
+          this.setState({itemsList:itemsList})
         }, style: 'cancel'}
       ],
     )
   }else if(this.state.itemSelected.length==1){
-    for(a=0;a<dataList.length;a++){
-      if(dataList[a].selected == true){
+    for(a=0;a<itemsList.length;a++){
+      if(itemsList[a].selected == true){
         this.setState({
           editor:{
-            gemachName:dataList[a].gemachName,
-            gemachDescription:dataList[a].gemachDescription,
-            pickedImage:dataList[a].pickedImage,
-            key:dataList[a].key,
-            date:dataList[a].date,
+            gemachName:itemsList[a].gemachName,
+            gemachDescription:itemsList[a].gemachDescription,
+            pickedImage:itemsList[a].pickedImage,
+            key:itemsList[a].key,
+            date:itemsList[a].date,
             cardBackgroundColor:'white',
             selected:false,
-            index:dataList.indexOf(dataList[a])
+            index:itemsList.indexOf(itemsList[a])
           }
         })
       }
@@ -187,16 +187,16 @@ edit(){
 }
 
 gemachEditor(){
-  let dataList = this.state.dataList
-  dataList[this.state.editor.index]=this.state.editor,
+  let itemsList = this.state.itemsList
+  itemsList[this.state.editor.index]=this.state.editor,
   this.setState({
-    dataList:dataList,
+    itemsList:itemsList,
     itemSelected:[],
   });this.refs.editor.close()
 }
 
 openItem = (itemNumber) => {
-  data = this.state.dataList[this.findItem(itemNumber)]
+  data = this.state.itemsList[this.findItem(itemNumber)]
   console.log('this is the item: ',data,this.state.item)
 }
 
@@ -242,9 +242,9 @@ removeSearch(){
 //search function
 searchByText(text){
   let data = []
-  for(i=0;i<this.state.dataList.length;i++){
-    if(this.state.dataList[i].gemachName.includes(text)){
-      data.push(this.state.dataList[i])
+  for(i=0;i<this.state.itemsList.length;i++){
+    if(this.state.itemsList[i].gemachName.includes(text)){
+      data.push(this.state.itemsList[i])
     }
   }this.setState(prevState => ({
     displayGemach:false,
@@ -298,7 +298,7 @@ searchByText(text){
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
-              placeholder={'שם הקרן'}
+              placeholder={'שם הפריט'}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachName: text})}
             />
@@ -340,11 +340,11 @@ searchByText(text){
             {!this.state.searchOpen &&
               <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
                 <Text style={styles.fontStyle}>{this.props.navigation.state.params.data.gemachName}</Text>
-                <Text style={styles.fontStyle}>{this.state.dataList.length}</Text>
+                <Text style={styles.fontStyle}>{this.state.itemsList.length}</Text>
               </View>}
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
-        {this.state.displayGemach && this.renderList(this.state.dataList) || this.renderList(this.state.searchList)}
+        {this.state.displayGemach && this.renderList(this.state.itemsList) || this.renderList(this.state.searchList)}
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
             <TouchableOpacity
