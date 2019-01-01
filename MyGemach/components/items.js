@@ -87,9 +87,11 @@ export default class Items extends React.Component {
       displayImage:false,
       displayText:true,
       key:this.state.key+1,
+      itemNumber:this.state.key+1,
       itemsList:itemsList
     }));
-    this.props.navigation.state.params.update(itemsList[itemsList.length-1],itemsList[itemsList.length-1].itemNumber)
+    console.log('this items update: ', itemsList, 'this itemnumber: ', this.props.navigation.state.params.data.itemNumber)
+    this.props.navigation.state.params.update(itemsList,this.props.navigation.state.params.data.itemNumber)
     this.refs.creator.close()
   }
 
@@ -165,7 +167,7 @@ edit(){
               itemsList[a].selected=false
               itemsList[a].cardBackgroundColor='white'
             }
-          }console.log('itemsList: ',itemsList)
+          }
           this.setState({itemsList:itemsList})
         }, style: 'cancel'}
       ],
@@ -201,7 +203,7 @@ gemachEditor(){
 
 openItem = (itemNumber) => {
   data = this.state.itemsList[this.findItem(itemNumber)]
-  console.log('this is the item: ',data,this.state.item)
+
 }
 
 
@@ -256,7 +258,10 @@ searchByText(text){
 }
 
   render() {
+    console.log('render items from selected list: ', this.props.navigation.state.params.data)
+    this.renderList(this.props.navigation.state.params.data.itemData)
     return (
+
       <View style={styles.container}>
 
       <Modal

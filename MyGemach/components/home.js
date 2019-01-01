@@ -75,6 +75,7 @@ export default class Home extends React.Component {
       key:this.state.key+1,
       dataList: [...prevState.dataList,{
                   key:this.state.key,
+                  itemNumber:this.state.key,
                   date:today.toLocaleDateString("en-US"),
                   gemachName:this.state.gemachName,
                   gemachDescription:this.state.gemachDescription,
@@ -159,7 +160,7 @@ edit(){
               dataList[a].selected=false
               dataList[a].cardBackgroundColor='white'
             }
-          }console.log('dataList: ',dataList)
+          }
           this.setState({dataList:dataList})
         }, style: 'cancel'}
       ],
@@ -194,12 +195,10 @@ gemachEditor(){
 }
 
 onChangeData(update,itemNumber){
-  console.log('update:',update,'itemNumber:',itemNumber)
+  console.log('this home update: ',update,'this home itemNumber: ',itemNumber)
   let index = this.findItem(itemNumber)
   let data = this.state.dataList
-  console.log('index is: ', index,'data is: ', data, 'data by index: ',data[index])
   data[index].itemData = update
-  console.log('checking data: ',data)
   this.setState({
     dataList:data
   })
