@@ -44,21 +44,11 @@ export default class Items extends React.Component {
 
 componentWillMount(){
   console.log('check will mount: --- ',this.props.navigation.state.params.data.itemData)
-  this.props.navigation.state.params.data.itemData.map(data =>
-    <ItemDetails
-      backgroundColor={data.cardBackgroundColor}
-      callbackFromItems={this.selectedItem}
-      callbackModalbox={this.openItem}
-      remove={this.state.remove}
-      edit={this.state.edit}
-      key={data.key}
-      itemNumber={data.key}
-      date={data.date}
-      display={data.displayGemach}
-      name={data.gemachName}
-      description={data.gemachDescription}
-      pickedImage={data.pickedImage}
-    />)
+  this.setState({
+    itemsList:this.props.navigation.state.params.data.itemData,
+    displayGemach:true,
+    key:this.props.navigation.state.params.data.itemData.length
+  })
 }
 
   pickImageHandler = () => {
