@@ -42,6 +42,25 @@ export default class Items extends React.Component {
   }
 
 
+componentWillMount(){
+  console.log('check will mount: --- ',this.props.navigation.state.params.data.itemData)
+  this.props.navigation.state.params.data.itemData.map(data =>
+    <ItemDetails
+      backgroundColor={data.cardBackgroundColor}
+      callbackFromItems={this.selectedItem}
+      callbackModalbox={this.openItem}
+      remove={this.state.remove}
+      edit={this.state.edit}
+      key={data.key}
+      itemNumber={data.key}
+      date={data.date}
+      display={data.displayGemach}
+      name={data.gemachName}
+      description={data.gemachDescription}
+      pickedImage={data.pickedImage}
+    />)
+}
+
   pickImageHandler = () => {
     ImagePicker.showImagePicker(options, res => {
       if (res.didCancel) {
@@ -208,6 +227,7 @@ openItem = (itemNumber) => {
 
 
 renderList(data){
+  console.log('in renderlist: ',data)
   return data.map(data =>
     <ItemDetails
       backgroundColor={data.cardBackgroundColor}
@@ -259,7 +279,6 @@ searchByText(text){
 
   render() {
     console.log('render items from selected list: ', this.props.navigation.state.params.data)
-    this.renderList(this.props.navigation.state.params.data.itemData)
     return (
 
       <View style={styles.container}>

@@ -28,6 +28,7 @@ selectedItem(){
 */
 
 render(){
+  console.log('in itemDetails ++++++++++')
   return(
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
   <TouchableOpacity
