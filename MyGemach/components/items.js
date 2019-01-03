@@ -8,7 +8,6 @@ let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
 let data = {}
-let itemsList = []
 
 const options={
   title:null,
@@ -26,10 +25,11 @@ export default class Items extends React.Component {
       displayImage: false,
       displaySearch:false,
       //setting for Gemach
+      itemNumber:this.props.navigation.state.params.data.itemNumber,
       date:new Date().toLocaleDateString("en-US"),
-      gemachName: '',
-      gemachDescription: '',
-      pickedImage: null,
+      gemachName: this.props.navigation.state.params.data.gemachName,
+      gemachDescription: this.props.navigation.state.params.data.gemachDescription,
+      pickedImage: this.props.navigation.state.params.data.pickedImage,
       key:0,
       index:0,
       //setting for all section
@@ -43,12 +43,16 @@ export default class Items extends React.Component {
 
 
 componentWillMount(){
-  console.log('check will mount: --- ',this.props.navigation.state.params.data.itemData)
+  console.log('check will mount: --- ',this.props.navigation.state.params.data)
   this.setState({
     itemsList:this.props.navigation.state.params.data.itemData,
     displayGemach:true,
     key:this.props.navigation.state.params.data.itemData.length
   })
+}
+
+componentDidUpdate(){
+  this.props.navigation.state.params.update(this.state.itemsList,this.props.navigation.state.params.data.itemNumber)
 }
 
   pickImageHandler = () => {
@@ -81,26 +85,25 @@ componentWillMount(){
   }
 
   createGemach(){
-    itemsList.push({
-      key:this.state.key,
-      itemNumber:this.state.key,
-      date:today.toLocaleDateString("en-US"),
-      gemachName:this.state.gemachName,
-      gemachDescription:this.state.gemachDescription,
-      pickedImage:this.state.pickedImage,
-      cardBackgroundColor:'white',
-      selected:false,
-    })
     this.setState(prevState => ({
       displayGemach:true,
       displayImage:false,
       displayText:true,
       key:this.state.key+1,
       itemNumber:this.state.key+1,
-      itemsList:itemsList
+      itemsList:[...prevState.itemsList,{
+        key:this.state.key,
+        itemNumber:this.state.key,
+        date:today.toLocaleDateString("en-US"),
+        gemachName:this.state.gemachName,
+        gemachDescription:this.state.gemachDescription,
+        pickedImage:this.state.pickedImage,
+        cardBackgroundColor:'white',
+        selected:false,
+      }]
     }));
-    console.log('this items update: ', itemsList, 'this itemnumber: ', this.props.navigation.state.params.data.itemNumber)
-    this.props.navigation.state.params.update(itemsList,this.props.navigation.state.params.data.itemNumber)
+    console.log('checking item: ',this.props.navigation.state.params.data.itemNumber)
+
     this.refs.creator.close()
   }
 
@@ -217,7 +220,6 @@ openItem = (itemNumber) => {
 
 
 renderList(data){
-  console.log('in renderlist: ',data)
   return data.map(data =>
     <ItemDetails
       backgroundColor={data.cardBackgroundColor}
@@ -268,7 +270,7 @@ searchByText(text){
 }
 
   render() {
-    console.log('render items from selected list: ', this.props.navigation.state.params.data)
+
     return (
 
       <View style={styles.container}>
