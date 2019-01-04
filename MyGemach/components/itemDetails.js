@@ -15,6 +15,15 @@ constructor(props) {
     delivered:false,
     };
 }
+
+delivered(){
+  if(this.state.delivered){
+    return "אינו זמין"
+  }else{
+    return "זמין"
+  }
+}
+
 /*
 selectedItem(){
   if(this.state.backgroundColor === 'rgb(201,241,255)'){
@@ -35,29 +44,34 @@ render(){
     onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
     onPress={() => this.setState({pressed:!this.state.pressed})}
     >
+    <View style={{ flexDirection: 'row-reverse', alignItems:'center', justifyContent:'center', backgroundColor:'#00B0F0', borderTopLeftRadius: 5, borderTopRightRadius:5,}}>
+      <Text>נתוני הפריט</Text>
+    </View>
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={styles.View}>
-        <Text>שם: {this.props.name}</Text>
+        <Text>מספר הפריט: {this.props.itemNumber+1}</Text>
         <Text>תיאור: {this.props.description}</Text>
-        <Text>תאריך: {this.props.date}</Text>
-        <Text>מספר: {this.props.itemNumber+1}</Text>
+        <Text>תאריך הוספה: {this.props.date}</Text>
       </View>
       <View style={[styles.View,styles.ViewImage]}>
         <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
         </ImageBackground>
       </View>
     </View>
+    <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
+      <Text>זמינות בגמח:</Text>
+      <Text>
+      {this.delivered()}
+      </Text>
+      <Switch
+        thumbColor={'#00B0F0'}
+        trackColor={'#008CBA'}
+        onValueChange={() => this.setState({delivered:!this.state.delivered})}
+        value={this.state.delivered}/>
+    </View>
   </TouchableOpacity>
   {this.state.pressed &&
     <View>
-      <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
-        <Text>מוכן למסירה</Text>
-        <Switch
-          thumbColor={'#00B0F0'}
-          trackColor={'#008CBA'}
-          onValueChange={() => this.setState({delivered:!this.state.delivered})}
-          value={this.state.delivered}/>
-      </View>
       <View>
         <TextInput
           style={styles.textInput}
