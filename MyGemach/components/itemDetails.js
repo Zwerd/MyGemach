@@ -3,7 +3,7 @@ import {Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, 
 import { StackNavigator } from 'react-navigation'
 import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
-let height = StatusBar.currentHeight * 1.5
+let barHeight = StatusBar.currentHeight * 1.5
 let today  = new Date();
 
 export default class ItemDetails extends Component {
@@ -46,13 +46,13 @@ render(){
     onPress={() => this.setState({pressed:!this.state.pressed})}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
-      <View style={[styles.View,styles.ViewImage]}>
+      <View style={[styles.View,styles.ViewImage,{flex:2}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
-          <View style={{backgroundColor:'red',borderRadius:25,height:height,width:height}}></View>
+          <View style={{backgroundColor:'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
         </ImageBackground>
       </View>
-      <View style={styles.View}>
-        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.description}</Text>
+      <View style={[styles.View,{flex:4}]}>
+        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
         <Text>{this.state.customerData}</Text>
         <Text>{this.delivered()}</Text>
       </View>
