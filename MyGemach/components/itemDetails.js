@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
+import {Alert, Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import Modal from 'react-native-modalbox';
 let dim = Dimensions.get('window');
@@ -37,13 +37,24 @@ selectedItem(){
 }
 */
 
+pressed(){
+  Alert.alert(
+    [
+      {text: 'מסירה', onPress: () => false, style: 'cancel'},
+      {text: 'צפייה', onPress: () => false, style: 'cancel' },
+      {text: 'החזרה', onPress: () => false, style: 'cancel' },
+      {text: 'היסטוריה', onPress: () => false, style: 'cancel' },
+    ]
+  )
+}
+
+
 render(){
-  console.log('in itemDetails ++++++++++')
   return(
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
   <TouchableOpacity
     onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
-    onPress={() => this.setState({pressed:!this.state.pressed})}
+    onPress={() => this.pressed()}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
