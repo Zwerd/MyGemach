@@ -44,18 +44,15 @@ render(){
     onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
     onPress={() => this.setState({pressed:!this.state.pressed})}
     >
-    <View style={{ flexDirection: 'row-reverse', alignItems:'center', justifyContent:'center', backgroundColor:'#00B0F0', borderTopLeftRadius: 5, borderTopRightRadius:5,}}>
-      <Text>נתוני הפריט</Text>
-    </View>
     <View style={{ flexDirection: 'row-reverse'}}>
-      <View style={styles.View}>
-        <Text>מספר הפריט: {this.props.itemNumber+1}</Text>
-        <Text>תיאור: {this.props.description}</Text>
-        <Text>תאריך הוספה: {this.props.date}</Text>
-      </View>
       <View style={[styles.View,styles.ViewImage]}>
         <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
         </ImageBackground>
+      </View>
+      <View style={styles.View}>
+        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.description}</Text>
+        <Text>נתוני לקוח:</Text>
+        <Text>תאריך הוספה: {this.props.date}</Text>
       </View>
     </View>
     <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
