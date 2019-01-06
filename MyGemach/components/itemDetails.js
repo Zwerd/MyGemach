@@ -13,6 +13,7 @@ constructor(props) {
     backgroundColor:this.props.backgroundColor,
     pressed:false,
     delivered:false,
+    customerData:'',
     };
 }
 
@@ -46,25 +47,15 @@ render(){
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage]}>
-        <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
+        <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
+          <View style={{backgroundColor:'red',borderRadius:25,height:height,width:height}}></View>
         </ImageBackground>
       </View>
       <View style={styles.View}>
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.description}</Text>
-        <Text>נתוני לקוח:</Text>
-        <Text>תאריך הוספה: {this.props.date}</Text>
+        <Text>{this.state.customerData}</Text>
+        <Text>{this.delivered()}</Text>
       </View>
-    </View>
-    <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',margin:2}}>
-      <Text>זמינות בגמח:</Text>
-      <Text>
-      {this.delivered()}
-      </Text>
-      <Switch
-        thumbColor={'#00B0F0'}
-        trackColor={'#008CBA'}
-        onValueChange={() => this.setState({delivered:!this.state.delivered})}
-        value={this.state.delivered}/>
     </View>
   </TouchableOpacity>
   {this.state.pressed &&
@@ -116,14 +107,14 @@ const styles = StyleSheet.create({
     margin:2,
   },
   View:{
-    height: dim.height/8,
+    height: dim.height/6,
     width: ((dim.width-11)/4) * 3,
     borderWidth:null,
     borderRadius: 10,
     padding:2,
   },
   ViewImage:{
-    width: (dim.width-16)/4,
+    width: (dim.width-16)/3,
     overflow: 'hidden',
   },
   previewImage: {
