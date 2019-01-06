@@ -57,7 +57,7 @@ render(){
     onPress={() => this.pressed()}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
-      <View style={[styles.View,styles.ViewImage,{flex:2}]}>
+      <View style={[styles.View,styles.ViewImage,{flex:2.5}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
           <View style={{backgroundColor:'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
         </ImageBackground>
@@ -66,6 +66,9 @@ render(){
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
         <Text>{this.state.customerData}</Text>
         <Text>{this.delivered()}</Text>
+      </View>
+      <View style={{flex:1}}>
+        <Image source={require('../images/miniMenu.png')} style={{width: barHeight/2, height: barHeight}}/>
       </View>
     </View>
   </TouchableOpacity>
