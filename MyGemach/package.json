@@ -10,7 +10,9 @@
     "react": "^16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-image-picker": "^0.28.0",
+    "react-native-material-menu": "^0.4.2",
     "react-native-modalbox": "^1.6.0",
+    "react-native-options-menu": "^2.0.2",
     "react-native-popup-menu": "^0.14.2",
     "react-navigation": "^2.18.2"
   },

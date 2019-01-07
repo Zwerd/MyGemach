@@ -1,10 +1,22 @@
 import React, {Component} from 'react';
-import {Alert, Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
+import {FlatList, Alert, Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
 import { StackNavigator } from 'react-navigation'
-import Modal from 'react-native-modalbox';
+import OptionsMenu from "react-native-options-menu";
+import {
+  MenuProvider,
+  Menu,
+  MenuTrigger,
+  MenuOptions,
+  MenuOption,
+} from 'react-native-popup-menu';
+
+
+
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 1.5
 let today  = new Date();
+
+const myIcon = (<View name="rocket" size={30} color="#900" />)
 
 export default class ItemDetails extends Component {
 constructor(props) {
@@ -38,7 +50,11 @@ selectedItem(){
 */
 
 pressed(){
-  Alert.alert(
+  Activity.openOptionsMenu()
+}
+  /*
+ Alert.alert(
+    'null',
     [
       {text: 'מסירה', onPress: () => false, style: 'cancel'},
       {text: 'צפייה', onPress: () => false, style: 'cancel' },
@@ -47,8 +63,9 @@ pressed(){
     ]
   )
 }
+*/
 
-
+//this.props.callbackModalbox(this.props.itemNumber)
 render(){
   return(
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
@@ -57,7 +74,7 @@ render(){
     onPress={() => this.pressed()}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
-      <View style={[styles.View,styles.ViewImage,{flex:2.5}]}>
+      <View style={[styles.View,styles.ViewImage,{flex:2}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
           <View style={{backgroundColor:'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
         </ImageBackground>
@@ -67,37 +84,36 @@ render(){
         <Text>{this.state.customerData}</Text>
         <Text>{this.delivered()}</Text>
       </View>
-      <View style={{flex:1}}>
-        <Image source={require('../images/miniMenu.png')} style={{width: barHeight/2, height: barHeight}}/>
-      </View>
     </View>
   </TouchableOpacity>
-  {this.state.pressed &&
-    <View>
-      <View>
-        <TextInput
-          style={styles.textInput}
-          placeholder={'שם השואל'}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder={'כתובת השואל'}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder={'מספר השואל'}
-        />
-        <View style={{flexDirection:'row-reverse'}}>
-        <Text>תאריך השאלה: {today.toLocaleDateString("en-US")}</Text>
-        <Text>תאריך החזרה: </Text><TextInput
-          style={styles.textInput}
-        />
-        </View>
-      </View>
-    </View>
-  }
-  </View>
 
+
+  <MenuProvider style={styles.container}>
+    <FlatList
+      data={'data'}
+      renderItem={({ item }) => (
+        <Menu onSelect={value => Alert.alert(value)}>
+          <MenuTrigger text={'Select option ' + item.value} />
+          <MenuOptions>
+            <MenuOption value="A" text="A" />
+            <MenuOption value="B" text="B" />
+            <MenuOption value="C" text="C" />
+        </MenuOptions>
+      </Menu>
+      )}
+      style={{ height: 200 }}
+    />
+  </MenuProvider>
+
+
+  <OptionsMenu
+    customButton={myIcon}
+    destructiveIndex={1}
+    options={["Edit", "Delete", "Cancel"]}
+    actions={[this.editPost, this.deletePost]}/>
+
+
+  </View>
     )
   }
 }

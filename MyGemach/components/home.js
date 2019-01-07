@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
+import {Alert, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
@@ -327,7 +327,7 @@ searchByText(text){
             <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
           <TouchableOpacity
-              onPress={() => console.log('setting was press')}>
+              onPress={() => alert('setting pressed!')}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity

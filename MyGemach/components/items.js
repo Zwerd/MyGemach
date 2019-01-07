@@ -33,6 +33,7 @@ export default class Items extends React.Component {
       key:0,
       index:0,
       //setting for all section
+      itemData:{},
       itemSelected:[],
       itemsList:[],
       editor:{},
@@ -214,8 +215,9 @@ gemachEditor(){
 }
 
 openItem = (itemNumber) => {
+  this.refs.itemMenu.open()
   data = this.state.itemsList[this.findItem(itemNumber)]
-
+  this.setState({itemData:data})
 }
 
 
@@ -274,6 +276,38 @@ searchByText(text){
     return (
 
       <View style={styles.container}>
+
+      <Modal
+        style={[styles.modalbox]}
+        position={'center'}
+        ref={"itemMenu"}
+        >
+        <View>
+          <View style={{backgroundColor:'#00B0F0', alignItems:'center',height:barHeight}}>
+            <Text>{this.state.itemData.itemName}</Text>
+          </View>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'שם השואל'}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder={'כתובת השואל'}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder={'מספר השואל'}
+          />
+          <View style={{flexDirection:'row-reverse'}}>
+          <Text>תאריך השאלה: {today.toLocaleDateString("en-US")}</Text>
+          <Text>תאריך החזרה: </Text><TextInput
+            style={styles.textInput}
+          />
+          </View>
+        </View>
+      </Modal>
+
+
 
       <Modal
         style={[styles.modalbox]}
@@ -414,8 +448,6 @@ const styles = StyleSheet.create({
   modalbox:{
     justifyContent: 'center',
     height: null,
-    borderWidth: 2,
-    borderRadius: 10,
   },
   textInput:{
     flex:1,
