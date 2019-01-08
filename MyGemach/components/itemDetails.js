@@ -93,7 +93,7 @@ render(){
       <View style={[styles.View,{flex:4}]}>
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
         <Text>{this.state.customerData}</Text>
-        <Text>{this.delivered()}</Text>
+        <Text>{console.log('check')}</Text>
       </View>
 
 
@@ -102,10 +102,10 @@ render(){
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
             <MenuOptions >
-              <MenuOption value={1} style={{fontSize:barHeight/2}} text='מסירה'/>
-              <MenuOption value={2} disabled={false} style={{fontSize:barHeight/2}} text='צפיה'/>
-              <MenuOption value={3} disabled={true} style={{fontSize:barHeight/2}} text='החזרה'/>
-              <MenuOption style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',fontSize:barHeight/2}} value={4} text='היסטוריה'/>
+              <MenuOption value={1} customStyles={{fontSize:barHeight/2}} text='מסירה'/>
+              <MenuOption value={2} disabled={true} customStyles={{fontSize:barHeight}} text='צפיה'/>
+              <MenuOption value={3} disabled={true} customStyles={{margin:2}} optionText={{fontSize:barHeight}} text='החזרה'/>
+              <MenuOption style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',fontSize:barHeight}} value={4} text='היסטוריה'/>
             </MenuOptions>
           </Menu>
 
