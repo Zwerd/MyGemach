@@ -3,6 +3,14 @@ import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBac
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import ItemDetails from "./itemDetails";
+import {
+  MenuProvider,
+  Menu,
+  MenuTrigger,
+  MenuOptions,
+  MenuOption,
+} from 'react-native-popup-menu';
+
 
 let today  = new Date();
 let dim = Dimensions.get('window');
@@ -274,7 +282,7 @@ searchByText(text){
   render() {
 
     return (
-
+      <MenuProvider>
       <View style={styles.container}>
 
       <Modal
@@ -310,7 +318,7 @@ searchByText(text){
 
 
       <Modal
-        style={[styles.modalbox]} 
+        style={[styles.modalbox]}
         position={'center'}
         ref={"editor"}
         >
@@ -421,6 +429,7 @@ searchByText(text){
           </View>
         </ImageBackground>
       </View>
+      </MenuProvider>
     );
   }
 }

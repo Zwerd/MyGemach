@@ -71,7 +71,7 @@ render(){
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
   <TouchableOpacity
     onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
-    onPress={() => this.pressed()}
+    onPress={() => alert('pressed!')}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
@@ -84,33 +84,27 @@ render(){
         <Text>{this.state.customerData}</Text>
         <Text>{this.delivered()}</Text>
       </View>
+
+
+          <Menu onSelect={value => alert(`Selected number: ${value}`)}>
+            <MenuTrigger>
+            <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
+            </MenuTrigger>
+            <MenuOptions>
+              <MenuOption value={1} text='One' />
+              <MenuOption value={2}>
+                <Text style={{color: 'red'}}>Two</Text>
+              </MenuOption>
+              <MenuOption value={3} disabled={true} text='Three' />
+            </MenuOptions>
+          </Menu>
+  
+
     </View>
   </TouchableOpacity>
 
 
-  <MenuProvider style={styles.container}>
-    <FlatList
-      data={'data'}
-      renderItem={({ item }) => (
-        <Menu onSelect={value => Alert.alert(value)}>
-          <MenuTrigger text={'Select option ' + item.value} />
-          <MenuOptions>
-            <MenuOption value="A" text="A" />
-            <MenuOption value="B" text="B" />
-            <MenuOption value="C" text="C" />
-        </MenuOptions>
-      </Menu>
-      )}
-      style={{ height: 200 }}
-    />
-  </MenuProvider>
 
-
-  <OptionsMenu
-    customButton={myIcon}
-    destructiveIndex={1}
-    options={["Edit", "Delete", "Cancel"]}
-    actions={[this.editPost, this.deletePost]}/>
 
 
   </View>
