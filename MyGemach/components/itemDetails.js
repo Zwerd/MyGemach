@@ -65,7 +65,7 @@ pressed(){
 }
 */
 
-delivered(){
+deliver(){
   Alert.alert(
     'מסירת פריט',
     'האם למחוק את הפריטים שנבחרו לצמיתות?',
@@ -75,6 +75,20 @@ delivered(){
     ],
   )
 }
+
+
+view(){
+
+}
+
+returned(){
+
+}
+
+historyView(){
+
+}
+
 
 //this.props.callbackModalbox(this.props.itemNumber)
 render(){
@@ -97,15 +111,26 @@ render(){
       </View>
 
 
-          <Menu onSelect={value => alert(`Selected number: ${value}`)}>
+
+          //alert(`Selected number: ${value}`
+          <Menu onSelect={value => if(value==1){
+                                      return this.deliver()
+                                    }else if(value==2){
+                                      return this.view()
+                                    }else if(value==3){
+                                      return this.returned()
+                                    }else if(vlaue==4){
+                                      return this.historyView()
+                                    }
+                                    )}>
             <MenuTrigger>
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
             <MenuOptions >
-              <MenuOption value={1} customStyles={{fontSize:barHeight/2}} text='מסירה'/>
-              <MenuOption value={2} disabled={true} customStyles={{fontSize:barHeight}} text='צפיה'/>
-              <MenuOption value={3} disabled={true} customStyles={{margin:2}} optionText={{fontSize:barHeight}} text='החזרה'/>
-              <MenuOption style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',fontSize:barHeight}} value={4} text='היסטוריה'/>
+              <MenuOption value={1} style={{margin:2}} text='מסירה'/>
+              <MenuOption value={2} disabled={true} style={{margin:2}} text='צפיה'/>
+              <MenuOption value={3} disabled={true} style={{margin:2}} text='החזרה'/>
+              <MenuOption value={4} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',margin:2}} text='היסטוריה'/>
             </MenuOptions>
           </Menu>
 
