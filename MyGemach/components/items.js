@@ -310,7 +310,7 @@ searchByText(text){
 
 
       <Modal
-        style={[styles.modalbox]}
+        style={[styles.modalbox]} 
         position={'center'}
         ref={"editor"}
         >
