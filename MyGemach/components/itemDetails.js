@@ -65,6 +65,17 @@ pressed(){
 }
 */
 
+delivered(){
+  Alert.alert(
+    'מסירת פריט',
+    'האם למחוק את הפריטים שנבחרו לצמיתות?',
+    [
+      {text: 'ביטול', onPress: () => false, style: 'cancel'},
+      {text: 'אישור', onPress: () => this.remove() }
+    ],
+  )
+}
+
 //this.props.callbackModalbox(this.props.itemNumber)
 render(){
   return(
@@ -88,17 +99,15 @@ render(){
 
           <Menu onSelect={value => alert(`Selected number: ${value}`)}>
             <MenuTrigger>
-            <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
+              <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
-            <MenuOptions>
-              <MenuOption value={1} text='One' />
-              <MenuOption value={2}>
-                <Text style={{color: 'red'}}>Two</Text>
-              </MenuOption>
-              <MenuOption value={3} disabled={true} text='Three' />
+            <MenuOptions >
+              <MenuOption value={1} style={{fontSize:barHeight/2}} text='מסירה'/>
+              <MenuOption value={2} disabled={false} style={{fontSize:barHeight/2}} text='צפיה'/>
+              <MenuOption value={3} disabled={true} style={{fontSize:barHeight/2}} text='החזרה'/>
+              <MenuOption style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',fontSize:barHeight/2}} value={4} text='היסטוריה'/>
             </MenuOptions>
           </Menu>
-  
 
     </View>
   </TouchableOpacity>
