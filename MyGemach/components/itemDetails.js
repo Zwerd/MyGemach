@@ -90,15 +90,15 @@ deliver(){
 
 
 view(){
-
+  console.log('check')
 }
 
 returned(){
-
+  console.log('check')
 }
 
 historyView(){
-
+  console.log('check')
 }
 
 
@@ -122,10 +122,7 @@ render(){
         <Text>{console.log('check')}</Text>
       </View>
 
-
-
-          //alert(`Selected number: ${value}`;this.checkValue(value)
-          <Menu onSelect={value => alert(`Selected number: ${value}`)}>
+         <Menu onSelect={value => this.checkValue(value)}>
             <MenuTrigger>
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
