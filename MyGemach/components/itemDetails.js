@@ -65,6 +65,18 @@ pressed(){
 }
 */
 
+checkValue(value){
+  if(value==1){
+    return this.deliver()
+  }else if(value==2){
+    return this.view()
+  }else if(value==3){
+    return this.returned()
+  }else if(vlaue==4){
+    return this.historyView()
+  }
+}
+
 deliver(){
   Alert.alert(
     'מסירת פריט',
@@ -112,17 +124,8 @@ render(){
 
 
 
-          //alert(`Selected number: ${value}`
-          <Menu onSelect={value => if(value==1){
-                                      return this.deliver()
-                                    }else if(value==2){
-                                      return this.view()
-                                    }else if(value==3){
-                                      return this.returned()
-                                    }else if(vlaue==4){
-                                      return this.historyView()
-                                    }
-                                    )}>
+          //alert(`Selected number: ${value}`;this.checkValue(value)
+          <Menu onSelect={value => alert(`Selected number: ${value}`)}>
             <MenuTrigger>
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
