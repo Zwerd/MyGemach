@@ -67,7 +67,7 @@ pressed(){
 
 checkValue(value){
   if(value==1){
-    return this.props.callbackModalbox(this.props.itemNumber)
+    return this.deliver()
   }else if(value==2){
     return this.view()
   }else if(value==3){
@@ -80,7 +80,7 @@ checkValue(value){
 deliver(){
   Alert.alert(
     'מסירת פריט',
-    'האם למחוק את הפריטים שנבחרו לצמיתות?',
+    'check',
     [
       {text: 'ביטול', onPress: () => false, style: 'cancel'},
       {text: 'אישור', onPress: () => this.remove() }

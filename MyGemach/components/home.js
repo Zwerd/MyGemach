@@ -397,15 +397,12 @@ const styles = StyleSheet.create({
   modalbox:{
     justifyContent: 'center',
     height: null,
-    borderWidth: 2,
-    borderRadius: 10,
   },
   textInput:{
     flex:1,
     fontSize:StatusBar.currentHeight,
-    borderColor: 'black',
-    borderRadius:5,
-    borderWidth: 1,
+    borderColor: 'gray',
+    borderBottomWidth: 1,
     margin:2,
   },
   ViewTitle: {
