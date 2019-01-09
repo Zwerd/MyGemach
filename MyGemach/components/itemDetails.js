@@ -67,7 +67,7 @@ pressed(){
 
 checkValue(value){
   if(value==1){
-    return this.refs.itemMenu.open()
+    return this.props.callbackModalbox(this.props.itemNumber)
   }else if(value==2){
     return this.view()
   }else if(value==3){
@@ -105,7 +105,6 @@ historyView(){
 //this.props.callbackModalbox(this.props.itemNumber)
 render(){
   return(
-
 
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
   <TouchableOpacity
