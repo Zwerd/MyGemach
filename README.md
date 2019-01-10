@@ -20,7 +20,8 @@ adding permission in the AndroidManifest.xml file:
 '''
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-'''
 
+'''
+need to change the modalbox style view and the card commponent
 
 
