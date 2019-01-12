@@ -23,6 +23,8 @@ adding permission in the AndroidManifest.xml file:
 
 '''
 need to change the modalbox style view and the card commponent
+
 I am at the hospital,
 
 
+good
