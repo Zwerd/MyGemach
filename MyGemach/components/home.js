@@ -264,29 +264,42 @@ searchByText(text){
         position={'center'}
         ref={"editor"}
         >
+        <View style={{padding:10}}>
+          <Text style={{fontSize:barHeight/2}}>עריכה</Text>
+        </View>
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
               <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
+              underlineColorAndroid={'gray'}
               value={this.state.editor.gemachName}
               style={styles.textInput}
               onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor, gemachName: text}}))}
             />
             <TextInput
+              underlineColorAndroid={'gray'}
               value={this.state.editor.gemachDescription}
               style={styles.textInput}
               onChangeText={(text) => this.setState(prevState => ({editor:{...prevState.editor,gemachDescription: text}}))}
             />
           </View>
         </View>
-        <TouchableOpacity
-          style={[styles.header,styles.button]}
-          onPress={() => this.gemachEditor()}
-          >
-          <Text style={styles.fontStyle}>אישור</Text>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            style={[styles.header,styles.button,{flex:1}]}
+            onPress={() => this.gemachEditor()}
+            >
+            <Text style={styles.fontStyle}>אישור</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.header,styles.button,{flex:1}]}
+            onPress={() => this.refs.editor.close()}
+            >
+            <Text style={styles.fontStyle}>ביטול</Text>
+          </TouchableOpacity>
+        </View>
       </Modal>
 
       <Modal
@@ -295,7 +308,7 @@ searchByText(text){
         ref={"creator"}
         >
         <View style={{padding:10}}>
-          <Text style={{fontSize:barHeight/2}}>יצירת גמ''ח</Text>
+          <Text style={{fontSize:barHeight/2}}>צור גמ''ח</Text>
         </View>
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
@@ -304,23 +317,33 @@ searchByText(text){
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
+              underlineColorAndroid={'gray'}
               placeholder={'שם הקרן'}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachName: text})}
             />
             <TextInput
+              underlineColorAndroid={'gray'}
               placeholder={'תיאור'}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachDescription: text})}
             />
           </View>
         </View>
-        <TouchableOpacity
-          style={[styles.header,styles.button]}
-          onPress={() => this.createGemach()}
-          >
-          <Text style={styles.fontStyle}>אישור</Text>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            style={[styles.header,styles.button,{flex:1}]}
+            onPress={() => this.createGemach()}
+            >
+            <Text style={styles.fontStyle}>אישור</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.header,styles.button,{flex:1}]}
+            onPress={() => this.refs.creator.close()}
+            >
+            <Text style={styles.fontStyle}>ביטול</Text>
+          </TouchableOpacity>
+        </View>
       </Modal>
         <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>
         <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
@@ -405,7 +428,6 @@ const styles = StyleSheet.create({
     flex:1,
     fontSize:StatusBar.currentHeight,
     borderColor: 'gray',
-    borderBottomWidth: 1,
     margin:2,
   },
   ViewTitle: {
@@ -416,12 +438,12 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderStyle:'dashed',
     borderWidth:1,
-    borderRadius:10,
+    borderRadius:2,
     justifyContent:'center',
     alignItems:'center',
     height: dim.height/6,
     width: dim.width/3,
-    margin:2,
+    margin:5,
   },
   previewImage: {
     width: "100%",
