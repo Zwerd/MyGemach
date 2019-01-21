@@ -294,6 +294,9 @@ searchByText(text){
         position={'center'}
         ref={"creator"}
         >
+        <View style={{padding:10}}>
+          <Text style={{fontSize:barHeight/2}}>יצירת גמ''ח</Text>
+        </View>
         <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
               {!this.state.displayImage && <Text style={{fontSize:20}}>בחר תמונה</Text>}

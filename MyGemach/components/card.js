@@ -31,15 +31,15 @@ render(){
     style={[{backgroundColor:this.props.backgroundColor},styles.display]}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
+    <View style={[styles.View,styles.ViewImage]}>
+      <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
+      </ImageBackground>
+    </View>
       <View style={styles.View}>
         <Text>שם: {this.props.name}</Text>
         <Text>תיאור: {this.props.description}</Text>
         <Text>תאריך: {this.props.date}</Text>
         <Text>מספר: {this.props.itemNumber+1}</Text>
-      </View>
-      <View style={[styles.View,styles.ViewImage]}>
-        <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
-        </ImageBackground>
       </View>
     </View>
   </TouchableOpacity>
@@ -53,9 +53,8 @@ const styles = StyleSheet.create({
     margin: 5,
     marginRight:null,
     marginBottom:0,
-    borderRadius: 5,
-    borderColor: 'black',
-    borderWidth: 1,
+    borderWidth:1,
+    borderColor:'#00B0F0',
   },
   View:{
     height: dim.height/8,

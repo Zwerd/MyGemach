@@ -153,8 +153,7 @@ const styles = StyleSheet.create({
     margin: 5,
     marginRight:null,
     marginBottom:0,
-    borderRadius: 5,
-    borderColor: 'black',
+    borderColor: '#00B0F0',
     borderWidth: 1,
   },
   textInput:{
