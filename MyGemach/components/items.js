@@ -42,6 +42,14 @@ export default class Items extends React.Component {
       index:0,
       //setting for all section
       itemData:{},
+      customerData:{
+        firstName:'',
+        lastName:'',
+        address:'',
+        phone:'',
+        deliverDate:'',
+        recivingDate:'',
+      },
       itemSelected:[],
       itemsList:[],
       editor:{},
@@ -222,19 +230,12 @@ gemachEditor(){
   });this.refs.editor.close()
 }
 
-openItem = (itemNumber) => {
-  this.refs.itemMenu.open()
-  data = this.state.itemsList[this.findItem(itemNumber)]
-  this.setState({itemData:data})
-}
-
-
 renderList(data){
   return data.map(data =>
     <ItemDetails
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
-      callbackModalbox={this.openItem}
+      callDeliverModalbox={this.deliverItem}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -279,8 +280,14 @@ searchByText(text){
     searchList:data}))
 }
 
-  render() {
+deliverItem = (itemNumber) => {
+  this.refs.deliverItemMenu.open()
+  data = this.state.itemsList[this.findItem(itemNumber)]
+  console.log('checking data', data)
+  this.setState({itemData:data})
+}
 
+  render() {
     return (
       <MenuProvider>
       <View style={styles.container}>
@@ -288,11 +295,11 @@ searchByText(text){
       <Modal
         style={[styles.modalbox]}
         position={'center'}
-        ref={"itemMenu"}
+        ref={"deliverItemMenu"}
         >
         <View>
-          <View style={{backgroundColor:'#00B0F0', alignItems:'center',height:barHeight}}>
-            <Text>{this.state.itemData.itemName}</Text>
+          <View style={{padding:10}}>
+            <Text style={{fontSize:barHeight/2}}>{this.state.itemData.itemName}</Text>
           </View>
           <TextInput
             style={styles.textInput}

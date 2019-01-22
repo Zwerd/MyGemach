@@ -25,7 +25,7 @@ constructor(props) {
     backgroundColor:this.props.backgroundColor,
     pressed:false,
     delivered:false,
-    customerData:'',
+    customerData:{data:1,checking:2},
     };
 }
 
@@ -78,14 +78,7 @@ checkValue(value){
 }
 
 deliver(){
-  Alert.alert(
-    'מסירת פריט',
-    'check',
-    [
-      {text: 'ביטול', onPress: () => false, style: 'cancel'},
-      {text: 'אישור', onPress: () => this.remove() }
-    ],
-  )
+  this.props.callDeliverModalbox(this.props.itemNumber)
 }
 
 
@@ -119,7 +112,7 @@ render(){
       </View>
       <View style={[styles.View,{flex:4}]}>
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
-        <Text>{this.state.customerData}</Text>
+        <Text>{JSON.stringify(this.state.customerData)}</Text>
         <Text>{console.log('check')}</Text>
       </View>
 
