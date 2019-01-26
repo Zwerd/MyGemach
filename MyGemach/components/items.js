@@ -299,25 +299,35 @@ deliverItem = (itemNumber) => {
         >
         <View>
           <View style={{padding:10}}>
-            <Text style={{fontSize:barHeight/2}}>{this.state.itemData.itemName}</Text>
+            <Text style={{fontSize:barHeight/2}}>מסירת פריט</Text>
           </View>
+          <View style={{padding:10}}>
+            <TextInput
+              underlineColorAndroid={'gray'}
+              placeholder={'שם מלא'}
+              style={styles.textInput}
+              onChangeText={(text) => console.log(text)}
+            />
+            <TextInput
+              underlineColorAndroid={'gray'}
+              placeholder={'כתובת'}
+              style={styles.textInput}
+            />
+            <TextInput
+              underlineColorAndroid={'gray'}
+              placeholder={'מספר טלפון'}
+              style={styles.textInput}
+            />
+          <View style={{flexDirection:'row-reverse',padding:4}}>
+            <Text style={styles.textInput}>תאריך מסירה: {today.toLocaleDateString("en-US")}</Text>
+          </View>
+          <View style={{flexDirection:'row-reverse',padding:4,alignItems:'center'}}>
+            <Text style={styles.textInput}>תאריך החזרה: </Text>
           <TextInput
             style={styles.textInput}
-            placeholder={'שם השואל'}
+            underlineColorAndroid={'gray'}
           />
-          <TextInput
-            style={styles.textInput}
-            placeholder={'כתובת השואל'}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder={'מספר השואל'}
-          />
-          <View style={{flexDirection:'row-reverse'}}>
-          <Text>תאריך השאלה: {today.toLocaleDateString("en-US")}</Text>
-          <Text>תאריך החזרה: </Text><TextInput
-            style={styles.textInput}
-          />
+          </View>
           </View>
         </View>
       </Modal>
@@ -480,7 +490,7 @@ const styles = StyleSheet.create({
     height: null,
   },
   textInput:{
-    flex:1,
+    color:'#9C9C9C',
     fontSize:StatusBar.currentHeight,
     borderColor: 'black',
     margin:2,
