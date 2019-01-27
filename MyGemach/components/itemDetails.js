@@ -26,7 +26,7 @@ constructor(props) {
     pressed:false,
     delivered:false,
     customerData:{data:1,checking:2},
-    status:false,
+    status:true,
     disabled:{fontSize:barHeight/2,fontWeight:'bold',color:'#DCDCDC'},
     enabled:{fontSize:barHeight/2,color:'black'}
     };
@@ -110,7 +110,7 @@ render(){
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
-          <View style={{backgroundColor:'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
+          <View style={{backgroundColor:this.state.status&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
         </ImageBackground>
       </View>
       <View style={[styles.View,{flex:4}]}>
