@@ -1,5 +1,7 @@
 this app build up to make help each other in the community, the first vertion is only managing an open and active Gemach which you can to open the fundetion and adding to it an items for each, and display data like who is the lest person that used the item, the day time this person must bring back the item to the gemach and such etc. 
 
+
+
 please reffer to the documents for more details; I will update every new featur that we build.
 
 
