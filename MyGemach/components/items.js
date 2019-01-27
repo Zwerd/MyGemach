@@ -287,6 +287,10 @@ deliverItem = (itemNumber) => {
   this.setState({itemData:data})
 }
 
+deliveredUpdate(){
+
+}
+
   render() {
     return (
       <MenuProvider>
@@ -297,7 +301,6 @@ deliverItem = (itemNumber) => {
         position={'center'}
         ref={"deliverItemMenu"}
         >
-        <View>
           <View style={{padding:10}}>
             <Text style={{fontSize:barHeight/2}}>מסירת פריט</Text>
           </View>
@@ -318,18 +321,31 @@ deliverItem = (itemNumber) => {
               placeholder={'מספר טלפון'}
               style={styles.textInput}
             />
+          </View>
           <View style={{flexDirection:'row-reverse',padding:4}}>
             <Text style={styles.textInput}>תאריך מסירה: {today.toLocaleDateString("en-US")}</Text>
           </View>
           <View style={{flexDirection:'row-reverse',padding:4,alignItems:'center'}}>
             <Text style={styles.textInput}>תאריך החזרה: </Text>
-          <TextInput
-            style={styles.textInput}
-            underlineColorAndroid={'gray'}
-          />
+            <TextInput
+              style={styles.textInput}
+              underlineColorAndroid={'gray'}
+            />
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={[styles.header,styles.button,{flex:1}]}
+              onPress={() => this.deliveredUpdate()}
+              >
+              <Text style={styles.fontStyle}>אישור</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.header,styles.button,{flex:1}]}
+              onPress={() => this.refs.deliverItemMenu.close()}
+              >
+              <Text style={styles.fontStyle}>ביטול</Text>
+            </TouchableOpacity>
           </View>
-        </View>
       </Modal>
 
 
@@ -490,7 +506,6 @@ const styles = StyleSheet.create({
     height: null,
   },
   textInput:{
-    color:'#9C9C9C',
     fontSize:StatusBar.currentHeight,
     borderColor: 'black',
     margin:2,
