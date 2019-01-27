@@ -121,7 +121,9 @@ render(){
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
             <MenuOptions >
-              <MenuOption value={1} style={{margin:2}} text='מסירה'/>
+              <MenuOption value={1} disabled={false} style={{margin:2}}>
+                <Text style={{fontSize:barHeight/2}}>מסירה</Text>
+              </MenuOption>
               <MenuOption value={2} disabled={true} style={{margin:2}} text='צפיה'/>
               <MenuOption value={3} disabled={true} style={{margin:2}} text='החזרה'/>
               <MenuOption value={4} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',margin:2}} text='היסטוריה'/>
