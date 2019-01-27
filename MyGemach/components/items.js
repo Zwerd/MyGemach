@@ -3,6 +3,7 @@ import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBac
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import ItemDetails from "./itemDetails";
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import {
   MenuProvider,
   Menu,
@@ -28,6 +29,9 @@ export default class Items extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //choose date time
+      isDateTimePickerVisible: false,
+      isDeliverDatePressed: false,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -43,12 +47,11 @@ export default class Items extends React.Component {
       //setting for all section
       itemData:{},
       customerData:{
-        firstName:'',
-        lastName:'',
+        fullName:'',
         address:'',
         phone:'',
         deliverDate:'',
-        recivingDate:'',
+        reciverDate:'',
       },
       itemSelected:[],
       itemsList:[],
@@ -287,14 +290,39 @@ deliverItem = (itemNumber) => {
   this.setState({itemData:data})
 }
 
-deliveredUpdate(){
 
+hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+handleDatePicked = date => {
+  if(this.state.isDeliverDatePressed){
+  this.setState(prevState => ({ customerData: {...prevState.customerData,deliverDate:date.toString()}}));
+  this.hideDateTimePicker()
+}else{
+  this.setState(prevState => ({ customerData: {...prevState.customerData,reciverDate:date.toString()}}));
+  this.hideDateTimePicker()
+};
+};
+
+deliveredUpdate(){
+  this.setState({isDeliverDatePressed:true})
+  this.setState({ isDateTimePickerVisible: true });
+}
+
+reciveredUpdate(){
+  this.setState({isDeliverDatePressed:false})
+  this.setState({ isDateTimePickerVisible: true });
 }
 
   render() {
     return (
       <MenuProvider>
       <View style={styles.container}>
+
+      <DateTimePicker
+        isVisible={this.state.isDateTimePickerVisible}
+        onConfirm={this.handleDeliverDatePicked}
+        onCancel={this.hideDateTimePicker}
+      />
 
       <Modal
         style={[styles.modalbox]}
@@ -322,16 +350,24 @@ deliveredUpdate(){
               style={styles.textInput}
             />
           </View>
-          <View style={{flexDirection:'row-reverse',padding:4}}>
-            <Text style={styles.textInput}>תאריך מסירה: {today.toLocaleDateString("en-US")}</Text>
+          <View style={{flexDirection:'row-reverse',padding:14}}>
+            <TouchableOpacity onPress={this.deliveredUpdate()}>
+              <View style={[styles.header,styles.button,{flex:2}]}>
+                <Text>תאריך מסירה</Text>
+              </View>
+            </TouchableOpacity>
+            <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.deliverDate}</Text>
           </View>
-          <View style={{flexDirection:'row-reverse',padding:4,alignItems:'center'}}>
-            <Text style={styles.textInput}>תאריך החזרה: </Text>
-            <TextInput
-              style={styles.textInput}
-              underlineColorAndroid={'gray'}
-            />
+
+          <View style={{flexDirection:'row-reverse',padding:14}}>
+            <TouchableOpacity onPress={this.reciveredUpdate()}>
+              <View style={styles.button}>
+                <Text>תאריך החזרה</Text>
+              </View>
+            </TouchableOpacity>
+            <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.reciverDate}</Text>
           </View>
+
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={[styles.header,styles.button,{flex:1}]}

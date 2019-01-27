@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {FlatList, Alert, Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import OptionsMenu from "react-native-options-menu";
-import DateTimePicker from 'react-native-modal-datetime-picker';
+
 import {
   MenuProvider,
   Menu,
