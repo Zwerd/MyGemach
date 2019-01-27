@@ -26,6 +26,9 @@ constructor(props) {
     pressed:false,
     delivered:false,
     customerData:{data:1,checking:2},
+    status:false,
+    disabled:{fontSize:barHeight/2,fontWeight:'bold',color:'#DCDCDC'},
+    enabled:{fontSize:barHeight/2,color:'black'}
     };
 }
 
@@ -121,12 +124,18 @@ render(){
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
             <MenuOptions >
-              <MenuOption value={1} disabled={false} style={{margin:2}}>
-                <Text style={{fontSize:barHeight/2}}>מסירה</Text>
+              <MenuOption value={1} style={{margin:2}}>
+                <Text style={this.state.status && this.state.enabled || this.state.disabled}>מסירה</Text>
               </MenuOption>
-              <MenuOption value={2} disabled={true} style={{margin:2}} text='צפיה'/>
-              <MenuOption value={3} disabled={true} style={{margin:2}} text='החזרה'/>
-              <MenuOption value={4} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0',margin:2}} text='היסטוריה'/>
+              <MenuOption value={2} style={{margin:2}}>
+                <Text style={!this.state.status && this.state.enabled || this.state.disabled}>צפיה</Text>
+              </MenuOption>
+              <MenuOption value={3} style={{margin:2}}>
+                <Text style={!this.state.status && this.state.enabled || this.state.disabled}>החזרה</Text>
+              </MenuOption>
+              <MenuOption value={4} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
+                <Text style={this.state.enabled}>הסטוריה</Text>
+              </MenuOption>
             </MenuOptions>
           </Menu>
 
