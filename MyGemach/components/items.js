@@ -3,7 +3,8 @@ import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBac
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import ItemDetails from "./itemDetails";
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-datepicker'
+
 import {
   MenuProvider,
   Menu,
@@ -325,13 +326,24 @@ deliverItem = (itemNumber) => {
               style={styles.textInput}
             />
           </View>
-          <View style={{flexDirection:'row-reverse'}}>
+
+          <View style={{flexDirection:'row-reverse',alignItems:'center'}}>
             <TouchableOpacity style={[styles.dateButton,{flex:2}]} onPress={console.log('deliver')}>
               <View>
                 <Text style={[styles.fontStyle,{color:'gray'}]}>תאריך מסירה</Text>
               </View>
             </TouchableOpacity>
-            <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.deliverDate}</Text>
+            <DatePicker
+              customStyles={{dateInput:{borderWidth: 0}}}
+              style={{borderWidth:1, borderColor:'#008CBA',height:barHeight,margin:5,borderRadius:25,flex:2}}
+              date={this.state.customerData.deliverDate}
+              mode="datetime"
+              format="YYYY-MM-DD HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={true}
+              onDateChange={(datetime) => {this.setState({datetime: datetime});}}
+            />
           </View>
 
           <View style={{flexDirection:'row-reverse'}}>
