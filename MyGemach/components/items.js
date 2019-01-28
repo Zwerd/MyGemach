@@ -291,38 +291,13 @@ deliverItem = (itemNumber) => {
 }
 
 
-hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
-handleDatePicked = date => {
-  if(this.state.isDeliverDatePressed){
-  this.setState(prevState => ({ customerData: {...prevState.customerData,deliverDate:date.toString()}}));
-  this.hideDateTimePicker()
-}else{
-  this.setState(prevState => ({ customerData: {...prevState.customerData,reciverDate:date.toString()}}));
-  this.hideDateTimePicker()
-};
-};
-
-deliveredUpdate(){
-  this.setState({isDeliverDatePressed:true})
-  this.setState({ isDateTimePickerVisible: true });
-}
-
-reciveredUpdate(){
-  this.setState({isDeliverDatePressed:false})
-  this.setState({ isDateTimePickerVisible: true });
-}
 
   render() {
+    const isDateTimePickerVisible = this.state.isDateTimePickerVisible;
     return (
       <MenuProvider>
       <View style={styles.container}>
-
-      <DateTimePicker
-        isVisible={this.state.isDateTimePickerVisible}
-        onConfirm={this.handleDeliverDatePicked}
-        onCancel={this.hideDateTimePicker}
-      />
 
       <Modal
         style={[styles.modalbox]}
@@ -350,23 +325,24 @@ reciveredUpdate(){
               style={styles.textInput}
             />
           </View>
-          <View style={{flexDirection:'row-reverse',padding:14}}>
-            <TouchableOpacity onPress={this.deliveredUpdate()}>
-              <View style={[styles.header,styles.button,{flex:2}]}>
-                <Text>תאריך מסירה</Text>
+          <View style={{flexDirection:'row-reverse',padding:10}}>
+            <TouchableOpacity style={[styles.header,styles.button,{flex:2}]} onPress={console.log('deliver')}>
+              <View>
+                <Text style={styles.fontStyle}>תאריך מסירה</Text>
               </View>
             </TouchableOpacity>
             <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.deliverDate}</Text>
           </View>
 
-          <View style={{flexDirection:'row-reverse',padding:14}}>
-            <TouchableOpacity onPress={this.reciveredUpdate()}>
-              <View style={styles.button}>
-                <Text>תאריך החזרה</Text>
+          <View style={{flexDirection:'row-reverse',padding:10}}>
+            <TouchableOpacity style={[styles.header,styles.button,{flex:2}]} onPress={console.log('reciver')}>
+              <View>
+                <Text style={styles.fontStyle}>תאריך החזרה</Text>
               </View>
             </TouchableOpacity>
             <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.reciverDate}</Text>
           </View>
+
 
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
