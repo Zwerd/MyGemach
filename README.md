@@ -26,6 +26,8 @@ adding permission in the AndroidManifest.xml file:
 '''
 need to change the modalbox style view and the card commponent
 
+npm install --save react-native-modal-datetime-picker
+
 I am at the hospital,
 
 
