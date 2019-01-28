@@ -325,19 +325,19 @@ deliverItem = (itemNumber) => {
               style={styles.textInput}
             />
           </View>
-          <View style={{flexDirection:'row-reverse',padding:10}}>
-            <TouchableOpacity style={[styles.header,styles.button,{flex:2}]} onPress={console.log('deliver')}>
+          <View style={{flexDirection:'row-reverse'}}>
+            <TouchableOpacity style={[styles.dateButton,{flex:2}]} onPress={console.log('deliver')}>
               <View>
-                <Text style={styles.fontStyle}>תאריך מסירה</Text>
+                <Text style={[styles.fontStyle,{color:'gray'}]}>תאריך מסירה</Text>
               </View>
             </TouchableOpacity>
             <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.deliverDate}</Text>
           </View>
 
-          <View style={{flexDirection:'row-reverse',padding:10}}>
-            <TouchableOpacity style={[styles.header,styles.button,{flex:2}]} onPress={console.log('reciver')}>
+          <View style={{flexDirection:'row-reverse'}}>
+            <TouchableOpacity style={[styles.dateButton,{flex:2}]} onPress={console.log('reciver')}>
               <View>
-                <Text style={styles.fontStyle}>תאריך החזרה</Text>
+                <Text style={[styles.fontStyle,{color:'gray'}]}>תאריך החזרה</Text>
               </View>
             </TouchableOpacity>
             <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.reciverDate}</Text>
@@ -507,6 +507,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button:{
+    justifyContent: 'center',
+    height: barHeight,
+    margin: 5,
+    borderRadius: 25,
+    borderWidth:1,
+  },
+  dateButton:{
+    borderColor: "#008CBA",
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     justifyContent: 'center',
     height: barHeight,
     margin: 5,
