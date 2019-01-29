@@ -33,6 +33,8 @@ export default class Items extends React.Component {
       //choose date time
       isDateTimePickerVisible: false,
       isDeliverDatePressed: false,
+      //choose itemNumber
+      chooseItemNumber:null,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -45,6 +47,7 @@ export default class Items extends React.Component {
       pickedImage: this.props.navigation.state.params.data.pickedImage,
       key:0,
       index:0,
+      delivered:false,
       //setting for all section
       itemData:{},
       customerData:{
@@ -75,6 +78,10 @@ componentWillMount(){
 }
 
 componentDidUpdate(){
+  this.props.navigation.state.params.update(this.state.itemsList,this.props.navigation.state.params.data.itemNumber)
+}
+
+componentWillUpdate(){
   this.props.navigation.state.params.update(this.state.itemsList,this.props.navigation.state.params.data.itemNumber)
 }
 
@@ -123,10 +130,9 @@ componentDidUpdate(){
         pickedImage:this.state.pickedImage,
         cardBackgroundColor:'white',
         selected:false,
+        delivered:false,
       }]
     }));
-    console.log('checking item: ',this.props.navigation.state.params.data.itemNumber)
-
     this.refs.creator.close()
   }
 
@@ -251,6 +257,7 @@ renderList(data){
       name={data.gemachName}
       description={data.gemachDescription}
       pickedImage={data.pickedImage}
+      delivered={data.delivered}
     />
   )}
 
@@ -287,13 +294,28 @@ searchByText(text){
 }
 
 deliverItem = (itemNumber) => {
+  this.setState({chooseItemData:itemNumber})
   this.refs.deliverItemMenu.open()
-  data = this.state.itemsList[this.findItem(itemNumber)]
-  console.log('checking data', data)
-  this.setState({itemData:data})
 }
 
-
+approvedDelivering(){
+  itemsList = this.state.itemsList
+  itemsList[this.findItem(this.state.chooseItemData)].customerData = this.state.customerData
+  itemsList[this.findItem(this.state.chooseItemData)].delivered = true
+  this.setState({
+    itemsList:itemsList,
+    customerData:{
+      fullName:'',
+      address:'',
+      phone:'',
+      deliverDate:'',
+      reciverDate:'',
+      deliverSwitch:false,
+      reciverSwitch:false,
+    }
+  })
+  this.refs.deliverItemMenu.close()
+}
 
 
   render() {
@@ -315,17 +337,19 @@ deliverItem = (itemNumber) => {
               underlineColorAndroid={'gray'}
               placeholder={'שם מלא'}
               style={styles.textInput}
-              onChangeText={(text) => console.log(text)}
+              onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,fullName:text}}))}
             />
             <TextInput
               underlineColorAndroid={'gray'}
               placeholder={'כתובת'}
               style={styles.textInput}
+              onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,address:text}}))}
             />
             <TextInput
               underlineColorAndroid={'gray'}
               placeholder={'מספר טלפון'}
               style={styles.textInput}
+              onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,phone:text}}))}
             />
           </View>
           <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
@@ -370,7 +394,7 @@ deliverItem = (itemNumber) => {
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={[styles.header,styles.button,{flex:1}]}
-              onPress={() => this.deliveredUpdate()}
+              onPress={() => this.approvedDelivering()}
               >
               <Text style={styles.fontStyle}>אישור</Text>
             </TouchableOpacity>
