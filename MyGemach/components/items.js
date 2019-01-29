@@ -53,6 +53,8 @@ export default class Items extends React.Component {
         phone:'',
         deliverDate:'',
         reciverDate:'',
+        deliverSwitch:false,
+        reciverSwitch:false,
       },
       itemSelected:[],
       itemsList:[],
@@ -305,10 +307,10 @@ deliverItem = (itemNumber) => {
         position={'center'}
         ref={"deliverItemMenu"}
         >
-          <View style={{padding:10}}>
+          <View style={{padding:10,}}>
             <Text style={{fontSize:barHeight/2}}>מסירת פריט</Text>
           </View>
-          <View style={{padding:10}}>
+          <View style={{padding:10,paddingBottom:0}}>
             <TextInput
               underlineColorAndroid={'gray'}
               placeholder={'שם מלא'}
@@ -326,35 +328,44 @@ deliverItem = (itemNumber) => {
               style={styles.textInput}
             />
           </View>
-
-          <View style={{flexDirection:'row-reverse',alignItems:'center'}}>
-            <TouchableOpacity style={[styles.dateButton,{flex:2}]} onPress={console.log('deliver')}>
-              <View>
-                <Text style={[styles.fontStyle,{color:'gray'}]}>תאריך מסירה</Text>
-              </View>
-            </TouchableOpacity>
+          <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
+            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך מסירה</Text>
+            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך החזרה</Text>
+          </View>
+          <View style={{flexDirection:'row-reverse',alignItems:'center',margin:4,marginTop:0}}>
             <DatePicker
-              customStyles={{dateInput:{borderWidth: 0}}}
-              style={{borderWidth:1, borderColor:'#008CBA',height:barHeight,margin:5,borderRadius:25,flex:2}}
+              customStyles={{
+                dateInput:{borderWidth: 0},
+                placeholderText:{fontSize:barHeight/2,color:'#9D9D9D'},
+                dateText:{fontSize:barHeight/2.5,color: '#9D9D9D'}
+              }}
+              style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
               date={this.state.customerData.deliverDate}
+              placeholder={this.state.deliverSwitch&&this.state.customerData.deliverDate||'בחר תאריך'}
               mode="datetime"
-              format="YYYY-MM-DD HH:mm"
+              format="DD-MM-YYYY HH:mm"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
-              showIcon={true}
-              onDateChange={(datetime) => {this.setState({datetime: datetime});}}
+              showIcon={false}
+              onDateChange={(datetime) => {this.setState(prevState => ({customerData:{...prevState.customerData,deliverDate:datetime,deliverSwitch:true}}))}}
+            />
+            <DatePicker
+              customStyles={{
+                dateInput:{borderWidth:0},
+                placeholderText:{fontSize:barHeight/2,color: '#9D9D9D'},
+                dateText:{fontSize:barHeight/2.5,color: '#9D9D9D'}
+              }}
+              style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
+              date={this.state.customerData.reciverDate}
+              placeholder={this.state.reciverSwitch&&this.state.customerData.reciverDate||'בחר תאריך'}
+              mode="datetime"
+              format="DD-MM-YYYY HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              onDateChange={(datetime) => {this.setState(prevState => ({customerData:{...prevState.customerData,reciverDate:datetime,reciverSwitch:true}}))}}
             />
           </View>
-
-          <View style={{flexDirection:'row-reverse'}}>
-            <TouchableOpacity style={[styles.dateButton,{flex:2}]} onPress={console.log('reciver')}>
-              <View>
-                <Text style={[styles.fontStyle,{color:'gray'}]}>תאריך החזרה</Text>
-              </View>
-            </TouchableOpacity>
-            <Text style={{borderColor:'gray',borderRadius:2,flex:2}}>{this.state.customerData.reciverDate}</Text>
-          </View>
-
 
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
