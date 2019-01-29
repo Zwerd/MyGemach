@@ -33,6 +33,7 @@ constructor(props) {
     };
 }
 
+
 delivered(){
   if(this.state.delivered){
     return "אינו זמין"
@@ -111,7 +112,7 @@ render(){
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
-          <View style={{backgroundColor:!this.state.delivered&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
+          <View style={{backgroundColor:!this.props.delivered&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
         </ImageBackground>
       </View>
       <View style={[styles.View,{flex:4}]}>
@@ -125,14 +126,14 @@ render(){
               <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
             </MenuTrigger>
             <MenuOptions >
-              <MenuOption value={1} style={{margin:2}} disabled={this.state.delivered}>
-                <Text style={!this.state.delivered && this.state.enabled || this.state.disabled}>מסירה</Text>
+              <MenuOption value={1} style={{margin:2}} disabled={this.props.delivered}>
+                <Text style={!this.props.delivered && this.state.enabled || this.state.disabled}>מסירה</Text>
               </MenuOption>
-              <MenuOption value={2} style={{margin:2}} disabled={!this.state.delivered}>
-                <Text style={this.state.delivered && this.state.enabled || this.state.disabled}>צפיה</Text>
+              <MenuOption value={2} style={{margin:2}} disabled={!this.props.delivered}>
+                <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>צפיה</Text>
               </MenuOption>
-              <MenuOption value={3} style={{margin:2}} disabled={!this.state.delivered}>
-                <Text style={this.state.delivered && this.state.enabled || this.state.disabled}>החזרה</Text>
+              <MenuOption value={3} style={{margin:2}} disabled={!this.props.delivered}>
+                <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>החזרה</Text>
               </MenuOption>
               <MenuOption value={4} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
                 <Text style={this.state.enabled}>הסטוריה</Text>

@@ -30,9 +30,6 @@ export default class Items extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //choose date time
-      isDateTimePickerVisible: false,
-      isDeliverDatePressed: false,
       //choose itemNumber
       chooseItemNumber:null,
       //display items
@@ -319,7 +316,6 @@ approvedDelivering(){
 
 
   render() {
-    const isDateTimePickerVisible = this.state.isDateTimePickerVisible;
     return (
       <MenuProvider>
       <View style={styles.container}>
