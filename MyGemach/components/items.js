@@ -78,9 +78,6 @@ componentDidUpdate(){
   this.props.navigation.state.params.update(this.state.itemsList,this.props.navigation.state.params.data.itemNumber)
 }
 
-componentWillUpdate(){
-  this.props.navigation.state.params.update(this.state.itemsList,this.props.navigation.state.params.data.itemNumber)
-}
 
   pickImageHandler = () => {
     ImagePicker.showImagePicker(options, res => {
@@ -245,7 +242,7 @@ renderList(data){
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
-      callViewModalbox={this.viewItem}
+      callReturnedModalbox={this.returnedItem}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -295,14 +292,28 @@ deliverItem = (itemNumber) => {
   this.setState({chooseItemData:itemNumber})
   this.refs.deliverItemMenu.open()
 }
-viewItem = (itemNumber) => {
-  this.setState({
-    chooseItemData:itemNumber,
-    customerData:this.state.itemsList[itemNumber].customerData
-  })
-  console.log('customerData:',this.state.itemsList[itemNumber].customerData,
-'customerData from state:',this.state.customerData)
-  this.refs.viewItemMenu.open()
+returnedItem = (itemNumber) => {
+  Alert.alert(
+    'החזרת פריט',
+    'האם הפריט חזר לקרן?',
+    [
+      {text: 'ביטול', onPress: () => false, style: 'cancel'},
+      {text: 'אישור', onPress: () => this.setState(prevState => ({
+        itemsList:{...prevState.itemsList,
+          ...prevState.itemsList.itemsList[itemNumber].customerData:{
+            fullName:'',
+            address:'',
+            phone:'',
+            deliverDate:'',
+            reciverDate:'',
+            deliverSwitch:false,
+            reciverSwitch:false,
+          }
+        }
+      }))
+     }
+    ],
+  )
 }
 
 approvedDelivering(){
@@ -429,71 +440,7 @@ disapprovedDelivering(){
           </View>
       </Modal>
 
-      <Modal
-        style={[styles.modalbox]}
-        position={'center'}
-        ref={"viewItemMenu"}
-        >
-          <View style={{padding:10,}}>
-            <Text style={{fontSize:barHeight/2}}>צפיה</Text>
-          </View>
-          <View style={{padding:10,paddingBottom:0}}>
-            <Text>{this.state.itemsList[0].customerData.fullName}</Text>
-          </View>
-          <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
-            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך מסירה</Text>
-            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך החזרה</Text>
-          </View>
-          <View style={{flexDirection:'row-reverse',alignItems:'center',margin:4,marginTop:0}}>
-            <DatePicker
-              customStyles={{
-                dateInput:{borderWidth: 0},
-                placeholderText:{fontSize:barHeight/2,color:'#9D9D9D'},
-                dateText:{fontSize:barHeight/2.5,color: '#9D9D9D'}
-              }}
-              style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
-              date={this.state.customerData.deliverDate}
-              placeholder={this.state.deliverSwitch&&this.state.customerData.deliverDate||'בחר תאריך'}
-              mode="datetime"
-              format="DD-MM-YYYY HH:mm"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              onDateChange={(datetime) => {this.setState(prevState => ({customerData:{...prevState.customerData,deliverDate:datetime,deliverSwitch:true}}))}}
-            />
-            <DatePicker
-              customStyles={{
-                dateInput:{borderWidth:0},
-                placeholderText:{fontSize:barHeight/2,color: '#9D9D9D'},
-                dateText:{fontSize:barHeight/2.5,color: '#9D9D9D'}
-              }}
-              style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
-              date={this.state.customerData.reciverDate}
-              placeholder={this.state.reciverSwitch&&this.state.customerData.reciverDate||'בחר תאריך'}
-              mode="datetime"
-              format="DD-MM-YYYY HH:mm"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              onDateChange={(datetime) => {this.setState(prevState => ({customerData:{...prevState.customerData,reciverDate:datetime,reciverSwitch:true}}))}}
-            />
-          </View>
 
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              style={[styles.header,styles.button,{flex:1}]}
-              onPress={() => this.approvedDelivering()}
-              >
-              <Text style={styles.fontStyle}>אישור</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.header,styles.button,{flex:1}]}
-              onPress={() => this.disapprovedDelivering()}
-              >
-              <Text style={styles.fontStyle}>ביטול</Text>
-            </TouchableOpacity>
-          </View>
-      </Modal>
 
 
 

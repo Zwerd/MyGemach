@@ -74,10 +74,8 @@ checkValue(value){
   if(value==1){
     return this.deliver()
   }else if(value==2){
-    return this.view()
-  }else if(value==3){
     return this.returned()
-  }else if(vlaue==4){
+  }else if(vlaue==3){
     return this.historyView()
   }
 }
@@ -86,13 +84,8 @@ deliver(){
   this.props.callDeliverModalbox(this.props.itemNumber)
 }
 
-
-view(){
-  this.props.callViewModalbox(this.props.itemNumber)
-}
-
 returned(){
-  console.log('check')
+  this.props.callReturnedModalbox(this.props.itemNumber)
 }
 
 historyView(){
@@ -117,7 +110,7 @@ render(){
       </View>
       <View style={[styles.View,{flex:4}]}>
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
-        <Text>{JSON.stringify(this.state.customerData)}</Text>
+        <Text>{JSON.stringify(this.props.customerData)}</Text>
         <Text>{console.log('check')}</Text>
       </View>
 
@@ -130,12 +123,9 @@ render(){
                 <Text style={!this.props.delivered && this.state.enabled || this.state.disabled}>מסירה</Text>
               </MenuOption>
               <MenuOption value={2} style={{margin:2}} disabled={!this.props.delivered}>
-                <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>צפיה</Text>
-              </MenuOption>
-              <MenuOption value={3} style={{margin:2}} disabled={!this.props.delivered}>
                 <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>החזרה</Text>
               </MenuOption>
-              <MenuOption value={4} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
+              <MenuOption value={3} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
                 <Text style={this.state.enabled}>הסטוריה</Text>
               </MenuOption>
             </MenuOptions>
