@@ -31,7 +31,7 @@ export default class Items extends React.Component {
     super(props);
     this.state = {
       //choose itemNumber
-      chooseItemNumber:null,
+      chooseItemNumber:-1,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -296,8 +296,13 @@ deliverItem = (itemNumber) => {
   this.refs.deliverItemMenu.open()
 }
 viewItem = (itemNumber) => {
-  this.setState({chooseItemData:itemNumber})
-  this.refs.deliverItemMenu.open()
+  this.setState({
+    chooseItemData:itemNumber,
+    customerData:this.state.itemsList[itemNumber].customerData
+  })
+  console.log('customerData:',this.state.itemsList[itemNumber].customerData,
+'customerData from state:',this.state.customerData)
+  this.refs.viewItemMenu.open()
 }
 
 approvedDelivering(){
@@ -305,7 +310,7 @@ approvedDelivering(){
   itemsList[this.findItem(this.state.chooseItemData)].customerData = this.state.customerData
   itemsList[this.findItem(this.state.chooseItemData)].delivered = true
   this.setState({
-    chooseItemData:null,
+    chooseItemData:-1,
     itemsList:itemsList,
     customerData:{
       fullName:'',
@@ -321,7 +326,7 @@ approvedDelivering(){
 }
 disapprovedDelivering(){
   this.setState({
-    chooseItemData:null,
+    chooseItemData:-1,
     customerData:{
       fullName:'',
       address:'',
@@ -423,6 +428,79 @@ disapprovedDelivering(){
             </TouchableOpacity>
           </View>
       </Modal>
+
+      <Modal
+        style={[styles.modalbox]}
+        position={'center'}
+        ref={"viewItemMenu"}
+        >
+          <View style={{padding:10,}}>
+            <Text style={{fontSize:barHeight/2}}>צפיה</Text>
+          </View>
+          <View style={{padding:10,paddingBottom:0}}>
+            <Text>{this.state.itemsList[0].customerData.fullName}</Text>
+          </View>
+          <View style={{flexDirection:'row-reverse',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
+            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך מסירה</Text>
+            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך החזרה</Text>
+          </View>
+          <View style={{flexDirection:'row-reverse',alignItems:'center',margin:4,marginTop:0}}>
+            <DatePicker
+              customStyles={{
+                dateInput:{borderWidth: 0},
+                placeholderText:{fontSize:barHeight/2,color:'#9D9D9D'},
+                dateText:{fontSize:barHeight/2.5,color: '#9D9D9D'}
+              }}
+              style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
+              date={this.state.customerData.deliverDate}
+              placeholder={this.state.deliverSwitch&&this.state.customerData.deliverDate||'בחר תאריך'}
+              mode="datetime"
+              format="DD-MM-YYYY HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              onDateChange={(datetime) => {this.setState(prevState => ({customerData:{...prevState.customerData,deliverDate:datetime,deliverSwitch:true}}))}}
+            />
+            <DatePicker
+              customStyles={{
+                dateInput:{borderWidth:0},
+                placeholderText:{fontSize:barHeight/2,color: '#9D9D9D'},
+                dateText:{fontSize:barHeight/2.5,color: '#9D9D9D'}
+              }}
+              style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
+              date={this.state.customerData.reciverDate}
+              placeholder={this.state.reciverSwitch&&this.state.customerData.reciverDate||'בחר תאריך'}
+              mode="datetime"
+              format="DD-MM-YYYY HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              onDateChange={(datetime) => {this.setState(prevState => ({customerData:{...prevState.customerData,reciverDate:datetime,reciverSwitch:true}}))}}
+            />
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={[styles.header,styles.button,{flex:1}]}
+              onPress={() => this.approvedDelivering()}
+              >
+              <Text style={styles.fontStyle}>אישור</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.header,styles.button,{flex:1}]}
+              onPress={() => this.disapprovedDelivering()}
+              >
+              <Text style={styles.fontStyle}>ביטול</Text>
+            </TouchableOpacity>
+          </View>
+      </Modal>
+
+
+
+
+
+
+
 
 
 
