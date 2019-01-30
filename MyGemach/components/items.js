@@ -245,6 +245,7 @@ renderList(data){
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
+      callViewModalbox={this.viewItem}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -294,13 +295,33 @@ deliverItem = (itemNumber) => {
   this.setState({chooseItemData:itemNumber})
   this.refs.deliverItemMenu.open()
 }
+viewItem = (itemNumber) => {
+  this.setState({chooseItemData:itemNumber})
+  this.refs.deliverItemMenu.open()
+}
 
 approvedDelivering(){
   itemsList = this.state.itemsList
   itemsList[this.findItem(this.state.chooseItemData)].customerData = this.state.customerData
   itemsList[this.findItem(this.state.chooseItemData)].delivered = true
   this.setState({
+    chooseItemData:null,
     itemsList:itemsList,
+    customerData:{
+      fullName:'',
+      address:'',
+      phone:'',
+      deliverDate:'',
+      reciverDate:'',
+      deliverSwitch:false,
+      reciverSwitch:false,
+    }
+  })
+  this.refs.deliverItemMenu.close()
+}
+disapprovedDelivering(){
+  this.setState({
+    chooseItemData:null,
     customerData:{
       fullName:'',
       address:'',
@@ -396,7 +417,7 @@ approvedDelivering(){
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.header,styles.button,{flex:1}]}
-              onPress={() => this.refs.deliverItemMenu.close()}
+              onPress={() => this.disapprovedDelivering()}
               >
               <Text style={styles.fontStyle}>ביטול</Text>
             </TouchableOpacity>

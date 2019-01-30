@@ -88,7 +88,7 @@ deliver(){
 
 
 view(){
-  console.log('check')
+  this.props.callViewModalbox(this.props.itemNumber)
 }
 
 returned(){
