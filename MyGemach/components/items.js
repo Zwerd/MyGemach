@@ -298,9 +298,22 @@ returnedItem = (itemNumber) => {
     'האם הפריט חזר לקרן?',
     [
       {text: 'ביטול', onPress: () => false, style: 'cancel'},
-      {text: 'אישור', onPress: () => this.setState(prevState => ({
-        itemsList:{...prevState.itemsList,
-          ...prevState.itemsList.itemsList[itemNumber].customerData:{
+      {text: 'אישור', onPress: () => {
+        let itemsList = this.state.itemsList
+        itemsList[itemNumber].customerData = {
+          fullName:'',
+          address:'',
+          phone:'',
+          deliverDate:'',
+          reciverDate:'',
+          deliverSwitch:false,
+          reciverSwitch:false,
+        }
+        itemsList[itemNumber].delivered = false
+        this.setState({
+          chooseItemData:-1,
+          itemsList:itemsList,
+          customerData:{
             fullName:'',
             address:'',
             phone:'',
@@ -309,15 +322,14 @@ returnedItem = (itemNumber) => {
             deliverSwitch:false,
             reciverSwitch:false,
           }
-        }
-      }))
-     }
+        })
+      }},
     ],
   )
 }
 
 approvedDelivering(){
-  itemsList = this.state.itemsList
+  let itemsList = this.state.itemsList
   itemsList[this.findItem(this.state.chooseItemData)].customerData = this.state.customerData
   itemsList[this.findItem(this.state.chooseItemData)].delivered = true
   this.setState({

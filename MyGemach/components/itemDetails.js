@@ -126,7 +126,7 @@ render(){
                 <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>החזרה</Text>
               </MenuOption>
               <MenuOption value={3} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
-                <Text style={this.state.enabled}>הסטוריה</Text>
+                <Text style={this.state.enabled}>היסטוריה</Text>
               </MenuOption>
             </MenuOptions>
           </Menu>
