@@ -3,6 +3,7 @@ import { AppRegistry, View, Text, StatusBar } from 'react-native'
 import {createStackNavigator} from 'react-navigation';
 import Home from './home'
 import Items from './items'
+import Histories from './histories'
 
 
 
@@ -30,10 +31,22 @@ class ItemsScreen extends Component {
   }
 }
 
+class HistoriesScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
+  render() {
+    return (
+        <Histories navigation={this.props.navigation} />
+    )
+  }
+}
 
 const AppContent = createStackNavigator({
   Home:{screen:HomeScreen},
   Items:{screen:ItemsScreen},
+  Histories:{screen:HistoriesScreen},
 });
 
 const App = () => (

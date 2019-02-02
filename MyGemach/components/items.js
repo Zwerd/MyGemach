@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
+import { StackNavigator } from 'react-navigation'
 import ImagePicker from "react-native-image-picker";
 import ItemDetails from "./itemDetails";
 import DatePicker from 'react-native-datepicker'
@@ -243,6 +244,7 @@ renderList(data){
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
       callReturnedModalbox={this.returnedItem}
+      callHistoriesModalbox={() => this.props.navigation.navigate("Histories")}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}

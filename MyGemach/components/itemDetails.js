@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {FlatList, Alert, Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
-import { StackNavigator } from 'react-navigation'
 import OptionsMenu from "react-native-options-menu";
 
 import {
@@ -75,8 +74,8 @@ checkValue(value){
     return this.deliver()
   }else if(value==2){
     return this.returned()
-  }else if(vlaue==3){
-    return this.historyView()
+  }else if(value==3){
+    return this.historiesView()
   }
 }
 
@@ -85,10 +84,11 @@ deliver(){
 }
 
 returned(){
-  this.props.callReturnedModalbox(this.props.itemNumber)
+
 }
 
-historyView(){
+historiesView(){
+  this.props.callHistoriesModalbox(this.props.itemNumber)
   console.log('check')
 }
 
