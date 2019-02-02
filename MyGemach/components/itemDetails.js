@@ -84,7 +84,7 @@ deliver(){
 }
 
 returned(){
-
+  this.props.callReturnedModalbox(this.props.itemNumber)
 }
 
 historiesView(){

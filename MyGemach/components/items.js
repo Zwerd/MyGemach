@@ -244,7 +244,8 @@ renderList(data){
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
       callReturnedModalbox={this.returnedItem}
-      callHistoriesModalbox={() => this.props.navigation.navigate("Histories")}
+      callHistoriesModalbox={() => this.props.navigation.navigate("Histories",
+                                   {historiesData:this.historiesRender.bind(this)})}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -302,6 +303,7 @@ returnedItem = (itemNumber) => {
       {text: 'ביטול', onPress: () => false, style: 'cancel'},
       {text: 'אישור', onPress: () => {
         let itemsList = this.state.itemsList
+        let customerData = this.state.customerData
         itemsList[itemNumber].customerData = {
           fullName:'',
           address:'',
@@ -311,6 +313,7 @@ returnedItem = (itemNumber) => {
           deliverSwitch:false,
           reciverSwitch:false,
         }
+        itemsList[itemNumber].histories = customerData
         itemsList[itemNumber].delivered = false
         this.setState({
           chooseItemData:-1,
@@ -365,6 +368,9 @@ disapprovedDelivering(){
   this.refs.deliverItemMenu.close()
 }
 
+historiesRender(itemNumber){
+  <Text>{this.state.itemsList[itemNumber].histories}</Text>
+}
 
   render() {
     return (
