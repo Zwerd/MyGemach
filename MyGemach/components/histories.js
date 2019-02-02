@@ -372,9 +372,8 @@ searchByText(text){
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
-        {this.state.displayGemach && this.renderList(this.state.dataList) || this.renderList(this.state.searchList)}
         <View>
-          {this.props.navigation.state.params.historiesData}
+          <Text style={{fontSize:barHeight, color:'black'}}>{this.props.navigation.state.params.historiesData[0].fullName}</Text>
         </View>
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>

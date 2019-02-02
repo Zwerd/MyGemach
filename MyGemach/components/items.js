@@ -126,6 +126,7 @@ componentDidUpdate(){
         cardBackgroundColor:'white',
         selected:false,
         delivered:false,
+        histories:[],
       }]
     }));
     this.refs.creator.close()
@@ -244,8 +245,8 @@ renderList(data){
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
       callReturnedModalbox={this.returnedItem}
-      callHistoriesModalbox={() => this.props.navigation.navigate("Histories",
-                                   {historiesData:this.historiesRender.bind(this)})}
+      callHistoriesModalbox={(itemNumber) => this.props.navigation.navigate("Histories",
+                                   {historiesData:this.state.itemsList[itemNumber].histories})}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -303,7 +304,8 @@ returnedItem = (itemNumber) => {
       {text: 'ביטול', onPress: () => false, style: 'cancel'},
       {text: 'אישור', onPress: () => {
         let itemsList = this.state.itemsList
-        let customerData = this.state.customerData
+        itemsList[itemNumber].histories.push(itemsList[itemNumber].customerData)
+        itemsList[itemNumber].delivered = false
         itemsList[itemNumber].customerData = {
           fullName:'',
           address:'',
@@ -313,8 +315,6 @@ returnedItem = (itemNumber) => {
           deliverSwitch:false,
           reciverSwitch:false,
         }
-        itemsList[itemNumber].histories = customerData
-        itemsList[itemNumber].delivered = false
         this.setState({
           chooseItemData:-1,
           itemsList:itemsList,
