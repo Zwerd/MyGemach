@@ -10,19 +10,10 @@ constructor(props) {
     };
 }
 
-renderList(this.props.historiesData){
-  return this.props.historiesData.map(data =>
-    <View style={styles.View}>
-      <Text>שם: {this.props.name}</Text>
-      <Text>תיאור: {this.props.description}</Text>
-      <Text>תאריך: {this.props.date}</Text>
-      <Text>מספר: {this.props.itemNumber+1}</Text>
-    </View>
 
 render(){
   return(
-    {
-      this.props.historiesData.map(data =>
+    {this.props.historiesData.map(data =>
         <View style={styles.View}>
           <Text>שם: {data.fullName}</Text>
           <Text>כתובת: {data.address}</Text>
