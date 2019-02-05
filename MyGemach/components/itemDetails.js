@@ -1,178 +1,200 @@
 import React, {Component} from 'react';
-import {FlatList, Alert, Switch, TextInput, Dimensions, Image,ImageBackground, TouchableOpacity, StyleSheet, Text, View,StatusBar} from 'react-native';
-import OptionsMenu from "react-native-options-menu";
-
-import {
-  MenuProvider,
-  Menu,
-  MenuTrigger,
-  MenuOptions,
-  MenuOption,
-} from 'react-native-popup-menu';
+import {Alert, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
+import { StackNavigator } from 'react-navigation'
 
 
 
-let dim = Dimensions.get('window');
-let barHeight = StatusBar.currentHeight * 1.5
 let today  = new Date();
+let dim = Dimensions.get('window');
+let barHeight = StatusBar.currentHeight * 2
 
-const myIcon = (<View name="rocket" size={30} color="#900" />)
-
-export default class ItemDetails extends Component {
-constructor(props) {
-  super(props);
-  this.state = {
-    backgroundColor:this.props.backgroundColor,
-    pressed:false,
-    delivered:this.props.delivered,
-    customerData:{data:1,checking:2},
-    status:true,
-    disabled:{fontSize:barHeight/2,fontWeight:'bold',color:'#DCDCDC'},
-    enabled:{fontSize:barHeight/2,color:'black'}
-    };
+const options={
+  title:null,
+  takePhotoButtonTitle:'צלם תמונה',
+  chooseFromLibraryButtonTitle:'בחר מספריה מקומית',
+  cancelButtonTitle: 'ביטול'
 }
 
+export default class ItemDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      //display items
+      displayGemach: false,
+      displayImage: false,
+      displaySearch:false,
+      //setting for Gemach
+      date:new Date().toLocaleDateString("en-US"),
+      gemachName: '',
+      gemachDescription: '',
+      pickedImage: null,
+      key:0,
+      index:0,
+      //setting for all section
+      itemSelected:[],
+      dataList:[],
+      searchList:[],
+      editor:{},
+     };
+  }
 
-delivered(){
-  if(this.state.delivered){
-    return "אינו זמין"
-  }else{
-    return "זמין"
+findItem(itemNumber){
+  let newList = this.state.dataList
+  for(a=0;a<newList.length;a++){
+    if(newList[a].key == itemNumber){
+      return newList.indexOf(newList[a])
+    }
   }
 }
 
-/*
-selectedItem(){
-  if(this.state.backgroundColor === 'rgb(201,241,255)'){
-    //this.setState({backgroundColor:'white'})
-    this.props.callbackSelectedItem('remove',this.props.itemNumber)
-  }else{
-    //this.setState({backgroundColor:'rgb(201,241,255)'})
-    this.props.callbackSelectedItem('add', this.props.itemNumber)
-  }
-}
-*/
 
-pressed(){
-  Activity.openOptionsMenu()
-}
-  /*
- Alert.alert(
-    'null',
-    [
-      {text: 'מסירה', onPress: () => false, style: 'cancel'},
-      {text: 'צפייה', onPress: () => false, style: 'cancel' },
-      {text: 'החזרה', onPress: () => false, style: 'cancel' },
-      {text: 'היסטוריה', onPress: () => false, style: 'cancel' },
-    ]
-  )
-}
-*/
+renderList(data){
+  return data.map(data =>
+    <Card
+      backgroundColor={data.cardBackgroundColor}
+      callbackSelectedItem={this.selectedItem}
+      navigate={() => this.props.navigation.navigate("Items",
+                      {update:this.onChangeData.bind(this),data:data})}
+      remove={this.state.remove}
+      edit={this.state.edit}
+      key={data.key}
+      itemNumber={data.key}
+      date={data.date}
+      display={data.displayGemach}
+      name={data.gemachName}
+      description={data.gemachDescription}
+      pickedImage={data.pickedImage}
+    />
+  )}
 
-checkValue(value){
-  if(value==1){
-    return this.deliver()
-  }else if(value==2){
-    return this.returned()
-  }else if(value==3){
-    return this.historiesView()
-  }
+  renderHistory(history){
+    let key = 0
+    return history.map(data =>
+      <View key={key+=1} style={{backgroundColor: 'rgba(255, 255, 255, 0.8)', borderBottomWidth:1,justifyContent:'center',alignItems:'center'}}>
+        <Text style={{fontSize:barHeight/2}}>{data.fullName}, {data.address}, {data.phone}, {data.deliverDate}, {data.reciverDate}</Text>
+      </View>
+    )}
+
+
+openSearch(){
+  this.setState({displaySearch:true})
 }
 
-deliver(){
-  this.props.callDeliverModalbox(this.props.itemNumber)
+removeSearch(){
+  this.setState({displaySearch:false,searchList:[],displayGemach:true})
 }
 
-returned(){
-  this.props.callReturnedModalbox(this.props.itemNumber)
+//search function
+searchByText(text){
+  let data = []
+  for(i=0;i<this.state.dataList.length;i++){
+    if(this.state.dataList[i].gemachName.includes(text)){
+      data.push(this.state.dataList[i])
+    }
+  }this.setState(prevState => ({
+    displayGemach:false,
+    searchList:data}))
 }
 
-historiesView(){
-  this.props.callHistoriesModalbox(this.props.itemNumber)
-  console.log('check')
-}
+  render() {
+    return (
+      <View style={styles.container}>
+        <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>
+        <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'center',backgroundColor: 'rgb(0,176,240)', height: barHeight}}>
+          <View style={{flex:1, flexDirection: 'row', alignItems:'center'}}>
+          <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Items")}>
+              <Image source={require('../images/back.png')} style={{width: barHeight, height: barHeight}}/>
+            </TouchableOpacity>
+          </View>
+          <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
+            <Text style={styles.fontStyle}>{this.props.navigation.state.params.itemData.gemachName}</Text>
 
-
-//this.props.callbackModalbox(this.props.itemNumber)
-render(){
-  return(
-
-  <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
-  <TouchableOpacity
-    onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
-    onPress={() => alert('pressed!')}
-    >
-    <View style={{ flexDirection: 'row-reverse'}}>
-      <View style={[styles.View,styles.ViewImage,{flex:2}]}>
-        <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
-          <View style={{backgroundColor:!this.props.delivered&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
+          </View>
+        </View>
+        <ScrollView style={{height:dim.height-barHeight}}>
+        <View style={{flex:1,backgroundColor:'rgba(255, 255, 255, 0.8)',justifyContent:'center'}}>
+          <View style={{padding:5,width:dim.width,height:dim.width}}>
+            <Image source={this.props.navigation.state.params.itemData.pickedImage} style={{width:'100%',height:'100%'}}/>
+          </View>
+          <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center'}}>
+            <View style={{width:barHeight,height:barHeight}}>
+              <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
+            </View>
+            <View style={{padding:5, flex:2}}>
+              <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemData.delivered&&'פריט זמין'||'פריט אינו זמין'}</Text>
+            </View>
+          </View>
+            {!this.props.navigation.state.params.itemData.delivered ||
+          <View style={{padding:5, flex:2}}>
+              <Text style={{fontSize:barHeight/2}}>פרטי לקוח:</Text>
+              <Text style={{fontSize:barHeight/2}}>שם מלא: {this.props.navigation.state.params.itemData.customerData.fullName}</Text>
+              <Text style={{fontSize:barHeight/2}}>כתובת: {this.props.navigation.state.params.itemData.customerData.address}</Text>
+              <Text style={{fontSize:barHeight/2}}>מספר טלפון: {this.props.navigation.state.params.itemData.customerData.phone}</Text>
+              <Text style={{fontSize:barHeight/2}}>תאריך מסירה: {this.props.navigation.state.params.itemData.customerData.deliverDate}</Text>
+              <Text style={{fontSize:barHeight/2}}>תאריך החזרה: {this.props.navigation.state.params.itemData.customerData.reciverDate}</Text>
+          </View>
+            }
+        </View>
+        </ScrollView>
+          <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',height:barHeight}}>
+            {console.log(dim)}
+          </View>
         </ImageBackground>
       </View>
-      <View style={[styles.View,{flex:4}]}>
-        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
-        <Text>{JSON.stringify(this.props.customerData)}</Text>
-        <Text>{console.log('check')}</Text>
-      </View>
-
-         <Menu onSelect={value => this.checkValue(value)}>
-            <MenuTrigger>
-              <Image source={require('../images/miniMenu.png')} style={{width: barHeight, height: barHeight}}/>
-            </MenuTrigger>
-            <MenuOptions >
-              <MenuOption value={1} style={{margin:2}} disabled={this.props.delivered}>
-                <Text style={!this.props.delivered && this.state.enabled || this.state.disabled}>מסירה</Text>
-              </MenuOption>
-              <MenuOption value={2} style={{margin:2}} disabled={!this.props.delivered}>
-                <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>החזרה</Text>
-              </MenuOption>
-              <MenuOption value={3} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
-                <Text style={this.state.enabled}>היסטוריה</Text>
-              </MenuOption>
-            </MenuOptions>
-          </Menu>
-
-    </View>
-  </TouchableOpacity>
-
-
-
-
-
-  </View>
-    )
+    );
   }
 }
+
 const styles = StyleSheet.create({
-  display:{
+  fontStyle:{
+    fontFamily:'nrkis',
+    fontSize:StatusBar.currentHeight,
+    color: 'white',
+    alignItems:'center'
+  },
+  header:{
+    backgroundColor: 'rgb(0,176,240)',//#00B0F0
+    borderColor: "#008CBA",
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  button:{
     justifyContent: 'center',
-    textAlign: 'right',
+    height: barHeight,
     margin: 5,
-    marginRight:null,
-    marginBottom:0,
-    borderColor: '#00B0F0',
-    borderWidth: 1,
+    borderRadius: 25,
+    borderWidth:1,
+  },
+  modalbox:{
+    justifyContent: 'center',
+    height: null,
   },
   textInput:{
     flex:1,
     fontSize:StatusBar.currentHeight,
-    borderColor: 'black',
-    borderRadius:5,
-    borderWidth: 1,
+    borderColor: 'gray',
     margin:2,
   },
-  View:{
-    height: dim.height/6,
-    width: ((dim.width-11)/4) * 3,
-    borderWidth:null,
-    borderRadius: 10,
-    padding:2,
+  ViewTitle: {
+    width: ((dim.width-22)/4) * 3,
   },
-  ViewImage:{
-    width: (dim.width-16)/3,
-    overflow: 'hidden',
+  imageBox:{
+    backgroundColor: "white",
+    borderColor: "black",
+    borderStyle:'dashed',
+    borderWidth:1,
+    borderRadius:2,
+    justifyContent:'center',
+    alignItems:'center',
+    height: dim.height/6,
+    width: dim.width/3,
+    margin:5,
   },
   previewImage: {
     width: "100%",
     height: "100%",
-  }
+    borderRadius:2,
+  },
 });

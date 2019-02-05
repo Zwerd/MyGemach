@@ -244,9 +244,9 @@ renderList(data){
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
-      callReturnedModalbox={this.returnedItem}callRenderItemDetails
+      callReturnedModalbox={this.returnedItem}
       callRenderItemDetails={(itemNumber) => this.props.navigation.navigate("ItemDetails",
-                                   {item:this.state.itemsList[itemNumber]})}
+                                   {itemData:this.state.itemsList[itemNumber]})}
       callHistoriesModalbox={(itemNumber) => this.props.navigation.navigate("Histories",
                                    {historiesData:this.state.itemsList[itemNumber].histories})}
       remove={this.state.remove}
@@ -306,7 +306,7 @@ returnedItem = (itemNumber) => {
       {text: 'ביטול', onPress: () => false, style: 'cancel'},
       {text: 'אישור', onPress: () => {
         let itemsList = this.state.itemsList
-        itemsList[itemNumber].histories.push(itemsList[itemNumber].customerData)
+        itemsList[itemNumber].histories.unshift(itemsList[itemNumber].customerData)
         itemsList[itemNumber].delivered = false
         itemsList[itemNumber].customerData = {
           fullName:'',
