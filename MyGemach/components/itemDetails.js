@@ -97,6 +97,7 @@ searchByText(text){
 }
 
   render() {
+    console.log('itemDetails:',this.props.navigation.state.params.itemData)
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>

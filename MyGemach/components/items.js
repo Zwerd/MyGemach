@@ -246,9 +246,9 @@ renderList(data){
       callDeliverModalbox={this.deliverItem}
       callReturnedModalbox={this.returnedItem}
       callRenderItemDetails={(itemNumber) => this.props.navigation.navigate("ItemDetails",
-                                   {itemData:this.state.itemsList[itemNumber]})}
+                                   {itemData:this.state.itemsList[this.findItem(itemNumber)]})}
       callHistoriesModalbox={(itemNumber) => this.props.navigation.navigate("Histories",
-                                   {historiesData:this.state.itemsList[itemNumber].histories})}
+                                   {historiesData:this.state.itemsList[this.findItem(itemNumber)].histories})}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
