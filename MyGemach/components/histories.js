@@ -130,7 +130,6 @@ searchByText(text){
         </View>
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',height:barHeight}}>
-
           </View>
         </ImageBackground>
       </View>
