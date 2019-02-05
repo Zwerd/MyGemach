@@ -112,10 +112,9 @@ searchByText(text){
 
           </View>
         </View>
-        <ScrollView style={{height:dim.height-barHeight}}>
-        <View style={{flex:1,backgroundColor:'rgba(255, 255, 255, 0.8)',justifyContent:'center'}}>
+        <ScrollView style={{backgroundColor:'rgba(255, 255, 255, 0.8)',height:dim.height-barHeight}}>
           <View style={{padding:5,width:dim.width,height:dim.width}}>
-            <Image source={this.props.navigation.state.params.itemData.pickedImage} style={{width:'100%',height:'100%'}}/>
+            <Image source={this.props.navigation.state.params.itemData.pickedImage} style={{borderRadius:2,width:'100%',height:'100%'}}/>
           </View>
           <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center'}}>
             <View style={{width:barHeight,height:barHeight}}>
@@ -135,7 +134,6 @@ searchByText(text){
               <Text style={{fontSize:barHeight/2}}>תאריך החזרה: {this.props.navigation.state.params.itemData.customerData.reciverDate}</Text>
           </View>
             }
-        </View>
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',height:barHeight}}>
             {console.log(dim)}
