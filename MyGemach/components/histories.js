@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import { StackNavigator } from 'react-navigation'
-import HistoryView from './historyView'
+
 
 
 let today  = new Date();
@@ -67,6 +67,14 @@ renderList(data){
     />
   )}
 
+  renderHistory(history){
+    let key = 0
+    return history.map(data =>
+      <View key={key+=1} style={{backgroundColor: 'rgba(255, 255, 255, 0.8)', borderBottomWidth:1,justifyContent:'center',alignItems:'center'}}>
+        <Text style={{fontSize:barHeight/2}}>{data.fullName}, {data.address}, {data.phone}, {data.deliverDate}, {data.reciverDate}</Text>
+      </View>
+    )}
+
 
 openSearch(){
   this.setState({displaySearch:true})
@@ -118,9 +126,7 @@ searchByText(text){
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>
         <View>
-          <Text style={{fontSize:barHeight/2, color:'black'}}>
-           <HistoryView historiesData={this.props.navigation.state.params.historiesData}/>
-          </Text>
+           {this.renderHistory(this.props.navigation.state.params.historiesData)}
         </View>
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',height:barHeight}}>
