@@ -244,7 +244,9 @@ renderList(data){
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}
-      callReturnedModalbox={this.returnedItem}
+      callReturnedModalbox={this.returnedItem}callRenderItemDetails
+      callRenderItemDetails={(itemNumber) => this.props.navigation.navigate("ItemDetails",
+                                   {item:this.state.itemsList[itemNumber]})}
       callHistoriesModalbox={(itemNumber) => this.props.navigation.navigate("Histories",
                                    {historiesData:this.state.itemsList[itemNumber].histories})}
       remove={this.state.remove}

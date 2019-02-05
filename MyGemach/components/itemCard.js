@@ -100,7 +100,7 @@ render(){
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
   <TouchableOpacity
     onLongPress={() => this.props.callbackFromItems(this.props.itemNumber)}
-    onPress={() => alert('pressed!')}
+    onPress={() => this.props.callRenderItemDetails(this.props.itemNumber)}
     >
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
