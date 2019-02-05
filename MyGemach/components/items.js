@@ -3,7 +3,7 @@ import {Switch, Alert, Dimensions, Image, TouchableOpacity, ScrollView, ImageBac
 import Modal from 'react-native-modalbox';
 import { StackNavigator } from 'react-navigation'
 import ImagePicker from "react-native-image-picker";
-import ItemDetails from "./itemDetails";
+import ItemCard from "./itemCard";
 import DatePicker from 'react-native-datepicker'
 
 import {
@@ -240,7 +240,7 @@ gemachEditor(){
 
 renderList(data){
   return data.map(data =>
-    <ItemDetails
+    <ItemCard
       backgroundColor={data.cardBackgroundColor}
       callbackFromItems={this.selectedItem}
       callDeliverModalbox={this.deliverItem}

@@ -18,7 +18,7 @@ let today  = new Date();
 
 const myIcon = (<View name="rocket" size={30} color="#900" />)
 
-export default class ItemDetails extends Component {
+export default class ItemCard extends Component {
 constructor(props) {
   super(props);
   this.state = {
