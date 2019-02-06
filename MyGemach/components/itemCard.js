@@ -105,7 +105,7 @@ render(){
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
-          <View style={{backgroundColor:!this.props.delivered&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
+          <View style={{backgroundColor:!this.props.delivered&&'green'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
         </ImageBackground>
       </View>
       <View style={[styles.View,{flex:4}]}>

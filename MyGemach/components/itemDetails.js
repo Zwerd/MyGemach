@@ -118,10 +118,10 @@ searchByText(text){
             <Image source={this.props.navigation.state.params.itemData.pickedImage} style={{borderRadius:2,width:'100%',height:'100%'}}/>
           </View>
           <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center'}}>
-            <View style={{width:barHeight,height:barHeight}}>
-              <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'green'||'red',borderRadius:25,height:barHeight,width:barHeight}}></View>
+            <View style={{flex:1,justifyContent: 'center',}}>
+              <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'green'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
             </View>
-            <View style={{padding:5, flex:2}}>
+            <View style={{flex:3,justifyContent:'center'}}>
               <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemData.delivered&&'פריט זמין'||'פריט אינו זמין'}</Text>
             </View>
           </View>
