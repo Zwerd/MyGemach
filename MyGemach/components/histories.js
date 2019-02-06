@@ -70,8 +70,13 @@ renderList(data){
   renderHistory(history){
     let key = 0
     return history.map(data =>
-      <View key={key+=1} style={{backgroundColor: 'rgba(255, 255, 255, 0.8)', borderBottomWidth:1,justifyContent:'center',alignItems:'center'}}>
-        <Text style={{fontSize:barHeight/2}}>{data.fullName}, {data.address}, {data.phone}, {data.deliverDate}, {data.reciverDate}</Text>
+      <View key={key+=1} style={{backgroundColor: 'rgba(255, 255, 255, 0.8)',flexDirection:'row-reverse', borderBottomWidth:1,}}>
+        <View style={{flex:2}}>
+          <Text style={{fontSize:barHeight/2.5}}>{data.fullName}, {data.address}, {data.phone}</Text>
+        </View>
+        <View style={{flex:2, borderRightWidth:1, borderColor:'gray'}}>
+          <Text style={{fontSize:barHeight/2.5}}>{data.deliverDate}, {data.reciverDate}</Text>
+        </View>
       </View>
     )}
 
