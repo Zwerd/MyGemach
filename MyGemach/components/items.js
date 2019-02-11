@@ -230,7 +230,8 @@ edit(){
             date:itemsList[a].date,
             cardBackgroundColor:'white',
             selected:false,
-            index:itemsList.indexOf(itemsList[a])
+            index:itemsList.indexOf(itemsList[a]),
+            customerData:itemsList[a].customerData
           }
         })
       }
