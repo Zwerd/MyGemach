@@ -118,7 +118,7 @@ searchByText(text){
             <Image source={this.props.navigation.state.params.itemData.pickedImage} style={{borderRadius:2,width:'100%',height:'100%'}}/>
           </View>
           <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center'}}>
-            <View style={{flex:1,justifyContent: 'center',}}>
+            <View style={{flex:1,flexDirection: "row",justifyContent:'center'}}>
               <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'#32CD32'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
             </View>
             <View style={{flex:3,justifyContent:'center'}}>
