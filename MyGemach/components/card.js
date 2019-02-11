@@ -36,10 +36,9 @@ render(){
       </ImageBackground>
     </View>
       <View style={styles.View}>
-        <Text>שם: {this.props.name}</Text>
-        <Text>תיאור: {this.props.description}</Text>
-        <Text>תאריך: {this.props.date}</Text>
-        <Text>מספר: {this.props.itemNumber+1}</Text>
+        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}.{this.props.name}</Text>
+        <Text style={{fontSize:StatusBar.currentHeight/1.5}}>{this.props.description}</Text>
+        <Text>{this.props.date}</Text>
       </View>
     </View>
   </TouchableOpacity>

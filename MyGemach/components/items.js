@@ -127,6 +127,15 @@ componentDidUpdate(){
         selected:false,
         delivered:false,
         histories:[],
+        customerData:{
+          fullName:'',
+          address:'',
+          phone:'',
+          deliverDate:'',
+          reciverDate:'',
+          deliverSwitch:false,
+          reciverSwitch:false,
+        },
       }]
     }));
     this.refs.creator.close()
@@ -259,6 +268,7 @@ renderList(data){
       description={data.gemachDescription}
       pickedImage={data.pickedImage}
       delivered={data.delivered}
+      customerData={data.customerData}
     />
   )}
 

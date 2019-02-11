@@ -119,7 +119,7 @@ searchByText(text){
           </View>
           <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center'}}>
             <View style={{flex:1,justifyContent: 'center',}}>
-              <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'green'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
+              <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'#32CD32'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
             </View>
             <View style={{flex:3,justifyContent:'center'}}>
               <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemData.delivered&&'פריט זמין'||'פריט אינו זמין'}</Text>

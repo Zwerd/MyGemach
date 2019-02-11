@@ -25,7 +25,6 @@ constructor(props) {
     backgroundColor:this.props.backgroundColor,
     pressed:false,
     delivered:this.props.delivered,
-    customerData:{data:1,checking:2},
     status:true,
     disabled:{fontSize:barHeight/2,fontWeight:'bold',color:'#DCDCDC'},
     enabled:{fontSize:barHeight/2,color:'black'}
@@ -105,13 +104,12 @@ render(){
     <View style={{ flexDirection: 'row-reverse'}}>
       <View style={[styles.View,styles.ViewImage,{flex:2}]}>
         <ImageBackground source={this.props.pickedImage} style={[styles.previewImage,{flexDirection: 'row-reverse'}]}>
-          <View style={{backgroundColor:!this.props.delivered&&'green'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
+          <View style={{backgroundColor:!this.props.delivered&&'#32CD32'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
         </ImageBackground>
       </View>
       <View style={[styles.View,{flex:4}]}>
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}. {this.props.name}</Text>
-        <Text>{JSON.stringify(this.props.customerData)}</Text>
-        <Text>{console.log('check')}</Text>
+        <Text style={{fontSize:StatusBar.currentHeight/1.5}}>{this.props.customerData.fullName} {this.props.customerData.address} {this.props.customerData.phone}</Text>
       </View>
 
          <Menu onSelect={value => this.checkValue(value)}>
