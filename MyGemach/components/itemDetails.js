@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
+import {Alert, Linking, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import { StackNavigator } from 'react-navigation'
 
 
@@ -136,9 +136,31 @@ searchByText(text){
           </View>
             }
         </ScrollView>
-          <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',height:barHeight}}>
-            {console.log(dim)}
+            {this.props.navigation.state.params.itemData.delivered &&
+          <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',justifyContent:'space-around',height:barHeight}}>
+            <TouchableOpacity
+              style={{height:barHeight, width:barHeight}}
+              onPress={() => Linking.openURL('whatsapp://send?phone=+972'+this.props.navigation.state.params.itemData.customerData.phone.substring(1))}
+              >
+                <Image source={require('../images/whatsapp-logo.png')} style={{width: '100%', height: '100%'}}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{height:barHeight, width:barHeight}}
+              onPress={() => Linking.openURL(`tel:${this.props.navigation.state.params.itemData.customerData.phone}`)}
+              >
+                <Image source={require('../images/call.png')} style={{width: '100%', height: '100%'}}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{height:barHeight, width:barHeight}}
+              onPress={() => Linking.openURL(`sms:${this.props.navigation.state.params.itemData.customerData.phone}`)}
+              >
+                  <Image source={require('../images/message.png')} style={{width: '100%', height: '100%'}} />
+            </TouchableOpacity>
           </View>
+          ||
+          <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',justifyContent:'space-around',height:barHeight}}>
+          </View>
+        }
         </ImageBackground>
       </View>
     );
