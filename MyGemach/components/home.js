@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
+import {Alert, AsyncStorage, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
 import Card from "./card";
@@ -37,6 +37,22 @@ export default class Home extends React.Component {
       editor:{},
      };
   }
+
+  componentWillMount() {
+      AsyncStorage.getItem('data')
+        .then(value => {
+          this.setState({ dataList: value || 0 })
+        })
+        .done()
+    }
+
+  saveData() {
+    console.log('savedata:',this.state.dataList)
+    AsyncStorage.setItem('data', this.state.dataList)
+  }
+
+
+
 
   pickImageHandler = () => {
     ImagePicker.showImagePicker(options, res => {
@@ -121,7 +137,7 @@ removeApproved(){
       'האם למחוק את הקרן שנבחרה לצמיתות?',
       [
         {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => this.remove() }
+        {text: 'אישור', onPress: () => {this.saveData(),this.remove()} }
       ],
     )
   }else if(this.state.itemSelected.length>1){
@@ -130,7 +146,7 @@ removeApproved(){
       'האם למחוק את הקרנות הנבחרות לצמיתות?',
       [
         {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => this.remove() }
+        {text: 'אישור', onPress: () => {this.saveData(),this.remove()} }
       ],
     )
   }
@@ -162,6 +178,7 @@ edit(){
             }
           }
           this.setState({dataList:dataList})
+          this.saveData()
         }, style: 'cancel'}
       ],
     )
@@ -191,7 +208,9 @@ gemachEditor(){
   this.setState({
     dataList:dataList,
     itemSelected:[],
-  });this.refs.editor.close()
+  });
+  this.saveData()
+  this.refs.editor.close()
 }
 
 onChangeData(update,itemNumber){
@@ -256,6 +275,7 @@ searchByText(text){
 }
 
   render() {
+    this.saveData()
     return (
       <View style={styles.container}>
 
