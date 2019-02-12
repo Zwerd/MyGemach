@@ -5,6 +5,7 @@ import Home from './home'
 import Items from './items'
 import ItemDetails from './itemDetails'
 import Histories from './histories'
+import Settings from './settings'
 
 
 
@@ -16,6 +17,18 @@ class HomeScreen extends Component {
   render() {
     return (
         <Home navigation={this.props.navigation} />
+    )
+  }
+}
+
+class SettingsScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
+  render() {
+    return (
+        <Settings navigation={this.props.navigation} />
     )
   }
 }
@@ -58,6 +71,7 @@ class HistoriesScreen extends Component {
 
 const AppContent = createStackNavigator({
   Home:{screen:HomeScreen},
+  Settings:{screen:SettingsScreen},
   Items:{screen:ItemsScreen},
   ItemDetails:{screen:ItemDetailsScreen},
   Histories:{screen:HistoriesScreen},

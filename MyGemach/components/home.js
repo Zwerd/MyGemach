@@ -353,7 +353,7 @@ searchByText(text){
             <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
           <TouchableOpacity
-              onPress={() => alert('setting pressed!')}>
+              onPress={() => this.props.navigation.navigate("Settings")}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
