@@ -47,7 +47,6 @@ export default class Items extends React.Component {
       index:0,
       delivered:false,
       //setting for all section
-      itemData:{},
       customerData:{
         fullName:'',
         address:'',
@@ -67,15 +66,16 @@ export default class Items extends React.Component {
 
 
 componentWillMount(){
-  console.log('check will mount: --- ',this.props.navigation.state.params.data)
+  console.log('items page data: ', this.props.navigation.state.params.data)
   this.setState({
-    itemsList:this.props.navigation.state.params.data.itemData,
+    itemsList:this.props.navigation.state.params.data.itemsList,
     displayGemach:true,
-    key:this.props.navigation.state.params.data.itemData.length
+    key:this.props.navigation.state.params.data.itemsList.length
   })
 }
 
 componentDidUpdate(){
+  console.log('checking updateds: ',this.props.navigation.state.params.data.itemNumber)
   this.props.navigation.state.params.update(this.state.itemsList,this.props.navigation.state.params.data.itemNumber)
 }
 
@@ -256,7 +256,7 @@ renderList(data){
       callDeliverModalbox={this.deliverItem}
       callReturnedModalbox={this.returnedItem}
       callRenderItemDetails={(itemNumber) => this.props.navigation.navigate("ItemDetails",
-                                   {itemData:this.state.itemsList[this.findItem(itemNumber)]})}
+                                   {itemsList:this.state.itemsList[this.findItem(itemNumber)]})}
       callHistoriesModalbox={(itemNumber) => this.props.navigation.navigate("Histories",
                                    {historiesData:this.state.itemsList[this.findItem(itemNumber)].histories})}
       remove={this.state.remove}

@@ -38,17 +38,26 @@ export default class Home extends React.Component {
      };
   }
 
-  componentWillMount() {
-      AsyncStorage.getItem('data')
+  componentDidMount() {
+      AsyncStorage.getItem('dataList')
         .then(value => {
-          this.setState({ dataList: value || 0 })
+          console.log('mount',JSON.parse(value))
+          this.setState({ dataList: JSON.parse(value) || []})
         })
         .done()
+        AsyncStorage.getItem('displayGemach')
+          .then(value => {
+            console.log('mount',JSON.parse(value))
+            this.setState({ displayGemach: JSON.parse(value) || []})
+          })
+          .done()
     }
 
-  saveData() {
-    console.log('savedata:',this.state.dataList)
-    AsyncStorage.setItem('data', this.state.dataList)
+  componentDidUpdate() {
+    let dataList = this.state.dataList
+    console.log('savedata:',JSON.stringify(dataList))
+    AsyncStorage.setItem('dataList', JSON.stringify(this.state.dataList))
+    AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
 
 
@@ -98,7 +107,7 @@ export default class Home extends React.Component {
                   pickedImage:this.state.pickedImage,
                   cardBackgroundColor:'white',
                   selected:false,
-                  itemData:[],
+                  itemsList:[],
                 }]
     }));
     this.refs.creator.close()
@@ -137,7 +146,7 @@ removeApproved(){
       'האם למחוק את הקרן שנבחרה לצמיתות?',
       [
         {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => {this.saveData(),this.remove()} }
+        {text: 'אישור', onPress: () => {this.remove()} }
       ],
     )
   }else if(this.state.itemSelected.length>1){
@@ -146,7 +155,7 @@ removeApproved(){
       'האם למחוק את הקרנות הנבחרות לצמיתות?',
       [
         {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => {this.saveData(),this.remove()} }
+        {text: 'אישור', onPress: () => {this.remove()} }
       ],
     )
   }
@@ -178,7 +187,6 @@ edit(){
             }
           }
           this.setState({dataList:dataList})
-          this.saveData()
         }, style: 'cancel'}
       ],
     )
@@ -187,14 +195,15 @@ edit(){
       if(dataList[a].selected == true){
         this.setState({
           editor:{
+            key:dataList[a].key,
+            itemNumber:dataList.indexOf(dataList[a]),
+            date:dataList[a].date,
             gemachName:dataList[a].gemachName,
             gemachDescription:dataList[a].gemachDescription,
             pickedImage:dataList[a].pickedImage,
-            key:dataList[a].key,
-            date:dataList[a].date,
             cardBackgroundColor:'white',
             selected:false,
-            index:dataList.indexOf(dataList[a]),
+            itemsList:dataList[a].itemsList,
           }
         })
       }
@@ -204,20 +213,19 @@ edit(){
 
 gemachEditor(){
   let dataList = this.state.dataList
-  dataList[this.state.editor.index]=this.state.editor,
+  dataList[this.state.editor.itemNumber]=this.state.editor,
   this.setState({
     dataList:dataList,
     itemSelected:[],
   });
-  this.saveData()
   this.refs.editor.close()
 }
 
 onChangeData(update,itemNumber){
-  console.log('this home update: ',update,'this home itemNumber: ',itemNumber)
+  console.log('check itemNumber: ',itemNumber)
   let index = this.findItem(itemNumber)
   let data = this.state.dataList
-  data[index].itemData = update
+  data[index].itemsList = update
   this.setState({
     dataList:data
   })
@@ -275,7 +283,7 @@ searchByText(text){
 }
 
   render() {
-    this.saveData()
+    console.log('render at home, state: ',this.state.dataList)
     return (
       <View style={styles.container}>
 

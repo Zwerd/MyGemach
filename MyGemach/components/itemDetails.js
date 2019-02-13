@@ -97,7 +97,6 @@ searchByText(text){
 }
 
   render() {
-    console.log('itemDetails:',this.props.navigation.state.params.itemData)
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../images/itemsBackground.png')} style={{width: '100%', height: '100%'}}>
@@ -109,50 +108,64 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-            <Text style={styles.fontStyle}>{this.props.navigation.state.params.itemData.gemachName}</Text>
+            <Text style={styles.fontStyle}>{this.props.navigation.state.params.itemsList.gemachName}</Text>
 
           </View>
         </View>
         <ScrollView style={{backgroundColor:'rgba(255, 255, 255, 0.8)',height:dim.height-barHeight}}>
-          <View style={{padding:5,width:dim.width,height:dim.width}}>
-            <Image source={this.props.navigation.state.params.itemData.pickedImage} style={{borderRadius:2,width:'100%',height:'100%'}}/>
+          <View style={{padding:10,alignItems:'center',justifyContent:'center',width:dim.width,height:dim.width,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+            <Image source={this.props.navigation.state.params.itemsList.pickedImage} style={{padding:10,borderWidth:1,borderColor:'#DCDCDC',borderRadius:2,width:'100%',height:'100%'}}/>
           </View>
-          <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center'}}>
-            <View style={{flex:1,flexDirection: "row",justifyContent:'center'}}>
-              <View style={{backgroundColor:!this.props.navigation.state.params.itemData.delivered&&'#32CD32'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
+          <View style={{padding:5,flex: 1, flexDirection: 'row-reverse',alignItems:'center',borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+            <View style={{flex:1,flexDirection: "row",justifyContent:'center',}}>
+              <View style={{backgroundColor:!this.props.navigation.state.params.itemsList.delivered&&'#32CD32'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
             </View>
             <View style={{flex:3,justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemData.delivered&&'פריט זמין'||'פריט אינו זמין'}</Text>
+              <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemsList.delivered&&'פריט זמין'||'פריט אינו זמין'}</Text>
             </View>
           </View>
-            {!this.props.navigation.state.params.itemData.delivered ||
-          <View style={{padding:5, flex:2}}>
-              <Text style={{fontSize:barHeight/2}}>פרטי לקוח:</Text>
-              <Text style={{fontSize:barHeight/2}}>שם מלא: {this.props.navigation.state.params.itemData.customerData.fullName}</Text>
-              <Text style={{fontSize:barHeight/2}}>כתובת: {this.props.navigation.state.params.itemData.customerData.address}</Text>
-              <Text style={{fontSize:barHeight/2}}>מספר טלפון: {this.props.navigation.state.params.itemData.customerData.phone}</Text>
-              <Text style={{fontSize:barHeight/2}}>תאריך מסירה: {this.props.navigation.state.params.itemData.customerData.deliverDate}</Text>
-              <Text style={{fontSize:barHeight/2}}>תאריך החזרה: {this.props.navigation.state.params.itemData.customerData.reciverDate}</Text>
+            {!this.props.navigation.state.params.itemsList.delivered ||
+          <View>
+            <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+                <Text style={{fontSize:barHeight/2.5}}>שם מלא: </Text>
+                <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.fullName}</Text>
+            </View>
+            <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+                <Text style={{fontSize:barHeight/2.5}}>כתובת: </Text>
+                <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.address}</Text>
+            </View>
+            <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+                <Text style={{fontSize:barHeight/2.5}}>מספר טלפון: </Text>
+                <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.phone}</Text>
+            </View>
+            <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+                <Text style={{fontSize:barHeight/2.5}}>תאריך מסירה: </Text>
+                <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.deliverDate}</Text>
+            </View>
+            <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
+                <Text style={{fontSize:barHeight/2.5}}>תאריך החזרה: </Text>
+                <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.reciverDate}</Text>
+            </View>
           </View>
             }
         </ScrollView>
-            {this.props.navigation.state.params.itemData.delivered &&
+            {this.props.navigation.state.params.itemsList.delivered &&
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row', alignItems: 'center',justifyContent:'space-around',height:barHeight}}>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => Linking.openURL('whatsapp://send?phone=+972'+this.props.navigation.state.params.itemData.customerData.phone.substring(1))}
+              onPress={() => Linking.openURL('whatsapp://send?phone=+972'+this.props.navigation.state.params.itemsList.customerData.phone.substring(1))}
               >
                 <Image source={require('../images/whatsapp-logo.png')} style={{width: '100%', height: '100%'}}/>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => Linking.openURL(`tel:${this.props.navigation.state.params.itemData.customerData.phone}`)}
+              onPress={() => Linking.openURL(`tel:${this.props.navigation.state.params.itemsList.customerData.phone}`)}
               >
                 <Image source={require('../images/call.png')} style={{width: '100%', height: '100%'}}/>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height:barHeight, width:barHeight}}
-              onPress={() => Linking.openURL(`sms:${this.props.navigation.state.params.itemData.customerData.phone}`)}
+              onPress={() => Linking.openURL(`sms:${this.props.navigation.state.params.itemsList.customerData.phone}`)}
               >
                   <Image source={require('../images/message.png')} style={{width: '100%', height: '100%'}} />
             </TouchableOpacity>

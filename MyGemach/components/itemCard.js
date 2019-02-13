@@ -88,7 +88,6 @@ returned(){
 
 historiesView(){
   this.props.callHistoriesModalbox(this.props.itemNumber)
-  console.log('check')
 }
 
 
