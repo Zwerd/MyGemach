@@ -221,23 +221,23 @@ edit(){
   }else if(this.state.itemSelected.length==1){
     for(a=0;a<itemsList.length;a++){
       if(itemsList[a].selected == true){
-        this.setState({
-          editor:{
+        this.setState(prevState => ({
+          editor:{...prevState.editor,
+            key:itemsList[a].key,
+            itemNumber:itemsList.indexOf(itemsList[a]),
+            date:itemsList[a].date,
             gemachName:itemsList[a].gemachName,
             gemachDescription:itemsList[a].gemachDescription,
             pickedImage:itemsList[a].pickedImage,
-            key:itemsList[a].key,
-            date:itemsList[a].date,
             cardBackgroundColor:'white',
             selected:false,
-            index:itemsList.indexOf(itemsList[a]),
-            customerData:itemsList[a].customerData
-          }
-        })
+            customerData:itemsList[a].customerData,
+          }})
+        )}
       }
     }this.refs.editor.open()
   }
-}
+
 
 gemachEditor(){
   let itemsList = this.state.itemsList
@@ -317,6 +317,7 @@ returnedItem = (itemNumber) => {
       {text: 'ביטול', onPress: () => false, style: 'cancel'},
       {text: 'אישור', onPress: () => {
         let itemsList = this.state.itemsList
+        console.log('this.is history error:',itemsList,itemNumber,itemsList[itemNumber].histories)
         itemsList[itemNumber].histories.unshift(itemsList[itemNumber].customerData)
         itemsList[itemNumber].delivered = false
         itemsList[itemNumber].customerData = {
