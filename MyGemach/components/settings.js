@@ -65,7 +65,7 @@ export default class Settings extends React.Component {
               <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>רגיל</Text>
             </View>
           </View>
-          <View style={{borderBottomWidth:10, borderColor:'#DCDCDC'}}>
+          <View style={{borderBottomWidth:10, borderColor:'#DCDCDC',justifyContent:'center'}}>
             <View style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}>
               <Text style={{fontSize:barHeight/2}}>התראות</Text>
               <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>ללא</Text>
