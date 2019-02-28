@@ -434,6 +434,7 @@ historiesRender(itemNumber){
               underlineColorAndroid={'gray'}
               placeholder={'מספר טלפון'}
               style={styles.textInput}
+              keyboardType="numeric"
               onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,phone:text}}))}
             />
           </View>

@@ -28,14 +28,11 @@ render(){
   <TouchableOpacity
     onLongPress={() => this.props.callbackSelectedItem(this.props.itemNumber)}
     onPress={this.props.navigate}
-    style={[{backgroundColor:this.props.backgroundColor},styles.display]}
+    style={{backgroundColor:this.props.backgroundColor, borderWidth:1,borderColor:'#00B0F0',margin:5,marginBottom:0,padding:2}}
     >
-    <View style={{ flexDirection: 'row'}}>
-    <View style={[styles.View,styles.ViewImage]}>
-      <ImageBackground source={this.props.pickedImage} style={styles.previewImage}>
-      </ImageBackground>
-    </View>
-      <View style={styles.View}>
+    <View style={{flexDirection: 'row'}}>
+      <Image source={this.props.pickedImage} style={{flex:1,borderRadius:2}}/>
+      <View style={{flex:3,flexDirection:'column',margin:5,marginRight:0,marginBottom:0}}>
         <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}.{this.props.name}</Text>
         <Text style={{fontSize:StatusBar.currentHeight/1.5}}>{this.props.description}</Text>
         <Text style={{fontSize:StatusBar.currentHeight/1.5}}>{this.props.date}</Text>
@@ -57,7 +54,7 @@ const styles = StyleSheet.create({
   },
   View:{
     height: dim.height/8,
-    width: ((dim.width-11)/4) * 3,
+
     borderWidth:null,
     borderRadius: 10,
     padding:2,
