@@ -19,6 +19,8 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //language
+      language:'עברית',
       //display items
       displayGemach: false,
       displayImage: false,
@@ -221,6 +223,10 @@ gemachEditor(){
   this.refs.editor.close()
 }
 
+onLanguageChange(value){
+  this.setState({language:value})
+}
+
 onChangeData(update,itemNumber){
   console.log('check itemNumber: ',itemNumber)
   let index = this.findItem(itemNumber)
@@ -381,7 +387,8 @@ searchByText(text){
             <Image source={require('../images/exit.png')} style={{width: barHeight, height: barHeight}}/>
           </TouchableOpacity> ||
           <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Settings")}>
+              onPress={() => this.props.navigation.navigate("Settings",
+                              {update:this.onLanguageChange.bind(this)})}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
@@ -395,7 +402,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.displaySearch && <Text style={styles.fontStyle}>הגמ''ח שלי</Text>}
+            {!this.state.displaySearch && <Text style={styles.fontStyle}>{(this.state.language == 'English') ? 'MyGemach':"הגמ''ח שלי"}</Text>}
           </View>
         </View>
         <ScrollView  style={{height:dim.height-barHeight}}>
