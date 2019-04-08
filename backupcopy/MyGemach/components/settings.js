@@ -24,8 +24,7 @@ export default class Settings extends React.Component {
     this.state = {
       //display items
       setLanguage:'heb',
-      language:this.props.language=='eng'?Language.eng:Language.heb,
-      check:barHeight,
+      check:this.state.displayGemach,
       displayGemach: false,
       displayImage: false,
       displaySearch:false,
@@ -45,15 +44,14 @@ export default class Settings extends React.Component {
   }
 
 setLanguage(value){
-  let language = (value=='eng'?Language.eng:Language.heb)
   console.log('set lang',value)
-  this.setState({language:language})
+  this.setState({language:this.state.language=='eng'?Language.eng:Language.heb,})
   this.props.navigation.state.params.language(value)
 }
 
 
   render() {
-    console.log('this check:',this.state.check)
+    console.log('this check:',this.state)
     return (
       <MenuProvider>
       <View style={styles.container}>

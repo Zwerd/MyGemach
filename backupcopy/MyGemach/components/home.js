@@ -8,7 +8,6 @@ import Card from "./card";
 let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
-let setLanguage = 'heb'
 
 const options={
   title:null,
@@ -22,7 +21,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       //language
-      language:setLanguage=='heb'?Language.heb:Language.eng,
+      setLanguage:'heb',
       //display items
       displayGemach: false,
       displayImage: false,
@@ -43,6 +42,7 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({language:this.state.setLanguage=='heb'?Language.heb:Language.eng})
     AsyncStorage.getItem('language')
       .then(value => {
         language = value || []
@@ -229,8 +229,7 @@ gemachEditor(){
 }
 
 onLanguageChange(value){
-  setLanguage = value
-  this.setState({setLanguage:setLanguage,language:setLanguage=='heb'?Language.heb:Language.eng})
+  this.setState({setLanguage:value,language:value=='heb'?Language.heb:Language.eng})
 }
 
 onChangeData(update,itemNumber){
