@@ -8,6 +8,7 @@ import Card from "./card";
 let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
+let setLanguage = 'heb'
 
 const options={
   title:null,
@@ -21,7 +22,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       //language
-      language:Language.heb,
+      language:setLanguage=='heb'?Language.heb:Language.eng,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -42,11 +43,11 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    /*AsyncStorage.getItem('language')
+    AsyncStorage.getItem('language')
       .then(value => {
-        this.setState({ language: JSON.parse(value) || []})
+        language = value || []
       })
-      .done()*/
+      .done()
       AsyncStorage.getItem('dataList')
         .then(value => {
           this.setState({ dataList: JSON.parse(value) || []})
@@ -61,7 +62,7 @@ export default class Home extends React.Component {
 
   componentDidUpdate() {
     let dataList = this.state.dataList
-    //AsyncStorage.setItem('language', JSON.stringify(this.state.language))
+    AsyncStorage.setItem('language', language)
     AsyncStorage.setItem('dataList', JSON.stringify(this.state.dataList))
     AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
@@ -228,7 +229,8 @@ gemachEditor(){
 }
 
 onLanguageChange(value){
-  this.setState({setLanguage:value})
+  setLanguage = value
+  this.setState({setLanguage:setLanguage,language:setLanguage=='heb'?Language.heb:Language.eng})
 }
 
 onChangeData(update,itemNumber){

@@ -17,6 +17,7 @@ let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
 
 
+
 export default class Settings extends React.Component {
   constructor(props) {
     super(props);
@@ -44,9 +45,9 @@ export default class Settings extends React.Component {
   }
 
 setLanguage(value){
-  let language =( value=='eng'?Language.eng:Language.heb)
+  let language = (value=='eng'?Language.eng:Language.heb)
   console.log('set lang',value)
-  this.setState()
+  this.setState({language:language})
   this.props.navigation.state.params.language(value)
 }
 
