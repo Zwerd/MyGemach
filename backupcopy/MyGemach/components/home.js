@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Alert, AsyncStorage, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import Modal from 'react-native-modalbox';
 import ImagePicker from "react-native-image-picker";
+import Language from './language.js'
 import Card from "./card";
 
 let today  = new Date();
@@ -20,7 +21,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       //language
-      language:'עברית',
+      language:Language.heb,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -41,15 +42,18 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
+    /*AsyncStorage.getItem('language')
+      .then(value => {
+        this.setState({ language: JSON.parse(value) || []})
+      })
+      .done()*/
       AsyncStorage.getItem('dataList')
         .then(value => {
-          console.log('mount',JSON.parse(value))
           this.setState({ dataList: JSON.parse(value) || []})
         })
         .done()
         AsyncStorage.getItem('displayGemach')
           .then(value => {
-            console.log('mount',JSON.parse(value))
             this.setState({ displayGemach: JSON.parse(value) || []})
           })
           .done()
@@ -57,7 +61,7 @@ export default class Home extends React.Component {
 
   componentDidUpdate() {
     let dataList = this.state.dataList
-    console.log('savedata:',JSON.stringify(dataList))
+    //AsyncStorage.setItem('language', JSON.stringify(this.state.language))
     AsyncStorage.setItem('dataList', JSON.stringify(this.state.dataList))
     AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
@@ -224,11 +228,10 @@ gemachEditor(){
 }
 
 onLanguageChange(value){
-  this.setState({language:value})
+  this.setState({setLanguage:value})
 }
 
 onChangeData(update,itemNumber){
-  console.log('check itemNumber: ',itemNumber)
   let index = this.findItem(itemNumber)
   let data = this.state.dataList
   data[index].itemsList = update
@@ -289,7 +292,7 @@ searchByText(text){
 }
 
   render() {
-    console.log('render at home, state: ',this.state.dataList)
+    console.log('render lang:',this.state.setLanguage)
     return (
       <View style={styles.container}>
 
@@ -388,7 +391,7 @@ searchByText(text){
           </TouchableOpacity> ||
           <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Settings",
-                              {update:this.onLanguageChange.bind(this)})}>
+                              {language:this.onLanguageChange.bind(this)})}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
@@ -402,7 +405,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.displaySearch && <Text style={styles.fontStyle}>{(this.state.language == 'English') ? 'MyGemach':"הגמ''ח שלי"}</Text>}
+            {!this.state.displaySearch && <Text style={styles.fontStyle}>{this.state.language.home.title}</Text>}
           </View>
         </View>
         <ScrollView  style={{height:dim.height-barHeight}}>

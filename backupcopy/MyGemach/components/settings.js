@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Linking, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback, ScrollView, ImageBackground, StyleSheet, Text, View, StatusBar, TextInput, BackHandler} from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Language from './language.js'
 import {
   MenuProvider,
   Menu,
@@ -9,7 +10,6 @@ import {
   MenuOption,
   renderers,
 } from 'react-native-popup-menu';
-
 
 
 let today  = new Date();
@@ -22,7 +22,9 @@ export default class Settings extends React.Component {
     super(props);
     this.state = {
       //display items
-      language:'עברית',
+      setLanguage:'heb',
+      language:this.props.language=='eng'?Language.eng:Language.heb,
+      check:barHeight,
       displayGemach: false,
       displayImage: false,
       displaySearch:false,
@@ -42,12 +44,15 @@ export default class Settings extends React.Component {
   }
 
 setLanguage(value){
-  this.setState({language:value})
-  this.props.navigation.state.params.update(value)
+  let language =( value=='eng'?Language.eng:Language.heb)
+  console.log('set lang',value)
+  this.setState()
+  this.props.navigation.state.params.language(value)
 }
 
 
   render() {
+    console.log('this check:',this.state.check)
     return (
       <MenuProvider>
       <View style={styles.container}>
@@ -60,23 +65,23 @@ setLanguage(value){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
-            <Text style={styles.fontStyle}>{(this.state.language == 'English') ? 'Settings':'הגדרות'}</Text>
+            <Text style={styles.fontStyle}>{this.state.language.settings.title}</Text>
           </View>
         </View>
         <ScrollView style={{backgroundColor:'rgba(255, 255, 255, 0.8)',height:dim.height-barHeight}}>
           <View style={{borderBottomWidth:10, borderColor:'#DCDCDC'}}>
             <View style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{(this.state.language == 'English') ? 'Language':'שפה'}</Text>
+              <Text style={{fontSize:barHeight/2}}>{this.state.language.settings.language.title}</Text>
 
               <Menu renderer={renderers.NotAnimatedContextMenu} onSelect={value => this.setLanguage(value)}>
                  <MenuTrigger>
-                   <Text style={{fontSize:barHeight/2.5}}>{this.state.language}</Text>
+                   <Text style={{fontSize:barHeight/2.5}}>{this.state.language.settings.language.value}</Text>
                  </MenuTrigger>
                  <MenuOptions >
-                   <MenuOption value={'עברית'} style={{margin:2}}>
+                   <MenuOption value={'heb'} style={{margin:2}}>
                      <Text style={{fontSize:barHeight/2.5}}>עברית</Text>
                    </MenuOption>
-                   <MenuOption value={'English'} style={{margin:2}}>
+                   <MenuOption value={'eng'} style={{margin:2}}>
                      <Text style={{fontSize:barHeight/2.5}}>English</Text>
                    </MenuOption>
                  </MenuOptions>
@@ -85,14 +90,14 @@ setLanguage(value){
 
             </View>
             <View style={{margin:5, marginTop:0,justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{(this.state.language == 'English') ? 'Accessibility':'נגישות'}</Text>
-              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>{(this.state.language == 'English') ? 'Normal':'רגיל'}</Text>
+              <Text style={{fontSize:barHeight/2}}>נגישות</Text>
+              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>רגיל</Text>
             </View>
           </View>
           <View style={{borderBottomWidth:10, borderColor:'#DCDCDC',justifyContent:'center'}}>
             <View style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{(this.state.language == 'English') ? 'Alerts':'התראות'}</Text>
-              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>{(this.state.language == 'English') ? 'No':'ללא'}</Text>
+              <Text style={{fontSize:barHeight/2}}>התראות</Text>
+              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>ללא</Text>
             </View>
             <TouchableOpacity
               style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}
@@ -100,10 +105,10 @@ setLanguage(value){
                 Linking.openURL('https://play.google.com/store/apps/details?id=com.mygemach')
               }}
             >
-              <Text style={{fontSize:barHeight/2}}>{(this.state.language == 'English') ? 'Updates':'עדכונים'}</Text>
+              <Text style={{fontSize:barHeight/2}}>עדכונים</Text>
             </TouchableOpacity>
             <View style={{margin:5, marginTop:0,justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{(this.state.language == 'English') ? 'Help':'עזרה'}</Text>
+              <Text style={{fontSize:barHeight/2}}>עזרה</Text>
             </View>
           </View>
           <TouchableOpacity
@@ -112,7 +117,7 @@ setLanguage(value){
               Linking.openURL('http://zwerd.com/2019/02/17/new_open_source_app.html')
             }}
           >
-            <Text style={{fontSize:barHeight/2}}>{(this.state.language == 'English') ? 'About':'אודות'}</Text>
+            <Text style={{fontSize:barHeight/2}}>אודות</Text>
           </TouchableOpacity>
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row-reverse', alignItems: 'center',justifyContent:'space-around',height:barHeight}}>

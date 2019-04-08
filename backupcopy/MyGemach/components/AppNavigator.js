@@ -9,6 +9,7 @@ import Settings from './settings'
 
 
 
+
 class HomeScreen extends Component {
   static navigationOptions = {
     header: null
@@ -68,6 +69,8 @@ class HistoriesScreen extends Component {
     )
   }
 }
+
+
 
 const AppContent = createStackNavigator({
   Home:{screen:HomeScreen},

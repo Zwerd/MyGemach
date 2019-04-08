@@ -1,2 +1,2 @@
-import App from "./components/App.js"
+import App from "./components/AppNavigator"
 export default App
