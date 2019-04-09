@@ -69,11 +69,11 @@ setLanguage(value){
         <ScrollView style={{backgroundColor:'rgba(255, 255, 255, 0.8)',height:dim.height-barHeight}}>
           <View style={{borderBottomWidth:10, borderColor:'#DCDCDC'}}>
             <View style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{this.state.language.settings.language.title}</Text>
+              <Text style={{fontSize:barHeight/2}}>{this.props.language.settings.language.title}</Text>
 
               <Menu renderer={renderers.NotAnimatedContextMenu} onSelect={value => this.setLanguage(value)}>
                  <MenuTrigger>
-                   <Text style={{fontSize:barHeight/2.5}}>{this.state.language.settings.language.value}</Text>
+                   <Text style={{fontSize:barHeight/2.5}}>{this.props.language.settings.language.value}</Text>
                  </MenuTrigger>
                  <MenuOptions >
                    <MenuOption value={'heb'} style={{margin:2}}>
