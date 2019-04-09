@@ -292,7 +292,7 @@ searchByText(text){
 }
 
   render() {
-    console.log('render lang:',this.state.setLanguage)
+    console.log('render lang:',this.state.language)
     return (
       <View style={styles.container}>
 
@@ -391,7 +391,7 @@ searchByText(text){
           </TouchableOpacity> ||
           <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Settings",
-                              {language:this.state.language setLanguage:this.onLanguageChange.bind(this)})}>
+                              {setLanguage:this.onLanguageChange.bind(this), language:this.state.language})}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
