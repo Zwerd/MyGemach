@@ -41,7 +41,7 @@ export default class Home extends React.Component {
      };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     AsyncStorage.getItem('language')
       .then(value => {
         this.setState({ language: JSON.parse(value) || Language['heb']})
