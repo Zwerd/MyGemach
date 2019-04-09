@@ -346,23 +346,23 @@ searchByText(text){
         ref={"creator"}
         >
         <View style={{padding:10}}>
-          <Text style={{fontSize:barHeight/2}}>צור גמ''ח</Text>
+          <Text style={{fontSize:barHeight/2}}>{this.state.language.home.add.title}</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
-              {!this.state.displayImage && <Text style={{fontSize:20}}>בחר תמונה</Text>}
+              {!this.state.displayImage && <Image source={require('../images/camera.png')} style={{width: "50%",height: "50%",}}/>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
               underlineColorAndroid={'gray'}
-              placeholder={'שם הקרן'}
+              placeholder={this.state.language.home.add.name}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachName: text})}
             />
             <TextInput
               underlineColorAndroid={'gray'}
-              placeholder={'תיאור'}
+              placeholder={this.state.language.home.add.description}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachDescription: text})}
             />
@@ -373,13 +373,13 @@ searchByText(text){
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.createGemach()}
             >
-            <Text style={styles.fontStyle}>אישור</Text>
+            <Text style={styles.fontStyle}>{this.state.language.home.add.approve}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.refs.creator.close()}
             >
-            <Text style={styles.fontStyle}>ביטול</Text>
+            <Text style={styles.fontStyle}>{this.state.language.home.add.cancel}</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -398,7 +398,7 @@ searchByText(text){
             <TouchableOpacity
               onPress={()=>this.openSearch()}>
               {this.state.displaySearch && <TextInput
-                                          placeholder={'חיפוש לפי שם'}
+                                          placeholder={this.state.language.home.search.title}
                                           style={{width:dim.width-barHeight,backgroundColor:'white',borderWidth:1,borderRadius:2}}
                                           onChangeText={(text) => this.searchByText(text)}
                                         /> ||

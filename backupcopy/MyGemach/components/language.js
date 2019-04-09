@@ -9,6 +9,8 @@ export default {
         title:'Create Foundation',
         name:'Name',
         description:'Description',
+        approve:'OK',
+        cancel:'Cancel',
       },
       edit:{
         title:'Edit',
@@ -71,6 +73,8 @@ export default {
         title:"צור גמ''ח",
         name:'שם הקרן',
         description:'תיאור',
+        approve:'אישור',
+        cancel:'ביטול',
       },
       edit:{
         title:'עריכה',
