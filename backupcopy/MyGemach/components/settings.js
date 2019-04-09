@@ -23,8 +23,7 @@ export default class Settings extends React.Component {
     super(props);
     this.state = {
       //display items
-      setLanguage:'heb',
-      check:this.state.displayGemach,
+      language:this.props.language,
       displayGemach: false,
       displayImage: false,
       displaySearch:false,
@@ -45,8 +44,8 @@ export default class Settings extends React.Component {
 
 setLanguage(value){
   console.log('set lang',value)
-  this.setState({language:this.state.language=='eng'?Language.eng:Language.heb,})
-  this.props.navigation.state.params.language(value)
+  this.setState({language:Language[value]})
+  this.props.navigation.state.params.setLanguage(value)
 }
 
 

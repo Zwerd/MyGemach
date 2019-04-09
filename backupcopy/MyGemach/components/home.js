@@ -21,7 +21,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       //language
-      setLanguage:'heb',
+      language:Language['heb'],
       //display items
       displayGemach: false,
       displayImage: false,
@@ -42,10 +42,9 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({language:this.state.setLanguage=='heb'?Language.heb:Language.eng})
     AsyncStorage.getItem('language')
       .then(value => {
-        language = value || []
+        this.setState({ language: JSON.parse(value) || Language['heb']})
       })
       .done()
       AsyncStorage.getItem('dataList')
@@ -62,7 +61,7 @@ export default class Home extends React.Component {
 
   componentDidUpdate() {
     let dataList = this.state.dataList
-    AsyncStorage.setItem('language', language)
+    AsyncStorage.setItem('language', JSON.stringify(this.state.language))
     AsyncStorage.setItem('dataList', JSON.stringify(this.state.dataList))
     AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
@@ -229,7 +228,7 @@ gemachEditor(){
 }
 
 onLanguageChange(value){
-  this.setState({setLanguage:value,language:value=='heb'?Language.heb:Language.eng})
+  this.setState({language:Language[value]})
 }
 
 onChangeData(update,itemNumber){
@@ -392,7 +391,7 @@ searchByText(text){
           </TouchableOpacity> ||
           <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Settings",
-                              {language:this.onLanguageChange.bind(this)})}>
+                              {language:this.state.language setLanguage:this.onLanguageChange.bind(this)})}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
