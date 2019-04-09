@@ -43,14 +43,12 @@ export default class Settings extends React.Component {
   }
 
 setLanguage(value){
-  console.log('set lang',value)
-  this.setState({language:Language[value]})
+  this.setState({language:Language[value].settings})
   this.props.navigation.state.params.setLanguage(value)
 }
 
 
   render() {
-    console.log('this check:',this.props.navigation.state.params.language)
     return (
       <MenuProvider>
       <View style={styles.container}>
@@ -63,7 +61,7 @@ setLanguage(value){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
-            <Text style={styles.fontStyle}>{this.state.language.settings.title}</Text>
+            <Text style={styles.fontStyle}>{this.state.language.title}</Text>
           </View>
         </View>
         <ScrollView style={{backgroundColor:'rgba(255, 255, 255, 0.8)',height:dim.height-barHeight}}>
@@ -72,7 +70,7 @@ setLanguage(value){
 
               <Menu renderer={renderers.NotAnimatedContextMenu} onSelect={value => this.setLanguage(value)}>
                  <MenuTrigger>
-                   <Text style={{fontSize:barHeight/2}}>{this.state.language.settings.language.title}</Text>
+                   <Text style={{fontSize:barHeight/2}}>{this.state.language.language.title}</Text>
                  </MenuTrigger>
                  <MenuOptions >
                    <MenuOption value={'heb'} style={{margin:2}}>
@@ -83,18 +81,18 @@ setLanguage(value){
                    </MenuOption>
                  </MenuOptions>
                </Menu>
-              <Text style={{fontSize:barHeight/2.5}}>{this.state.language.settings.language.value}</Text>
+              <Text style={{fontSize:barHeight/2.5}}>{this.state.language.language.value}</Text>
 
             </View>
             <View style={{margin:5, marginTop:0,justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>נגישות</Text>
-              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>רגיל</Text>
+              <Text style={{fontSize:barHeight/2}}>{this.state.language.accessibility.title}</Text>
+              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>{this.state.language.accessibility.value}</Text>
             </View>
           </View>
           <View style={{borderBottomWidth:10, borderColor:'#DCDCDC',justifyContent:'center'}}>
             <View style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>התראות</Text>
-              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>ללא</Text>
+              <Text style={{fontSize:barHeight/2}}>{this.state.language.alerts.title}</Text>
+              <Text style={{fontSize:barHeight/2.5,color:'#DCDCDC'}}>{this.state.language.alerts.value}</Text>
             </View>
             <TouchableOpacity
               style={{margin:5, marginTop:0, borderBottomWidth:1,borderColor:'#DCDCDC',justifyContent:'center'}}
@@ -102,10 +100,10 @@ setLanguage(value){
                 Linking.openURL('https://play.google.com/store/apps/details?id=com.mygemach')
               }}
             >
-              <Text style={{fontSize:barHeight/2}}>עדכונים</Text>
+              <Text style={{fontSize:barHeight/2}}>{this.state.language.updates.title}</Text>
             </TouchableOpacity>
             <View style={{margin:5, marginTop:0,justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>עזרה</Text>
+              <Text style={{fontSize:barHeight/2}}>{this.state.language.help.title}</Text>
             </View>
           </View>
           <TouchableOpacity
@@ -114,7 +112,7 @@ setLanguage(value){
               Linking.openURL('http://zwerd.com/2019/02/17/new_open_source_app.html')
             }}
           >
-            <Text style={{fontSize:barHeight/2}}>אודות</Text>
+            <Text style={{fontSize:barHeight/2}}>{this.state.language.about.title}</Text>
           </TouchableOpacity>
         </ScrollView>
           <View style={{backgroundColor: 'rgb(0,176,240)',flexDirection: 'row-reverse', alignItems: 'center',justifyContent:'space-around',height:barHeight}}>

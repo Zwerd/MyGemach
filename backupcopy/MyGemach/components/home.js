@@ -23,8 +23,8 @@ export default class Home extends React.Component {
       //language
       language:Language['heb'],
       //display items
-      displayGemach: false,
-      displayImage: false,
+      displayGemach:false,
+      displayImage:false,
       displaySearch:false,
       //setting for Gemach
       date:new Date().toLocaleDateString("en-US"),
@@ -42,11 +42,11 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    AsyncStorage.getItem('language')
+    /*AsyncStorage.getItem('language')
       .then(value => {
         this.setState({ language: JSON.parse(value) || Language['heb']})
       })
-      .done()
+      .done()*/
       AsyncStorage.getItem('dataList')
         .then(value => {
           this.setState({ dataList: JSON.parse(value) || []})
@@ -61,7 +61,7 @@ export default class Home extends React.Component {
 
   componentDidUpdate() {
     let dataList = this.state.dataList
-    AsyncStorage.setItem('language', JSON.stringify(this.state.language))
+    //AsyncStorage.setItem('language', JSON.stringify(this.state.language))
     AsyncStorage.setItem('dataList', JSON.stringify(this.state.dataList))
     AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
@@ -146,22 +146,23 @@ selectedItem = (itemNumber) => {
 }
 
 removeApproved(){
+  console.log('home remove check',this.state.language.home)
   if(this.state.itemSelected.length==1){
     Alert.alert(
-      'מחיקת קרן',
-      'האם למחוק את הקרן שנבחרה לצמיתות?',
+      this.state.language.home.remove.one.title,
+      this.state.language.home.remove.one.description,
       [
-        {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => {this.remove()} }
+        {text: this.state.language.home.remove.one.cancel, onPress: () => false, style: 'cancel'},
+        {text: this.state.language.home.remove.one.approve, onPress: () => {this.remove()} }
       ],
     )
   }else if(this.state.itemSelected.length>1){
     Alert.alert(
-      'מחיקת קרן',
-      'האם למחוק את הקרנות הנבחרות לצמיתות?',
+      this.state.language.home.remove.many.title,
+      this.state.language.home.remove.many.description,
       [
-        {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => {this.remove()} }
+        {text: this.state.language.home.remove.many.cancel, onPress: () => false, style: 'cancel'},
+        {text: this.state.language.home.remove.many.approve, onPress: () => {this.remove()} }
       ],
     )
   }
@@ -181,10 +182,10 @@ edit(){
   let dataList = this.state.dataList
   if(this.state.itemSelected.length>1){
     Alert.alert(
-      'שגיאה',
-      'יש לבחור פריט אחד בלבד',
+      this.state.language.home.edit.alert.title,
+      this.state.language.home.edit.alert.description,
       [
-        {text: 'אישור', onPress: () => {
+        {text: this.state.language.home.edit.alert.approve, onPress: () => {
           this.setState({itemSelected:[]})
           for(a=0;a<dataList.length;a++){
             if(dataList[a].selected == true){
@@ -302,7 +303,7 @@ searchByText(text){
         ref={"editor"}
         >
         <View style={{padding:10}}>
-          <Text style={{fontSize:barHeight/2}}>עריכה</Text>
+          <Text style={{fontSize:barHeight/2}}>{this.state.language.home.edit.title}</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
@@ -328,13 +329,13 @@ searchByText(text){
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.gemachEditor()}
             >
-            <Text style={styles.fontStyle}>אישור</Text>
+            <Text style={styles.fontStyle}>{this.state.language.home.edit.approve}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.refs.editor.close()}
             >
-            <Text style={styles.fontStyle}>ביטול</Text>
+            <Text style={styles.fontStyle}>{this.state.language.home.edit.cancel}</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -391,7 +392,7 @@ searchByText(text){
           </TouchableOpacity> ||
           <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Settings",
-                              {setLanguage:this.onLanguageChange.bind(this), language:this.state.language})}>
+                              {setLanguage:this.onLanguageChange.bind(this), language:this.state.language.settings})}>
               <Image source={require('../images/setting.png')} style={{width: barHeight, height: barHeight}}/>
             </TouchableOpacity>}
             <TouchableOpacity
