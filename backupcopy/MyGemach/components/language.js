@@ -113,6 +113,49 @@ export default {
         cancel:'ביטול',
       },
     },
+    items:{
+      summary:"סה''כ",
+      search:{
+        title:'חיפוש לפי שם'
+      },
+      add:{
+        title:"צור גמ''ח",
+        name:'שם הקרן',
+        description:'תיאור',
+        approve:'אישור',
+        cancel:'ביטול',
+      },
+      edit:{
+        title:'עריכה',
+        approve:'אישור',
+        cancel:'ביטול',
+        alert:{
+          title:'שגיאה',
+          description:'יש לבחור קרן אחת בלבד.',
+          approve:'הבנתי',
+        },
+      },
+      remove:{
+        one:{
+          title:'מחיקת הקרן',
+          description:'האם אתה בטוח שברצונך למחוק את הקרן שנבחרה?',
+          approve:'כן',
+          cancel:'לא',
+        },
+        many:{
+          title: 'מחיקת קרנות',
+          description:'האם אתה בטוח שברצונך למחוק את הקרנות שנבחרו?',
+          approve:'כן',
+          cancel:'לא',
+        },
+      },
+      image:{
+        title:'הוספת תמונה',
+        camera:'צלם תמונה',
+        library:'בחר מספריה מקומית',
+        cancel:'ביטול',
+      },
+    },
     settings: {
       title:'הגדרות',
       language:{

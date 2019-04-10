@@ -20,12 +20,7 @@ let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
 let data = {}
 
-const options={
-  title:null,
-  takePhotoButtonTitle:'צלם תמונה',
-  chooseFromLibraryButtonTitle:'בחר מספריה מקומית',
-  cancelButtonTitle: 'ביטול'
-}
+
 
 export default class Items extends React.Component {
   constructor(props) {
@@ -80,7 +75,13 @@ componentDidUpdate(){
 }
 
 
-  pickImageHandler = () => {
+pickImageHandler(){
+  const options={
+    title:null,
+    takePhotoButtonTitle:this.state.language.home.image.camera,
+    chooseFromLibraryButtonTitle:this.state.language.home.image.library,
+    cancelButtonTitle:this.state.language.home.image.cancel,
+  }
     ImagePicker.showImagePicker(options, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
@@ -96,18 +97,30 @@ componentDidUpdate(){
     });
   }
 
-  editPickImageHandler = () => {
-    ImagePicker.showImagePicker(options, res => {
-      if (res.didCancel) {
-        console.log("User cancelled!");
-      } else if (res.error) {
-        console.log("Error", res.error);
-      } else {
-        this.setState(prevState => ({
-          editor:{...prevState.editor,pickedImage: { uri: res.uri }}}));
-      }
-    });
-  }
+  editPickImageHandler(){
+    const options={
+      title:null,
+      takePhotoButtonTitle:this.state.language.home.image.camera,
+      chooseFromLibraryButtonTitle:this.state.language.home.image.library,
+      cancelButtonTitle:this.state.language.home.image.cancel,
+    }
+      ImagePicker.showImagePicker(options, res => {
+        console.log('this is the image from editor:',res.uri)
+        if (res.didCancel) {
+          console.log("User cancelled!");
+        } else if (res.error) {
+          console.log("Error", res.error);
+        } else {
+          this.setState(prevState => ({
+            displayText:false,
+            displayImage:true,
+            editor:{...prevState.editor, pickedImage: { uri: res.uri }}
+          }));
+        }
+      });
+    }
+
+
 
   createGemach(){
     this.setState(prevState => ({
@@ -513,7 +526,7 @@ historiesRender(itemNumber){
           <Text style={{fontSize:barHeight/2}}>עריכה</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler.bind(this)}>
               <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
@@ -550,7 +563,7 @@ historiesRender(itemNumber){
           <Text style={{fontSize:barHeight/2}}>צור פריט</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler.bind(this)}>
               {!this.state.displayImage && <Text style={{fontSize:20}}>בחר תמונה</Text>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>
