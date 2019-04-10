@@ -180,12 +180,20 @@ removeApproved(){
 }
 
 remove(){
+  console.log('going to remove item')
   let newList = this.state.dataList
   for(a=this.state.dataList.length-1;a>=0;a--){
     if(this.state.dataList[a].selected == true){
       newList.splice(newList.indexOf(this.state.dataList[a]),1)
     }
-  };this.setState({dataList:newList,itemSelected:[]})
+  };
+  //Numbering the items from scratch
+  for(a=0;a<newList.length;a++){
+    newList[a].key = a+1
+    newList[a].itemNumber = a+1
+    console.log('check the items:', newList[a])
+  };
+  this.setState({dataList:newList,itemSelected:[]})
 }
 
 
