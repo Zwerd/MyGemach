@@ -8,12 +8,13 @@ import Card from "./card";
 let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
+let language = Language['heb']
 
-const options={
+const options=(language)={
   title:null,
-  takePhotoButtonTitle:'צלם תמונה',
-  chooseFromLibraryButtonTitle:'בחר מספריה מקומית',
-  cancelButtonTitle: 'ביטול'
+  takePhotoButtonTitle:language.home.image.camera,
+  chooseFromLibraryButtonTitle:language.home.image.library,
+  cancelButtonTitle:language.home.image.cancel,
 }
 
 export default class Home extends React.Component {
@@ -41,6 +42,8 @@ export default class Home extends React.Component {
      };
   }
 
+
+
   componentWillMount() {
     /*AsyncStorage.getItem('language')
       .then(value => {
@@ -66,10 +69,13 @@ export default class Home extends React.Component {
     AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
 
-
-
-
-  pickImageHandler = () => {
+pickImageHandler(){
+  const options={
+    title:null,
+    takePhotoButtonTitle:this.state.language.home.image.camera,
+    chooseFromLibraryButtonTitle:this.state.language.home.image.library,
+    cancelButtonTitle:this.state.language.home.image.cancel,
+  }
     ImagePicker.showImagePicker(options, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
@@ -85,18 +91,31 @@ export default class Home extends React.Component {
     });
   }
 
-  editPickImageHandler = () => {
-    ImagePicker.showImagePicker(options, res => {
-      if (res.didCancel) {
-        console.log("User cancelled!");
-      } else if (res.error) {
-        console.log("Error", res.error);
-      } else {
-        this.setState(prevState => ({
-          editor:{...prevState.editor,pickedImage: { uri: res.uri }}}));
-      }
-    });
-  }
+  editPickImageHandler(){
+    const options={
+      title:null,
+      takePhotoButtonTitle:this.state.language.home.image.camera,
+      chooseFromLibraryButtonTitle:this.state.language.home.image.library,
+      cancelButtonTitle:this.state.language.home.image.cancel,
+    }
+      ImagePicker.showImagePicker(options, res => {
+        console.log('this is the image from editor:',res.uri)
+        if (res.didCancel) {
+          console.log("User cancelled!");
+        } else if (res.error) {
+          console.log("Error", res.error);
+        } else {
+          this.setState(prevState => ({
+            displayText:false,
+            displayImage:true,
+            editor:{...prevState.editor, pickedImage: { uri: res.uri }}
+          }));
+        }
+      });
+    }
+
+
+
 
   createGemach(){
     this.setState(prevState => ({
@@ -293,7 +312,7 @@ searchByText(text){
 }
 
   render() {
-    console.log('render lang:',this.state.language)
+    console.log('image state:',this.state.editor.pickedImage)
     return (
       <View style={styles.container}>
 
@@ -306,7 +325,7 @@ searchByText(text){
           <Text style={{fontSize:barHeight/2}}>{this.state.language.home.edit.title}</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler.bind(this)}>
               <Image source={this.state.editor.pickedImage} style={styles.previewImage}/>
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
@@ -349,7 +368,7 @@ searchByText(text){
           <Text style={{fontSize:barHeight/2}}>{this.state.language.home.add.title}</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler}>
+            <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler.bind(this)}>
               {!this.state.displayImage && <Image source={require('../images/camera.png')} style={{width: "50%",height: "50%",}}/>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>

@@ -35,7 +35,13 @@ export default {
           approve:'Yes',
           cancel:'No',
         }
-      }
+      },
+      image:{
+        title:'Add photo',
+        camera:'Take a picture',
+        library:'Choose from library',
+        cancel:'Cancel',
+      },
     },
     settings: {
       title:'Settings',
@@ -99,6 +105,12 @@ export default {
           approve:'כן',
           cancel:'לא',
         },
+      },
+      image:{
+        title:'הוספת תמונה',
+        camera:'צלם תמונה',
+        library:'בחר מספריה מקומית',
+        cancel:'ביטול',
       },
     },
     settings: {
