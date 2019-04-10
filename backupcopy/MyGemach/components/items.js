@@ -132,7 +132,7 @@ pickImageHandler(){
       key:this.state.itemsList.length+1,
       itemNumber:this.state.itemsList.length+1,
       itemsList:[...prevState.itemsList,{
-        key:this.state.dataitemsListList.length+1,
+        key:this.state.itemsList.length+1,
         itemNumber:this.state.itemsList.length+1,
         date:today.toLocaleDateString("en-US"),
         gemachName:this.state.gemachName,
