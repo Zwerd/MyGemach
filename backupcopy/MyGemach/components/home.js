@@ -267,7 +267,7 @@ renderList(data){
       backgroundColor={data.cardBackgroundColor}
       callbackSelectedItem={this.selectedItem}
       navigate={() => this.props.navigation.navigate("Items",
-                      {update:this.onChangeData.bind(this),data:data})}
+                      {update:this.onChangeData.bind(this),data:data,language:this.state.language.items})}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}

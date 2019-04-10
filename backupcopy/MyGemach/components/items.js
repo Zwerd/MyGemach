@@ -26,6 +26,8 @@ export default class Items extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //language
+      language:this.props.navigation.state.params.language,
       //choose itemNumber
       chooseItemNumber:-1,
       //display items
@@ -78,9 +80,9 @@ componentDidUpdate(){
 pickImageHandler(){
   const options={
     title:null,
-    takePhotoButtonTitle:this.state.language.home.image.camera,
-    chooseFromLibraryButtonTitle:this.state.language.home.image.library,
-    cancelButtonTitle:this.state.language.home.image.cancel,
+    takePhotoButtonTitle:this.state.language.image.camera,
+    chooseFromLibraryButtonTitle:this.state.language.image.library,
+    cancelButtonTitle:this.state.language.image.cancel,
   }
     ImagePicker.showImagePicker(options, res => {
       if (res.didCancel) {
@@ -100,9 +102,9 @@ pickImageHandler(){
   editPickImageHandler(){
     const options={
       title:null,
-      takePhotoButtonTitle:this.state.language.home.image.camera,
-      chooseFromLibraryButtonTitle:this.state.language.home.image.library,
-      cancelButtonTitle:this.state.language.home.image.cancel,
+      takePhotoButtonTitle:this.state.language.image.camera,
+      chooseFromLibraryButtonTitle:this.state.language.image.library,
+      cancelButtonTitle:this.state.language.image.cancel,
     }
       ImagePicker.showImagePicker(options, res => {
         console.log('this is the image from editor:',res.uri)
@@ -127,11 +129,11 @@ pickImageHandler(){
       displayGemach:true,
       displayImage:false,
       displayText:true,
-      key:this.state.key+1,
-      itemNumber:this.state.key+1,
+      key:this.state.dataList.length+1,
+      itemNumber:this.state.dataList.length+1,
       itemsList:[...prevState.itemsList,{
-        key:this.state.key,
-        itemNumber:this.state.key,
+        key:this.state.dataList.length+1,
+        itemNumber:this.state.dataList.length+1,
         date:today.toLocaleDateString("en-US"),
         gemachName:this.state.gemachName,
         gemachDescription:this.state.gemachDescription,

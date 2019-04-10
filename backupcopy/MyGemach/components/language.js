@@ -43,6 +43,49 @@ export default {
         cancel:'Cancel',
       },
     },
+    items:{
+      summary:"Sum:",
+      search:{
+        title:'Search by name'
+      },
+      add:{
+        title:"Addd item",
+        name:'Name',
+        description:'Description',
+        approve:'Ok',
+        cancel:'Cancel',
+      },
+      edit:{
+        title:'Edit',
+        approve:'Ok',
+        cancel:'Cancel',
+        alert:{
+          title:'Error',
+          description:'You must choose only one item.',
+          approve:'OK',
+        },
+      },
+      remove:{
+        one:{
+          title:'Remove Item',
+          description:'Are you sure you want to remove the selected item?',
+          approve:'Yes',
+          cancel:'No',
+        },
+        many:{
+          title: 'Remove items',
+          description:'Are you sure you want to remove the selected items?',
+          approve:'Yes',
+          cancel:'No',
+        },
+      },
+      image:{
+        title:'Add photo',
+        camera:'Take a picture',
+        library:'Choose from library',
+        cancel:'Cancel',
+      },
+    },
     settings: {
       title:'Settings',
       language:{
@@ -119,8 +162,8 @@ export default {
         title:'חיפוש לפי שם'
       },
       add:{
-        title:"צור גמ''ח",
-        name:'שם הקרן',
+        title:"הוספת פריט",
+        name:'שם הפריט',
         description:'תיאור',
         approve:'אישור',
         cancel:'ביטול',
@@ -131,20 +174,20 @@ export default {
         cancel:'ביטול',
         alert:{
           title:'שגיאה',
-          description:'יש לבחור קרן אחת בלבד.',
+          description:'יש לבחור פריט אחד בלבד.',
           approve:'הבנתי',
         },
       },
       remove:{
         one:{
-          title:'מחיקת הקרן',
-          description:'האם אתה בטוח שברצונך למחוק את הקרן שנבחרה?',
+          title:'מחיקת פריט',
+          description:'האם אתה בטוח שברצונך למחוק את הפריט הנבחר?',
           approve:'כן',
           cancel:'לא',
         },
         many:{
-          title: 'מחיקת קרנות',
-          description:'האם אתה בטוח שברצונך למחוק את הקרנות שנבחרו?',
+          title: 'מחיקת פריטים',
+          description:'האם אתה בטוח שברצונך למחוק את הפריטים שנבחרו?',
           approve:'כן',
           cancel:'לא',
         },
