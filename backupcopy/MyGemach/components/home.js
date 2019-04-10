@@ -8,14 +8,6 @@ import Card from "./card";
 let today  = new Date();
 let dim = Dimensions.get('window');
 let barHeight = StatusBar.currentHeight * 2
-let language = Language['heb']
-
-const options=(language)={
-  title:null,
-  takePhotoButtonTitle:language.home.image.camera,
-  chooseFromLibraryButtonTitle:language.home.image.library,
-  cancelButtonTitle:language.home.image.cancel,
-}
 
 export default class Home extends React.Component {
   constructor(props) {
