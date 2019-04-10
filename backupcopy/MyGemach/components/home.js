@@ -197,6 +197,7 @@ remove(){
 }
 
 
+
 edit(){
   let dataList = this.state.dataList
   if(this.state.itemSelected.length>1){
