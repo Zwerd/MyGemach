@@ -114,10 +114,10 @@ pickImageHandler(){
       displayGemach:true,
       displayImage:false,
       displayText:true,
-      key:this.state.key+1,
+      key:this.state.dataList.length+1,
       dataList: [...prevState.dataList,{
-                  key:this.state.key,
-                  itemNumber:this.state.key,
+                  key:this.state.dataList.length+1,
+                  itemNumber:this.state.dataList.length+1,
                   date:today.toLocaleDateString("en-US"),
                   gemachName:this.state.gemachName,
                   gemachDescription:this.state.gemachDescription,

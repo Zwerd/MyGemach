@@ -33,7 +33,7 @@ render(){
     <View style={{flexDirection: 'row'}}>
       <Image source={this.props.pickedImage} style={{flex:1,borderRadius:2}}/>
       <View style={{flex:3,flexDirection:'column',margin:5,marginRight:0,marginBottom:0}}>
-        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber+1}.{this.props.name}</Text>
+        <Text style={{fontSize:StatusBar.currentHeight}}>{this.props.itemNumber}.{this.props.name}</Text>
         <Text style={{fontSize:StatusBar.currentHeight/1.5}}>{this.props.description}</Text>
         <Text style={{fontSize:StatusBar.currentHeight/1.5}}>{this.props.date}</Text>
       </View>
