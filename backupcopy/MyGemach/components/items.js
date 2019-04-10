@@ -129,11 +129,11 @@ pickImageHandler(){
       displayGemach:true,
       displayImage:false,
       displayText:true,
-      key:this.state.dataList.length+1,
-      itemNumber:this.state.dataList.length+1,
+      key:this.state.itemsList.length+1,
+      itemNumber:this.state.itemsList.length+1,
       itemsList:[...prevState.itemsList,{
-        key:this.state.dataList.length+1,
-        itemNumber:this.state.dataList.length+1,
+        key:this.state.dataitemsListList.length+1,
+        itemNumber:this.state.itemsList.length+1,
         date:today.toLocaleDateString("en-US"),
         gemachName:this.state.gemachName,
         gemachDescription:this.state.gemachDescription,
@@ -185,20 +185,20 @@ selectedItem = (itemNumber) => {
 removeApproved(){
   if(this.state.itemSelected.length==1){
     Alert.alert(
-      'מחיקת פריט',
-      'האם למחוק את הפריט שנבחר לצמיתות?',
+      this.state.language.remove.one.title,
+      this.state.language.remove.one.description,
       [
-        {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => this.remove() }
+        {text: this.state.language.remove.one.cancel, onPress: () => false, style: 'cancel'},
+        {text: this.state.language.remove.one.approve, onPress: () => this.remove() }
       ],
     )
   }else if(this.state.itemSelected.length>1){
     Alert.alert(
-      'מחיקת פריט',
-      'האם למחוק את הפריטים שנבחרו לצמיתות?',
+      this.state.language.remove.many.title,
+      this.state.language.remove.many.description,
       [
-        {text: 'ביטול', onPress: () => false, style: 'cancel'},
-        {text: 'אישור', onPress: () => this.remove() }
+        {text: this.state.language.remove.many.title, onPress: () => false, style: 'cancel'},
+        {text: this.state.language.remove.many.description, onPress: () => this.remove() }
       ],
     )
   }
