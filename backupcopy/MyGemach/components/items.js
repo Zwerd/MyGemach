@@ -218,10 +218,10 @@ edit(){
   let itemsList = this.state.itemsList
   if(this.state.itemSelected.length>1){
     Alert.alert(
-      'שגיאה',
-      'יש לבחור פריט אחד בלבד',
+      this.state.language.edit.alert.title,
+      this.state.language.edit.alert.description,
       [
-        {text: 'אישור', onPress: () => {
+        {text: this.state.language.edit.alert.approve, onPress: () => {
           this.setState({itemSelected:[]})
           for(a=0;a<itemsList.length;a++){
             if(itemsList[a].selected == true){
@@ -344,11 +344,11 @@ deliverItem = (itemNumber) => {
 
 returnedItem = (itemNumber) => {
   Alert.alert(
-    'החזרת פריט',
-    'האם הפריט חזר לקרן?',
+    this.state.language.returnedItem.title,
+    this.state.language.returnedItem.description,
     [
-      {text: 'ביטול', onPress: () => false, style: 'cancel'},
-      {text: 'אישור', onPress: () => {
+      {text: this.state.language.returnedItem.cancel, onPress: () => false, style: 'cancel'},
+      {text: this.state.language.returnedItem.approve, onPress: () => {
         let itemsList = this.state.itemsList
         console.log('this.is history error:',itemsList,itemNumber,itemsList[itemNumber].histories)
         itemsList[itemNumber].histories.unshift(itemsList[itemNumber].customerData)
@@ -430,32 +430,32 @@ historiesRender(itemNumber){
         ref={"deliverItemMenu"}
         >
           <View style={{padding:10,}}>
-            <Text style={{fontSize:barHeight/2}}>מסירת פריט</Text>
+            <Text style={{fontSize:barHeight/2}}>{this.state.language.deliverItemMenu.title}</Text>
           </View>
           <View style={{padding:10,paddingBottom:0}}>
             <TextInput
               underlineColorAndroid={'gray'}
-              placeholder={'שם מלא'}
+              placeholder={this.state.language.deliverItemMenu.name}
               style={styles.textInput}
               onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,fullName:text}}))}
             />
             <TextInput
               underlineColorAndroid={'gray'}
-              placeholder={'כתובת'}
+              placeholder={this.state.language.deliverItemMenu.address}
               style={styles.textInput}
               onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,address:text}}))}
             />
             <TextInput
               underlineColorAndroid={'gray'}
-              placeholder={'מספר טלפון'}
+              placeholder={this.state.language.deliverItemMenu.phone}
               style={styles.textInput}
               keyboardType="numeric"
               onChangeText={(text) => this.setState(prevState=>({customerData:{...prevState.customerData,phone:text}}))}
             />
           </View>
           <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
-            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך מסירה</Text>
-            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך החזרה</Text>
+            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>{this.state.language.deliverItemMenu.deliverDate}</Text>
+            <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>{this.state.language.deliverItemMenu.reciverDate}</Text>
           </View>
           <View style={{flexDirection:'row',alignItems:'center',margin:4,marginTop:0}}>
             <DatePicker
@@ -466,7 +466,7 @@ historiesRender(itemNumber){
               }}
               style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
               date={this.state.customerData.deliverDate}
-              placeholder={this.state.deliverSwitch&&this.state.customerData.deliverDate||'בחר תאריך'}
+              placeholder={this.state.deliverSwitch&&this.state.customerData.deliverDate||this.state.language.deliverItemMenu.chooseDate}
               mode="datetime"
               format="DD-MM-YYYY HH:mm"
               confirmBtnText="Confirm"
@@ -482,7 +482,7 @@ historiesRender(itemNumber){
               }}
               style={{margin:2,borderColor:'#9D9D9D',borderWidth:1,borderRadius:25,borderColor:"#008CBA",flex:1}}
               date={this.state.customerData.reciverDate}
-              placeholder={this.state.reciverSwitch&&this.state.customerData.reciverDate||'בחר תאריך'}
+              placeholder={this.state.reciverSwitch&&this.state.customerData.reciverDate||this.state.language.deliverItemMenu.chooseDate}
               mode="datetime"
               format="DD-MM-YYYY HH:mm"
               confirmBtnText="Confirm"
@@ -497,13 +497,13 @@ historiesRender(itemNumber){
               style={[styles.header,styles.button,{flex:1}]}
               onPress={() => this.approvedDelivering()}
               >
-              <Text style={styles.fontStyle}>אישור</Text>
+              <Text style={styles.fontStyle}>{this.state.language.deliverItemMenu.approve}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.header,styles.button,{flex:1}]}
               onPress={() => this.disapprovedDelivering()}
               >
-              <Text style={styles.fontStyle}>ביטול</Text>
+              <Text style={styles.fontStyle}>{this.state.language.deliverItemMenu.cancel}</Text>
             </TouchableOpacity>
           </View>
       </Modal>

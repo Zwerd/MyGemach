@@ -65,6 +65,23 @@ export default {
           approve:'OK',
         },
       },
+      returnedItem:{
+        title:'Returned Item',
+        description:'Is the item returned to the foundation?',
+        approve:'Yes',
+        cancel:'No',
+      },
+      deliverItemMenu:{
+        title:'Deliver Item',
+        name:'Full name',
+        address:'Address',
+        phone:'Phone namber',
+        deliverDate:'Deliver date',
+        reciverDate:'Reciver Date',
+        chooseDate:'Choose Date',
+        approve:'Ok',
+        cancel:'Cancel',
+      },
       remove:{
         one:{
           title:'Remove Item',
@@ -177,6 +194,23 @@ export default {
           description:'יש לבחור פריט אחד בלבד.',
           approve:'הבנתי',
         },
+      },
+      returnedItem:{
+        title:'החזרת פריט',
+        description:'האם הפריט הוחזר לקרן?',
+        approve:'כן',
+        cancel:'לא',
+      },
+      deliverItemMenu:{
+        title:'מסירת פריט',
+        name:'שם מלא',
+        address:'כתובת',
+        phone:'מספר טלפון',
+        deliverDate:'תאריך מסירה',
+        reciverDate:'תאריך החזרה',
+        chooseDate:'בחר תאריך',
+        approve:'אישור',
+        cancel:'ביטול',
       },
       remove:{
         one:{
