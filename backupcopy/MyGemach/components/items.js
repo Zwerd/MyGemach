@@ -197,8 +197,8 @@ removeApproved(){
       this.state.language.remove.many.title,
       this.state.language.remove.many.description,
       [
-        {text: this.state.language.remove.many.title, onPress: () => false, style: 'cancel'},
-        {text: this.state.language.remove.many.description, onPress: () => this.remove() }
+        {text: this.state.language.remove.many.cancel, onPress: () => false, style: 'cancel'},
+        {text: this.state.language.remove.many.approve, onPress: () => this.remove() }
       ],
     )
   }

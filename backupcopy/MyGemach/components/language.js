@@ -73,7 +73,7 @@ export default {
           cancel:'No',
         },
         many:{
-          title: 'Remove items',
+          title: 'Remove Items',
           description:'Are you sure you want to remove the selected items?',
           approve:'Yes',
           cancel:'No',
