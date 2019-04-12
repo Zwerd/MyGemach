@@ -71,6 +71,7 @@ setLanguage(value){
               <Menu renderer={renderers.NotAnimatedContextMenu} onSelect={value => this.setLanguage(value)}>
                  <MenuTrigger>
                    <Text style={{fontSize:barHeight/2}}>{this.state.language.language.title}</Text>
+                   <Text style={{fontSize:barHeight/2.5}}>{this.state.language.language.value}</Text>
                  </MenuTrigger>
                  <MenuOptions >
                    <MenuOption value={'heb'} style={{margin:2}}>
@@ -81,7 +82,7 @@ setLanguage(value){
                    </MenuOption>
                  </MenuOptions>
                </Menu>
-              <Text style={{fontSize:barHeight/2.5}}>{this.state.language.language.value}</Text>
+
 
             </View>
             <View style={{margin:5, marginTop:0,justifyContent:'center'}}>
