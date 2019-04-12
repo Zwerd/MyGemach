@@ -533,7 +533,7 @@ historiesRender(itemNumber){
         ref={"editor"}
         >
         <View style={{padding:10}}>
-          <Text style={{fontSize:barHeight/2}}>עריכה</Text>
+          <Text style={{fontSize:barHeight/2}}>{this.state.language.edit.title}</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.editPickImageHandler.bind(this)}>
@@ -553,13 +553,13 @@ historiesRender(itemNumber){
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.gemachEditor()}
             >
-            <Text style={styles.fontStyle}>אישור</Text>
+            <Text style={styles.fontStyle}>{this.state.language.edit.approve}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.closeEditor()}
             >
-            <Text style={styles.fontStyle}>ביטול</Text>
+            <Text style={styles.fontStyle}>{this.state.language.edit.cancel}</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -570,17 +570,17 @@ historiesRender(itemNumber){
         ref={"creator"}
         >
         <View style={{padding:10}}>
-          <Text style={{fontSize:barHeight/2}}>צור פריט</Text>
+          <Text style={{fontSize:barHeight/2}}>{this.state.language.add.title}</Text>
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler.bind(this)}>
-              {!this.state.displayImage && <Text style={{fontSize:20}}>בחר תמונה</Text>}
+              {!this.state.displayImage && <Text style={{fontSize:20}}>{this.state.language.image.title}</Text>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
             <TextInput
               underlineColorAndroid={'gray'}
-              placeholder={'שם הפריט'}
+              placeholder={this.state.language.add.name}
               style={styles.textInput}
               onChangeText={(text) => this.setState({gemachName: text})}
             />
@@ -591,13 +591,13 @@ historiesRender(itemNumber){
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.createGemach()}
             >
-            <Text style={styles.fontStyle}>אישור</Text>
+            <Text style={styles.fontStyle}>this.state.language.add.approve</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.refs.creator.close()}
             >
-            <Text style={styles.fontStyle}>ביטול</Text>
+            <Text style={styles.fontStyle}>{this.state.language.add.cancel}</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -615,7 +615,7 @@ historiesRender(itemNumber){
             <TouchableOpacity
               onPress={()=>this.openSearch()}>
               {this.state.searchOpen && <TextInput
-                                          placeholder={'חיפוש לפי שם'}
+                                          placeholder={this.state.language.search.title}
                                           style={{width:dim.width-barHeight,backgroundColor:'white',borderWidth:1,borderRadius:2}}
                                           onChangeText={(text) => this.searchByText(text)}
                                         /> ||
@@ -625,7 +625,7 @@ historiesRender(itemNumber){
             {!this.state.searchOpen &&
               <View style={{flex:2, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
                 <Text style={styles.fontStyle}>{this.props.navigation.state.params.data.gemachName}</Text>
-                <Text style={styles.fontStyle}>סה''כ: {this.state.itemsList.length}</Text>
+                <Text style={styles.fontStyle}>{this.state.language.summary}: {this.state.itemsList.length}</Text>
               </View>}
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>

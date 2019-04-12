@@ -44,7 +44,7 @@ export default {
       },
     },
     items:{
-      summary:"Sum:",
+      summary:"Sum",
       search:{
         title:'Search by name'
       },
