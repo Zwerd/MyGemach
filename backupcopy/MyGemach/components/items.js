@@ -129,11 +129,11 @@ pickImageHandler(){
       displayGemach:true,
       displayImage:false,
       displayText:true,
-      key:this.state.itemsList.length+1,
-      itemNumber:this.state.itemsList.length+1,
+      key:this.state.itemsList.length,
+      itemNumber:this.state.itemsList.length,
       itemsList:[...prevState.itemsList,{
-        key:this.state.itemsList.length+1,
-        itemNumber:this.state.itemsList.length+1,
+        key:this.state.itemsList.length,
+        itemNumber:this.state.itemsList.length,
         date:today.toLocaleDateString("en-US"),
         gemachName:this.state.gemachName,
         gemachDescription:this.state.gemachDescription,
@@ -205,12 +205,20 @@ removeApproved(){
 }
 
 remove(){
+  console.log('going to remove item')
   let newList = this.state.itemsList
   for(a=this.state.itemsList.length-1;a>=0;a--){
     if(this.state.itemsList[a].selected == true){
       newList.splice(newList.indexOf(this.state.itemsList[a]),1)
     }
-  };this.setState({itemsList:newList,itemSelected:[]})
+  };
+  //Numbering the items from scratch
+  for(a=0;a<newList.length;a++){
+    newList[a].key = a
+    newList[a].itemNumber = a
+    console.log('check the items:', newList[a])
+  };
+  this.setState({itemsList:newList,itemSelected:[]})
 }
 
 
@@ -294,7 +302,7 @@ renderList(data){
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
-      itemNumber={data.key}
+      itemNumber={data.itemNumber}
       date={data.date}
       display={data.displayGemach}
       name={data.gemachName}
@@ -343,6 +351,7 @@ deliverItem = (itemNumber) => {
 }
 
 returnedItem = (itemNumber) => {
+  console.log('in reder item of items page')
   Alert.alert(
     this.state.language.returnedItem.title,
     this.state.language.returnedItem.description,
@@ -350,7 +359,6 @@ returnedItem = (itemNumber) => {
       {text: this.state.language.returnedItem.cancel, onPress: () => false, style: 'cancel'},
       {text: this.state.language.returnedItem.approve, onPress: () => {
         let itemsList = this.state.itemsList
-        console.log('this.is history error:',itemsList,itemNumber,itemsList[itemNumber].histories)
         itemsList[itemNumber].histories.unshift(itemsList[itemNumber].customerData)
         itemsList[itemNumber].delivered = false
         itemsList[itemNumber].customerData = {
@@ -361,7 +369,7 @@ returnedItem = (itemNumber) => {
           reciverDate:'',
           deliverSwitch:false,
           reciverSwitch:false,
-        }
+        },
         this.setState({
           chooseItemData:-1,
           itemsList:itemsList,

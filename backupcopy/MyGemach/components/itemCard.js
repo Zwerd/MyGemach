@@ -93,6 +93,7 @@ historiesView(){
 
 //this.props.callbackModalbox(this.props.itemNumber)
 render(){
+  console.log('itemCard:', this.props)
   return(
 
   <View style={[{backgroundColor:this.props.backgroundColor},styles.display]}>
