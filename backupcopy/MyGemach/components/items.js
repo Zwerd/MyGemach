@@ -27,7 +27,7 @@ export default class Items extends React.Component {
     super(props);
     this.state = {
       //language
-      language:this.props.navigation.state.params.language,
+      language:this.props.navigation.state.params.language.items,
       //choose itemNumber
       chooseItemNumber:-1,
       //display items
@@ -296,9 +296,12 @@ renderList(data){
       callDeliverModalbox={this.deliverItem}
       callReturnedModalbox={this.returnedItem}
       callRenderItemDetails={(itemNumber) => this.props.navigation.navigate("ItemDetails",
-                                   {itemsList:this.state.itemsList[this.findItem(itemNumber)]})}
+                                   {itemsList:this.state.itemsList[this.findItem(itemNumber)],
+                                   language:this.props.navigation.state.params.language.itemDetails})}
       callHistoriesModalbox={(itemNumber) => this.props.navigation.navigate("Histories",
-                                   {historiesData:this.state.itemsList[this.findItem(itemNumber)].histories})}
+                                   {historiesData:this.state.itemsList[this.findItem(itemNumber)].histories,
+                                     language:this.props.navigation.state.params.language.histories})}
+      language={this.props.navigation.state.params.language.itemCard}
       remove={this.state.remove}
       edit={this.state.edit}
       key={data.key}
@@ -574,7 +577,7 @@ historiesRender(itemNumber){
         </View>
         <View style={{flexDirection: 'row-reverse',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={styles.imageBox} onPress={this.pickImageHandler.bind(this)}>
-              {!this.state.displayImage && <Text style={{fontSize:20}}>{this.state.language.image.title}</Text>}
+              {!this.state.displayImage && <Image source={require('../images/camera.png')} style={{width: "50%",height: "50%",}}/>}
               {this.state.displayImage && <Image source={this.state.pickedImage} style={styles.previewImage}/>}
             </TouchableOpacity>
           <View style={{flex:1,flexDirection: 'column'}}>
@@ -591,7 +594,7 @@ historiesRender(itemNumber){
             style={[styles.header,styles.button,{flex:1}]}
             onPress={() => this.createGemach()}
             >
-            <Text style={styles.fontStyle}>this.state.language.add.approve</Text>
+            <Text style={styles.fontStyle}>{this.state.language.add.approve}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.header,styles.button,{flex:1}]}

@@ -103,6 +103,28 @@ export default {
         cancel:'Cancel',
       },
     },
+    itemCard:{
+      delivered:'Deliver',
+      returned:'Returned',
+      history:'History',
+    },
+    histories:{
+      title:'History',
+      search:'Search by name',
+      deliverDate:'Deliver Date',
+      reciverDate:'Reciver Date',
+    },
+    itemDetails:{
+      availability:{
+        available:'Item is available',
+        nonavailable:"Item is not available"
+      },
+      name:'Full Name',
+      address:'Address',
+      phone:'Phone Number',
+      deliverDate:'Deliver Date',
+      reciverDate:'Reciving Date',
+    },
     settings: {
       title:'Settings',
       language:{
@@ -232,6 +254,28 @@ export default {
         library:'בחר מספריה מקומית',
         cancel:'ביטול',
       },
+    },
+    itemCard:{
+      delivered:'מסירה',
+      returned:'החזרה',
+      history:'היסטוריה',
+    },
+    histories:{
+      title:'היסטוריה',
+      search:'חיפוש לפי שם',
+      deliverDate:'תאריך מסירה',
+      reciverDate:'תאריך החזרה',
+    },
+    itemDetails:{
+      availability:{
+        available:'פריט זמין',
+        nonavailable:'פריט אינו זמין'
+      },
+      name:'שם מלא',
+      address:'כתובת',
+      phone:'מספר טלפון',
+      deliverDate:'תאריך מסירה',
+      reciverDate:'תאריך החזרה',
     },
     settings: {
       title:'הגדרות',

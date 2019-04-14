@@ -19,6 +19,7 @@ export default class Histories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      language:this.props.navigation.state.params.language,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -75,11 +76,11 @@ renderList(data){
           <Text style={{fontSize:barHeight/2.5}}>{data.fullName}, {data.address}, {data.phone}</Text>
         </View>
         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
-          <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך מסירה</Text>
+          <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>{this.state.language.deliverDate}</Text>
           <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>{data.deliverDate}</Text>
         </View>
         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',margin:6,marginBottom:0}}>
-          <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>תאריך החזרה</Text>
+          <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>{this.state.language.reciverDate}</Text>
           <Text style={{flex:2,fontSize:barHeight/2.5,fontWeight:'bold',textAlign: 'center'}}>{data.reciverDate}</Text>
         </View>
       </View>
@@ -123,7 +124,7 @@ searchByText(text){
             <TouchableOpacity
               onPress={()=>this.openSearch()}>
               {this.state.displaySearch && <TextInput
-                                          placeholder={'חיפוש לפי שם'}
+                                          placeholder={this.state.language.search}
                                           style={{width:dim.width-barHeight,backgroundColor:'white',borderWidth:1,borderRadius:2}}
                                           onChangeText={(text) => this.searchByText(text)}
                                         /> ||
@@ -131,7 +132,7 @@ searchByText(text){
             </TouchableOpacity>
           </View>
           <View style={{flex:1, flexDirection: 'row-reverse', alignItems:'center', justifyContent:'space-around'}}>
-            {!this.state.displaySearch && <Text style={styles.fontStyle}>היסטוריה</Text>}
+            {!this.state.displaySearch && <Text style={styles.fontStyle}>{this.state.language.title}</Text>}
           </View>
         </View>
         <ScrollView style={{height:dim.height-barHeight}}>

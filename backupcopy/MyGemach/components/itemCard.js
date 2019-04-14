@@ -22,6 +22,7 @@ export default class ItemCard extends Component {
 constructor(props) {
   super(props);
   this.state = {
+    language:this.props.language,
     backgroundColor:this.props.backgroundColor,
     pressed:false,
     delivered:this.props.delivered,
@@ -118,13 +119,13 @@ render(){
             </MenuTrigger>
             <MenuOptions >
               <MenuOption value={1} style={{margin:2}} disabled={this.props.delivered}>
-                <Text style={!this.props.delivered && this.state.enabled || this.state.disabled}>מסירה</Text>
+                <Text style={!this.props.delivered && this.state.enabled || this.state.disabled}>{this.state.language.delivered}</Text>
               </MenuOption>
               <MenuOption value={2} style={{margin:2}} disabled={!this.props.delivered}>
-                <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>החזרה</Text>
+                <Text style={this.props.delivered && this.state.enabled || this.state.disabled}>{this.state.language.returned}</Text>
               </MenuOption>
               <MenuOption value={3} style={{margin:2, borderTopWidth:1, borderColor:'#00B0F0'}}>
-                <Text style={this.state.enabled}>היסטוריה</Text>
+                <Text style={this.state.enabled}>{this.state.language.history}</Text>
               </MenuOption>
             </MenuOptions>
           </Menu>

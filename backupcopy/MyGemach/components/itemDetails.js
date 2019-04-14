@@ -19,6 +19,7 @@ export default class ItemDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      language:this.props.navigation.state.params.language,
       //display items
       displayGemach: false,
       displayImage: false,
@@ -121,29 +122,29 @@ searchByText(text){
               <View style={{backgroundColor:!this.props.navigation.state.params.itemsList.delivered&&'#32CD32'||'red',borderRadius:25,height:barHeight/2,width:barHeight/2}}></View>
             </View>
             <View style={{flex:3,justifyContent:'center'}}>
-              <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemsList.delivered&&'פריט זמין'||'פריט אינו זמין'}</Text>
+              <Text style={{fontSize:barHeight/2}}>{!this.props.navigation.state.params.itemsList.delivered&&this.state.language.availability.available||this.state.language.availability.nonavailable}</Text>
             </View>
           </View>
             {!this.props.navigation.state.params.itemsList.delivered ||
           <View>
             <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
-                <Text style={{fontSize:barHeight/2.5}}>שם מלא: </Text>
+                <Text style={{fontSize:barHeight/2.5}}>{this.state.language.name}:</Text>
                 <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.fullName}</Text>
             </View>
             <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
-                <Text style={{fontSize:barHeight/2.5}}>כתובת: </Text>
+                <Text style={{fontSize:barHeight/2.5}}>{this.state.language.address}:</Text>
                 <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.address}</Text>
             </View>
             <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
-                <Text style={{fontSize:barHeight/2.5}}>מספר טלפון: </Text>
+                <Text style={{fontSize:barHeight/2.5}}>{this.state.language.phone}:</Text>
                 <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.phone}</Text>
             </View>
             <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
-                <Text style={{fontSize:barHeight/2.5}}>תאריך מסירה: </Text>
+                <Text style={{fontSize:barHeight/2.5}}>{this.state.language.deliverDate}:</Text>
                 <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.deliverDate}</Text>
             </View>
             <View style={{padding:5,borderBottomWidth:2,borderColor:'#DCDCDC'}}>
-                <Text style={{fontSize:barHeight/2.5}}>תאריך החזרה: </Text>
+                <Text style={{fontSize:barHeight/2.5}}>{this.state.language.reciverDate}:</Text>
                 <Text style={{fontSize:barHeight/2, fontWeight: 'bold'}}>{this.props.navigation.state.params.itemsList.customerData.reciverDate}</Text>
             </View>
           </View>
