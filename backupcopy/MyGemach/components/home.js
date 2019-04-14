@@ -37,11 +37,11 @@ export default class Home extends React.Component {
 
 
   componentWillMount() {
-    /*AsyncStorage.getItem('language')
+    AsyncStorage.getItem('language')
       .then(value => {
         this.setState({ language: JSON.parse(value) || Language['heb']})
       })
-      .done()*/
+      .done()
       AsyncStorage.getItem('dataList')
         .then(value => {
           this.setState({ dataList: JSON.parse(value) || []})
@@ -56,7 +56,7 @@ export default class Home extends React.Component {
 
   componentDidUpdate() {
     let dataList = this.state.dataList
-    //AsyncStorage.setItem('language', JSON.stringify(this.state.language))
+    AsyncStorage.setItem('language', JSON.stringify(this.state.language))
     AsyncStorage.setItem('dataList', JSON.stringify(this.state.dataList))
     AsyncStorage.setItem('displayGemach', JSON.stringify(this.state.displayGemach))
   }
